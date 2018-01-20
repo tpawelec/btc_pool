@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Description" content="Pool statistic for mining Monero">
+	<meta name="keywords" content="bitcoin, cryptocurrency, monero, xmr, minig, stats">
+	<meta name="google" content="notranslate">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/grid.min.css">
+	<link rel="stylesheet" href="css/style.min.css">
+	<title>Monero Mining</title>
+</head>
+<body>
+	<!-- MENU -->
+	<div class="nav-bar">
+		<img src="https://lorempixel.com/200/50" alt="Lorem ipsum">
+		<ul class="menu">
+			<li><a href="#">Link 1</a></li>
+			<li><a href="#">Link 2</a></li>
+		</ul>
+
+		<div class="dropdown">
+			<p class="label">Currency:</p>
+			<button id="currencySelect" class="btn nav-btn">USD</button>
+			<div class="dropdown-content">
+				<p id="usd">USD</p>
+				<p id="eur">EUR</p>
+				<p id="gbp">GBP</p>
+				<p id="btc">BTC</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- LOGIN INPUT -->
+	<div class="login">
+		<form action="POST">
+			<label for="loginId">Login:</label>
+			<input type="text" name="userId" placeholder="Id">
+			<input type="submit" value="Login" class="btn">
+		</form>
+	</div>
+	<!-- POOL STATISTICS WITH CHART-->
+	<section class="pool-stats">
+		<div class="stats">
+		</div>
+		<div class="chart">
+			
+		</div>
+	</section>
+
+	<!-- JAVASCRIPT 
+	jQuery (from CDN)
+	chart.js (local)
+	own script.js (local)
+	-->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="js/chart.min.js"></script>
+	<script src="js/script.js"></script>
+</body>
+</html>

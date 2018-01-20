@@ -1,0 +1,132 @@
+/* Hex codes for colors */
+
+$background: #0F4172
+$btn: #366693
+$color-primary-2: #1B5389
+$text: #f0edee
+$nav: #032546
+
+/* fonts */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Open+Sans:300,400,600,700')
+
+/* mixins */
+=transform-translate($xvalue, $yvalue)
+	transform: translate($xvalue, $yvalue)
+    -webkit-transform: translate($xvalue, $yvalue)
+    -moz-transform: translate($xvalue, $yvalue)
+    -ms-transform: translate($xvalue, $yvalue)
+    -o-transform: translate($xvalue, $yvalue)
+
+=border-rad($radius)
+	-webkit-border-radius: $radius
+	-moz-border-radius: $radius
+	border-radius: $radius
+
+=transition($what, $time)
+	transition: $what $time ease-in-out
+	-webkit-transition: $what $time ease-in-out
+	-ms-transition: $what $time ease-in-out
+	-o-transition: $what $time ease-in-out
+
+*
+	margin: 0
+	padding: 0
+	box-sizing: border-box
+	+transition(all, .5s)
+
+body
+	background-color: $background
+	font-family: 'Open-Sans', sans-serif
+	color: $text
+
+.btn
+	background-color: $btn
+	border: none
+	padding: .5rem
+	color: $text
+
+.nav-bar
+	background-color: $nav
+	height: 4rem
+	padding: .5rem
+	position: relative
+	img
+		float: left
+		height: 3rem
+		width: auto
+		margin-right: .5rem
+	.menu
+		list-style-type: none
+		position: relative
+		margin-top: .9rem
+		li
+			float: left
+			display: inline-block
+			width: 6rem
+			text-align: center
+
+	a
+		color: $text
+		text-decoration: none
+		font-size: 1.2rem
+		font-weight: 300
+	.dropdown
+		position: absolute
+		top: 50%
+		+transform-translate(0,-50%)
+		right: 5%
+		height: 2rem
+		.label
+			display: inline-block
+			float: left
+			margin: .5rem 1rem 0 0
+		.nav-btn
+			display: inline-block
+			width: 5rem
+			height: 2rem
+			+border-rad(2px)
+			text-transform: uppercase
+		.dropdown-content
+			background-color: $color-primary-2
+			width: 5rem
+			text-align: center
+			+border-rad(2px)
+			position: absolute
+			right: 0
+			display: none
+			p
+				line-height: 1.5rem
+				border-bottom: 1px solid rgba(54,102,147,.8)
+				cursor: pointer
+				&:last-child
+					border: none
+		.show
+			display: block
+
+.login
+	text-align: center
+	width: auto
+	height: 4rem
+	padding: 1.5rem
+	font-size: 1.2rem
+	label
+		display: inline-block
+		margin-right: 1rem
+		padding: .2rem
+	input
+		padding: .5rem
+		border: none
+		+border-rad(10px)
+		width: 10rem
+		margin-right: 1rem
+		&:focus
+			outline: none
+			width: 30rem
+
+
+		
+
+
+
+
+/* imports */
