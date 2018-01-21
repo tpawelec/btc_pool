@@ -110,9 +110,11 @@ body {
       width: 30rem; }
 
 .row-stats {
-  padding: 2rem;
+  padding: .5rem;
+  margin: 0;
   height: 75vh; }
   .row-stats [class*='col-'] {
+    padding: 0;
     text-align: center; }
   .row-stats .stats [class*='col-'] {
     padding: 1rem;
@@ -121,9 +123,7 @@ body {
     text-transform: uppercase;
     margin-bottom: .5rem; }
   .row-stats .chart-canvas {
-    border: 1px solid black;
-    height: 100%;
-    width: 100%; }
+    border: 1px solid black; }
 
 /* imports */
 
