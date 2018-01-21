@@ -122,8 +122,6 @@ body {
   .row-stats .stats .title {
     text-transform: uppercase;
     margin-bottom: .5rem; }
-  .row-stats .chart-canvas {
-    border: 1px solid black; }
 
 /* imports */
 

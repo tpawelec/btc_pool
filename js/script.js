@@ -1,7 +1,9 @@
 /*
 TODO:
-zmienić dataset - te duże liczby to timestamp
-zmienić timestamp na zwykłą datę
+tooltip - linia pozioma
+wygląd dymka
+tło w statystykach (?)
+przeliczenie na waluty
 */
 
 /*jslint browser: true*/ /*global  $, window*/
@@ -63,32 +65,45 @@ function processCoin(resp) {
     Take response from pool_chart and draw chart
 */
 function drawChart(resp) {
+    'use strict';
     var datasets = [[],[]];
+    var serverNames = [];
+    var labels = [];
     var i = 0;
 
     for(var serverName in resp.pool_hashrate_graph) {
+        serverNames.push(serverName);
         for(var number in resp.pool_hashrate_graph[serverName]) {
-            datasets[i].push(resp.pool_hashrate_graph[serverName][number][0]);
+            datasets[i].push(resp.pool_hashrate_graph[serverName][number][1]);
+            if (i === 0) {
+            labels.push(moment(resp.pool_hashrate_graph[serverName][number][0] * 1000).format("DD.MM.YYYY HH:mm:ss Z"));
+        }
         }
         i++;
     }
-    
-    var min = Math.min(...datasets[0]);
-    console.log(min);
+    labels.reverse();
+    Chart.defaults.global.defaultFontColor = "#f0edee";
     var myChart = new Chart(chartCanvas, {
     type: 'line',
     data: {
-        labels: datasets[0],
+        labels: labels,
         datasets: [{
+            label: serverNames[0],
             data: datasets[0],
-            borderColor: 'rgba(0,99,132,1)',
+            borderColor: 'rgba(0,225,0,1)',
             borderWidth: 1,
-            pointBackgroundColor: 'rgba(0,99,132,1)'
+            pointBackgroundColor: 'rgba(0,99,132,1)',
+            pointRadius: 1,
+            showLine: false
         },
         {
+            label: serverNames[1],
             data: datasets[1],
-            borderColor: 'rgba(34,99,132,1)',
-            borderWidth: 1
+            borderColor: 'rgba(128,0,0,1)',
+            borderWidth: 1,
+            pointBackgroundColor: 'rgba(128,0,0,1)',
+            pointRadius: 1.5,
+            showLine: false
         }]
     },
     options: {
@@ -99,12 +114,30 @@ function drawChart(resp) {
                 ticks: {
                     beginAtZero:true,
                     autoSkip: true,
-                    min: 1500000000 
+                },
+                gridLines: {
+                    color: 'rgba(240,237,238,0.5)',
+                    borderDash: [5,15]
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: "Hashrate H/s"
                 }
             }],
             xAxes: [{
                 display: false
             }]
+        },
+        layout: {
+            padding: {
+                left: 15,
+                right: 15,
+                top: 0,
+                bottom: 0
+            }
+        },
+        tooltips: {
+            mode: 'index'
         }
     }
 });
