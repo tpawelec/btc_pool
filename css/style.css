@@ -109,6 +109,22 @@ body {
       outline: none;
       width: 30rem; }
 
+.row-stats {
+  padding: 2rem;
+  height: 75vh; }
+  .row-stats [class*='col-'] {
+    text-align: center; }
+  .row-stats .stats [class*='col-'] {
+    padding: 1rem;
+    margin: 1rem 0; }
+  .row-stats .stats .title {
+    text-transform: uppercase;
+    margin-bottom: .5rem; }
+  .row-stats .chart-canvas {
+    border: 1px solid black;
+    height: 100%;
+    width: 100%; }
+
 /* imports */
 
 /*# sourceMappingURL=style.css.map */
