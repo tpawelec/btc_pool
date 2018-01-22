@@ -1,11 +1,12 @@
 /* Hex codes for colors */
 /* fonts */
-@import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Open+Sans:300,400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 /* mixins */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5s ease-in-out;
   -ms-transition: all 0.5s ease-in-out;
@@ -13,7 +14,6 @@
 
 body {
   background-color: #0F4172;
-  font-family: 'Open-Sans', sans-serif;
   color: #f0edee; }
 
 .btn {
@@ -109,19 +109,36 @@ body {
       outline: none;
       width: 30rem; }
 
-.row-stats {
-  padding: .5rem;
-  margin: 0;
-  height: 75vh; }
-  .row-stats [class*='col-'] {
-    padding: 0;
-    text-align: center; }
-  .row-stats .stats [class*='col-'] {
-    padding: 1rem;
-    margin: 1rem 0; }
-  .row-stats .stats .title {
-    text-transform: uppercase;
-    margin-bottom: .5rem; }
+.pool-stats {
+  padding-bottom: 3rem; }
+  .pool-stats .row-stats {
+    padding: .5rem;
+    margin: 0;
+    height: 75vh; }
+    .pool-stats .row-stats [class*='col-'] {
+      padding: 0;
+      text-align: center; }
+    .pool-stats .row-stats .stats [class*='col-'] {
+      padding: 0 1rem 1rem 1rem; }
+    .pool-stats .row-stats .stats .title {
+      background-color: #1B5389;
+      height: 3rem;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+    .pool-stats .row-stats .stats .value {
+      background-color: #366693;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+
+.last-miners .last-miners-table {
+  width: 100%; }
+  .last-miners .last-miners-table .header th {
+    font-weight: 700; }
 
 /* imports */
 

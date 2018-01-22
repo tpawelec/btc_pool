@@ -1,9 +1,7 @@
 /*
 TODO:
 tooltip - linia pozioma
-wygląd dymka
-tło w statystykach (?)
-przeliczenie na waluty
+przeliczenie na waluty ( jeszcze na liście)
 */
 
 /*jslint browser: true*/ /*global  $, window*/
@@ -11,6 +9,7 @@ przeliczenie na waluty
 
 /* Currency Variable */
 var cCurrency = "USD";
+var cPrice = '';
 
 /* Stats DOM */
 var htmlStats = $('.pool-stats p');
@@ -42,9 +41,12 @@ function processStats(resp) {
     htmlStats.each(function () {
         if ($(this).attr('id') === 'last_mined_block') {
             $(this).html(resp['pool_last_mined_block_id'] + '<br>(' + convertTime(resp['pool_last_mined_block_time']) + ' minutes ago)');
+        } else if($(this).attr('id') === 'pool_fee') {
+            $(this).html(resp[$(this).attr('id')] + ' XMR<br>(' + resp[$(this).attr('id')] * cPrice + ' ' + cCurrency + ')');
+            
+        } else {
+            $(this).text(resp[$(this).attr('id')]);
         }
-
-        $(this).text(resp[$(this).attr('id')]);
 
     });
 }
@@ -54,9 +56,10 @@ function processStats(resp) {
 */
 function processCoin(resp) {
     'use strict';
+    cPrice = resp['pool_coin_price'][cCurrency];
     htmlStats.each(function () {
         if ($(this).attr('id') === 'pool_coin_price') {
-            $(this).text(resp['pool_coin_price'][cCurrency] + ' ' + cCurrency);
+            $(this).text(cPrice + ' ' + cCurrency);
         }
     });
 }
@@ -83,14 +86,22 @@ function drawChart(resp) {
     }
     labels.reverse();
     Chart.defaults.global.defaultFontColor = "#f0edee";
+    Chart.defaults.global.hover.onHover = function(x) {
+        if(x[0]) {
+        var index = x[0]._index;
+        console.log(index);
+    }
+    };
     var myChart = new Chart(chartCanvas, {
     type: 'line',
     data: {
         labels: labels,
         datasets: [{
             label: serverNames[0],
+            fill: true,
             data: datasets[0],
             borderColor: 'rgba(0,225,0,1)',
+            backgroundColor: 'rgba(0,225,0,1)',
             borderWidth: 1,
             pointBackgroundColor: 'rgba(0,99,132,1)',
             pointRadius: 1,
@@ -98,8 +109,10 @@ function drawChart(resp) {
         },
         {
             label: serverNames[1],
+            fill: true,
             data: datasets[1],
             borderColor: 'rgba(128,0,0,1)',
+            backgroundColor: 'rgba(128,0,0,1)',
             borderWidth: 1,
             pointBackgroundColor: 'rgba(128,0,0,1)',
             pointRadius: 1.5,
@@ -125,7 +138,9 @@ function drawChart(resp) {
                 }
             }],
             xAxes: [{
-                display: false
+                ticks: {
+                    display: false
+                }
             }]
         },
         layout: {
@@ -137,7 +152,18 @@ function drawChart(resp) {
             }
         },
         tooltips: {
-            mode: 'index'
+            mode: 'index',
+            backgroundColor: '#f0edee',
+            xPadding: 20,
+            yPadding: 20,
+            bodyFontColor: '#191919',
+            bodySpacing: 5,
+            titleMarginBottom: 10,
+            titleFontColor: '#191919'
+        },
+        legend: {
+            position: 'bottom',
+            boxWidth: 50
         }
     }
 });
@@ -147,17 +173,18 @@ function drawChart(resp) {
 function callApi() {
     'use strict';
 
+    /* COIN */
+    $.ajax({
+        url: coinUrl,
+        method: 'GET',
+        success: (response) => processCoin(response),
+        async: false
+    });
     /* STATS */
     $.ajax({
         url: poolUrl,
         method: 'GET',
         success: (response) => processStats(response)
-    });
-    /* COIN */
-    $.ajax({
-        url: coinUrl,
-        method: 'GET',
-        success: (response) => processCoin(response)
     });
     /* CHART */
     $.ajax({
