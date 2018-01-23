@@ -243,9 +243,7 @@ $(document).ready(function () {
         Global AJAX Setup for error
     */
     $.ajaxSetup({
-        headers: {
-            'Access-Control-Allow-Credentials': 'true'
-        },
+        dataType: 'jsonp',
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
                 alert('Not connect.\n Verify Network.');
