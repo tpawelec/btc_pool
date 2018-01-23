@@ -1,10 +1,6 @@
 /*
 TODO:
 tooltip - linia pozioma
-przeliczenie na waluty ( jeszcze na liście)
-
-każdy request = xhr
-w każdym requeście beforesend i sprawdzenie statusu. Jak źle to abort
 */
 
 /*jslint browser: true*/ /*global  $, window*/
@@ -46,13 +42,29 @@ function processStats(resp) {
         if ($(this).attr('id') === 'last_mined_block') {
             $(this).html(resp['pool_last_mined_block_id'] + '<br>(' + convertTime(resp['pool_last_mined_block_time']) + ' minutes ago)');
         } else if($(this).attr('id') === 'pool_fee') {
-            $(this).html(resp[$(this).attr('id')] + ' XMR<br>(' + resp[$(this).attr('id')] * cPrice + ' ' + cCurrency + ')');
+            $(this).html(resp[$(this).attr('id')] + ' XMR<br>(' + (resp[$(this).attr('id')] * cPrice).toFixed(2) + ' ' + cCurrency + ')');
             
         } else {
             $(this).text(resp[$(this).attr('id')]);
         }
 
     });
+
+    var innerHTMLTable = '';
+    resp['pool_last_blocks'].forEach(function (record) {
+        innerHTMLTable += '<tr><td>' + record.block_id + '</td>';
+        innerHTMLTable += '<td>' + record.miner + '</td>';
+        if(record.anon_miner) {
+            innerHTMLTable += '<td><i class="fa fa-check" aria-hidden="true"></i></td>';
+        } else {
+            innerHTMLTable += '<td><i class="fa fa-times" aria-hidden="true"></i></td>';
+        }
+        innerHTMLTable += '<td>' + record.reward + 'XMR<br>(' + (record.reward * cPrice).toFixed(2) + ' ' + cCurrency + ')</td>';
+        innerHTMLTable += '<td>' + convertTime(record.time) + ' minutes ago</td></tr>';
+    });
+
+    $('.table-body').html(innerHTMLTable);
+    console.log(resp['pool_last_blocks'])
 }
 
 /* 
@@ -97,11 +109,22 @@ function drawChart(resp) {
     }
     labels.reverse();
     Chart.defaults.global.defaultFontColor = "#f0edee";
-    Chart.defaults.global.hover.onHover = function(x) {
-        if(x[0]) {
-        var index = x[0]._index;
-        console.log(index);
-    }
+    let parentEventHandler = Chart.Controller.prototype.eventHandler;
+    Chart.Controller.prototype.eventHandler = function () {
+    let ret = parentEventHandler.apply(this, arguments);
+
+    let x = arguments[0].x;
+    let y = arguments[0].y;
+    this.clear();
+    this.draw();
+    let yScale = this.scales['y-axis-0'];
+    this.chart.ctx.beginPath();
+    this.chart.ctx.moveTo(x, yScale.getPixelForValue(yScale.max));
+    this.chart.ctx.strokeStyle = "#f0edee";
+    this.chart.ctx.lineTo(x, yScale.getPixelForValue(yScale.min));
+    this.chart.ctx.stroke();
+
+    return ret;
     };
     var myChart = new Chart(chartCanvas, {
     type: 'line',
@@ -131,6 +154,7 @@ function drawChart(resp) {
         }]
     },
     options: {
+        animation: false,
         responsive: true,
         maintainAspectRatio: false,
         scales: {
@@ -163,7 +187,7 @@ function drawChart(resp) {
             }
         },
         tooltips: {
-            mode: 'index',
+            mode: 'x',
             backgroundColor: '#f0edee',
             xPadding: 20,
             yPadding: 20,
@@ -183,7 +207,7 @@ function drawChart(resp) {
 
 function callApi() {
     'use strict';
-
+    console.log("called");
     /* COIN */
     $.ajax({
         url: coinUrl,
@@ -257,4 +281,5 @@ $(document).ready(function () {
 
     
     callApi();
+    setInterval(callApi, 10000);
 });

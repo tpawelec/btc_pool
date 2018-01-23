@@ -135,10 +135,23 @@ body {
       align-items: center;
       justify-content: center; }
 
+.last-miners h2 {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  text-align: center; }
+
 .last-miners .last-miners-table {
-  width: 100%; }
-  .last-miners .last-miners-table .header th {
-    font-weight: 700; }
+  width: 100%;
+  font-size: .8rem; }
+  .last-miners .last-miners-table .header {
+    font-weight: 700;
+    height: 3rem; }
+  .last-miners .last-miners-table .table-body .fa {
+    font-size: 1.2rem; }
+  .last-miners .last-miners-table .table-body td {
+    text-align: center;
+    padding: .5rem; }
 
 /* imports */
 
