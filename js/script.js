@@ -14,9 +14,19 @@ var cPrice = '';
 var htmlStats = $('.pool-stats p');
 
 /* API Urls */
+/*
 var chartUrl = 'http://work.monero.me:12345/api/pool-graph.php';
 var coinUrl = 'http://work.monero.me:12345/api/pool-coin.php';
 var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
+*/
+
+/*
+These API URLs are for case, when website runs on https protocol and api on http protocol (or reverse).
+If both api and website run on http (or https) protocol delete (or comment) urls under and unucomment these above
+*/
+var chartUrl = 'https://crossorigin.me/http://work.monero.me:12345/api/pool-graph.php';
+var coinUrl = 'https://crossorigin.me/http://work.monero.me:12345/api/pool-coin.php';
+var poolUrl = 'https://crossorigin.me/http://work.monero.me:12345/api/pool-front.php';
 
 /* DROPDOWN MENU DOM */
 var btn = $('#currencySelect');
