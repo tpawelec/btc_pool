@@ -245,7 +245,7 @@ $(document).ready(function () {
     $.ajaxSetup({
         headers: {
             'Access-Control-Allow-Credentials': 'true'
-        }
+        },
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
                 alert('Not connect.\n Verify Network.');
