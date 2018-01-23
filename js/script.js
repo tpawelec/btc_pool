@@ -14,9 +14,9 @@ var cPrice = '';
 var htmlStats = $('.pool-stats p');
 
 /* API Urls */
-var chartUrl = 'https://work.monero.me:12345/api/pool-graph.php';
-var coinUrl = 'https://work.monero.me:12345/api/pool-coin.php';
-var poolUrl = 'https://work.monero.me:12345/api/pool-front.php';
+var chartUrl = 'http://work.monero.me:12345/api/pool-graph.php';
+var coinUrl = 'http://work.monero.me:12345/api/pool-coin.php';
+var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
 
 /* DROPDOWN MENU DOM */
 var btn = $('#currencySelect');
@@ -236,6 +236,7 @@ $(document).ready(function () {
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
                 alert('Not connect.\n Verify Network.');
+                console.log('Uncaught Error.\n' + jqXHR.responseText);
             } else if (jqXHR.status == 404) {
                 alert('Requested page not found. [404]');
             } else if (jqXHR.status == 500) {
