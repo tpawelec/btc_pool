@@ -14,9 +14,9 @@ var cPrice = '';
 var htmlStats = $('.pool-stats p');
 
 /* API Urls */
-var chartUrl = 'http://work.monero.me:12345/api/pool-graph.php';
-var coinUrl = 'http://work.monero.me:12345/api/pool-coin.php';
-var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
+var chartUrl = 'https://work.monero.me:12345/api/pool-graph.php';
+var coinUrl = 'https://work.monero.me:12345/api/pool-coin.php';
+var poolUrl = 'https://work.monero.me:12345/api/pool-front.php';
 
 /* DROPDOWN MENU DOM */
 var btn = $('#currencySelect');
