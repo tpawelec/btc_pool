@@ -2,6 +2,9 @@
 TODO:
 tooltip - linia pozioma
 przeliczenie na waluty ( jeszcze na liście)
+
+każdy request = xhr
+w każdym requeście beforesend i sprawdzenie statusu. Jak źle to abort
 */
 
 /*jslint browser: true*/ /*global  $, window*/
@@ -33,6 +36,7 @@ function convertTime(timestamp) {
     var minutes = Math.floor((nowTime - timestamp) / 60);
     return minutes;
 }
+
 /*
     Take response from pool-front api and put it in DOM
 */
@@ -61,6 +65,13 @@ function processCoin(resp) {
         if ($(this).attr('id') === 'pool_coin_price') {
             $(this).text(cPrice + ' ' + cCurrency);
         }
+    });
+
+    /* STATS */
+    $.ajax({
+        url: poolUrl,
+        method: 'GET',
+        success: (response) => processStats(response)
     });
 }
 
@@ -177,15 +188,11 @@ function callApi() {
     $.ajax({
         url: coinUrl,
         method: 'GET',
-        success: (response) => processCoin(response),
-        async: false
+        success: (response) => processCoin(response)
     });
-    /* STATS */
-    $.ajax({
-        url: poolUrl,
-        method: 'GET',
-        success: (response) => processStats(response)
-    });
+    /*
+    Stats API is called inside processCoin callback because of need of xmr prices
+    */
     /* CHART */
     $.ajax({
         url: chartUrl,
@@ -198,12 +205,36 @@ function callApi() {
 $(document).ready(function () {
 
     'use strict';
-
+    /*
+        Global AJAX Setup for error
+    */
+    $.ajaxSetup({
+        error: function(jqXHR, exception) {
+            if (jqXHR.status === 0) {
+                alert('Not connect.\n Verify Network.');
+            } else if (jqXHR.status == 404) {
+                alert('Requested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Internal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Requested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Time out error.');
+            } else if (exception === 'abort') {
+                alert('Ajax request aborted.');
+            } else {
+                alert('Uncaught Error.\n' + jqXHR.responseText);
+            }
+        }
+    });
     /* DROPDOWN MENU WITH CURRENCIES */
     btn.click(function () {
         $('.dropdown-content').toggleClass('show');
     });
 
+    /*
+    When clicked anywhere else dropdown menu is closed
+    */
     $(window).click(function (e) {
         if (e.target.id !== 'currencySelect') {
             if ($('.dropdown-content').hasClass('show')) {
@@ -213,10 +244,13 @@ $(document).ready(function () {
 
     });
 
+    /*
+    When clicked on currency variable and html content is updated. Then API is called.
+    */
     $('.dropdown-content p').click(function (e) {
         cCurrency = e.currentTarget.id;
-        callApi();
         btn.text(cCurrency);
+        callApi();
     });
 
     /* END */
