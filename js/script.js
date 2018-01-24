@@ -125,6 +125,7 @@ function drawChart(resp) {
 
     let x = arguments[0].x;
     let y = arguments[0].y;
+    console.log(x);
     this.clear();
     this.draw();
     let yScale = this.scales['y-axis-0'];
@@ -247,7 +248,7 @@ $(document).ready(function () {
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
                 alert('Not connect.\n Verify Network.');
-                console.log('Uncaught Error.\n' + jqXHR.responseText);
+                console.log('Uncaught Error.\n' + exception);
             } else if (jqXHR.status == 404) {
                 alert('Requested page not found. [404]');
             } else if (jqXHR.status == 500) {
