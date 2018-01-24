@@ -133,7 +133,8 @@ body
 			text-align: center
 		.stats
 			[class*='col-']
-				padding: 0 1rem 1rem 1rem
+				padding: 0 2rem 1rem 2rem
+				margin: 1rem 0
 			.title
 				background-color: $color-primary-2
 				height: 3rem
@@ -151,6 +152,7 @@ body
 			
 
 .last-miners
+	padding: 3rem
 	h2
 		font-weight: 700
 		font-size: 2rem
@@ -159,17 +161,29 @@ body
 	.last-miners-table
 		width: 100%
 		font-size: .8rem
+		border-collapse: collapse
 		.header
 			font-weight: 700
 			height: 3rem
-			th
-				
 		.table-body
 			.fa
 				font-size: 1.2rem
 			td
 				text-align: center
 				padding: .5rem
+			a
+				color: $text
+				text-decoration: none
+				border-bottom: 1px dashed $text
+
+
+footer
+	background-color: $nav
+	text-align: center
+	border-top: 1px solid $text
+	height: 4rem
+	padding: 1rem
+	font-size: .8rem
 
 
 /* imports */

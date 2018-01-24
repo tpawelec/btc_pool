@@ -54,20 +54,24 @@ function processStats(resp) {
         } else if($(this).attr('id') === 'pool_fee') {
             $(this).html(resp[$(this).attr('id')] + ' XMR<br>(' + (resp[$(this).attr('id')] * cPrice).toFixed(2) + ' ' + cCurrency + ')');
             
+        } else if($(this).attr('id') === 'pool_network_diff') {
+            var diff = moment.unix((resp[$(this).attr('id')] / resp['pool_hashrate']).toFixed(0)).format("DD.MM.YYYY HH:mm:ss Z");
+            $(this).html(resp[$(this).attr('id')] + '<br>(' + moment().to(diff) + ')');
         } else {
             $(this).text(resp[$(this).attr('id')]);
         }
 
+        //time (seconds) = network diff / hashrate
     });
 
     var innerHTMLTable = '';
     resp['pool_last_blocks'].forEach(function (record) {
+        
         innerHTMLTable += '<tr><td>' + record.block_id + '</td>';
-        innerHTMLTable += '<td>' + record.miner + '</td>';
         if(record.anon_miner) {
-            innerHTMLTable += '<td><i class="fa fa-check" aria-hidden="true"></i></td>';
+            innerHTMLTable += '<td>' + record.miner + '</td>';
         } else {
-            innerHTMLTable += '<td><i class="fa fa-times" aria-hidden="true"></i></td>';
+            innerHTMLTable += '<td><a href="#">' + record.miner + '</a></td>';
         }
         innerHTMLTable += '<td>' + record.reward + 'XMR<br>(' + (record.reward * cPrice).toFixed(2) + ' ' + cCurrency + ')</td>';
         innerHTMLTable += '<td>' + convertTime(record.time) + ' minutes ago</td></tr>';
