@@ -243,7 +243,7 @@ $(document).ready(function () {
         Global AJAX Setup for error
     */
     $.ajaxSetup({
-        dataType: 'jsonp',
+        crossDomain: true,
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
                 alert('Not connect.\n Verify Network.');
