@@ -221,7 +221,6 @@ function callApi() {
     console.log("called");
     /* COIN */
     $.ajax({
-        crossDomain: true,
         url: coinUrl,
         method: 'GET',
         success: (response) => processCoin(response)
@@ -245,6 +244,9 @@ $(document).ready(function () {
         Global AJAX Setup for error
     */
     $.ajaxSetup({
+        xhrFields: {
+      withCredentials: true
+   },
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
                 alert('Not connect.\n Verify Network.');
