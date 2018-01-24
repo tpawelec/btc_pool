@@ -244,9 +244,6 @@ $(document).ready(function () {
         Global AJAX Setup for error
     */
     $.ajaxSetup({
-        xhrFields: {
-      withCredentials: true
-   },
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
                 alert('Not connect.\n Verify Network.');
@@ -296,5 +293,5 @@ $(document).ready(function () {
 
     
     callApi();
-    setInterval(callApi, 10000);
+   // setInterval(callApi, 10000);
 });
