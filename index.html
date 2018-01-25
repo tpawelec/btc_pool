@@ -34,48 +34,44 @@
 
 	<!-- LOGIN INPUT -->
 	<div class="login">
-		<form id="loginForm">
+		<form>
 			<label for="loginId">Login:</label>
 			<input type="text" name="userId" placeholder="Id">
-			<input type="submit" value="Login" class="btn">
+			<button id="loginForm" class="btn">Login</button>
 		</form>
 	</div>
 	<!-- POOL STATISTICS WITH CHART-->
 	<section class="pool-stats">
 		<div class="row row-stats">
-			<div class="stats col-5">
+			<div class="stats col-md-12 col-lg-5">
 				<div class="row">
-					<div class="col-6">
+					<div class="col-lg-6 col-sm-4">
 						<h4 class="title">hashrate</h4>
 						<p class="value" id="pool_hashrate">00000</p>
 					</div>
-					<div class="col-6">
+					<div class="col-lg-6 col-sm-4">
 						<h4 class="title">price</h4>
 						<p class="value" id="pool_coin_price">00000</p>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-6">
+					<div class="col-lg-6 col-sm-4">
 						<h4 class="title">active workers</h4>
 						<p class="value" id="pool_active_workers">00000</p>
 					</div>
-					<div class="col-6">
+					<div class="col-lg-6 col-sm-4">
 						<h4 class="title">active miners</h4>
 						<p class="value" id="pool_active_miners">00000</p>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-6">
+					<div class="col-lg-6 col-sm-4">
 						<h4 class="title">pool difficulty</h4>
 						<p class="value" id="pool_network_diff">00000</p>
 					</div>
-					<div class="col-6">
+					<div class="col-lg-6 col-sm-4">
 						<h4 class="title">pool fee</h4>
 						<p class="value" id="pool_fee">00000</p>
 					</div>
 				</div>
 			</div>
-			<div class="chart col-7">
+			<div class="chart col-md-12 col-lg-7">
 				<canvas id="myChart" width="400" height="400" class="chart-canvas"></canvas>
 			</div>
 		</div>
@@ -91,14 +87,13 @@
 						<thead class="header">
 						<tr>
 							<th>Block</th>
-							<th>Miner</th>
+							<th class="miner-id">Miner</th>
 							<th>Reward</th>
 							<th>Time</th>
 						</tr>
 						</thead>
 						<tbody class="table-body">
 						<tr>
-							<td>00000</td>
 							<td>00000</td>
 							<td>00000</td>
 							<td>00000</td>

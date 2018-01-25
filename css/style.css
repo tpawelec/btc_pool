@@ -12,6 +12,7 @@
   -ms-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out; }
 
+/* imports */
 body {
   background-color: #0F4172;
   color: #f0edee; }
@@ -20,9 +21,29 @@ body {
   background-color: #366693;
   border: none;
   padding: .5rem;
-  color: #f0edee; }
+  color: #f0edee;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px; }
+  .btn:focus {
+    outline: none; }
 
-/* imports */
+@media (max-width: 1199px) {
+  body {
+    font-size: 14px; } }
+
+@media (max-width: 991px) {
+  body {
+    font-size: 12px; } }
+
+@media (max-width: 767px) {
+  body {
+    font-size: 10px; }
+  .container {
+    padding-left: .5rem;
+    padding-right: .5rem;
+    max-width: 95%; } }
+
 .nav-bar {
   background-color: #032546;
   height: 4rem;
@@ -107,9 +128,12 @@ body {
     width: 10rem;
     margin-right: 1rem; }
     .login input:focus {
-      outline: none; }
-    .login input:focus:first-child {
+      outline: none;
       width: 30rem; }
+
+@media (max-width: 767px) {
+  .login input {
+    width: 20rem; } }
 
 .pool-stats {
   padding-bottom: 3rem; }
@@ -137,6 +161,15 @@ body {
       display: flex;
       align-items: center;
       justify-content: center; }
+    .pool-stats .row-stats .chart {
+      margin-top: 3rem; }
+
+@media (max-width: 991px) {
+  .pool-stats .row-stats {
+    padding: .5rem;
+    height: auto; }
+    .pool-stats .row-stats .stats [class*='col-'] {
+      padding: 0 2rem .5rem 2rem; } }
 
 .last-miners {
   padding: 3rem; }
@@ -147,20 +180,32 @@ body {
     text-align: center; }
   .last-miners .last-miners-table {
     width: 100%;
-    font-size: .8rem;
-    border-collapse: collapse; }
+    font-size: .8rem; }
     .last-miners .last-miners-table .header {
       font-weight: 700;
       height: 3rem; }
-    .last-miners .last-miners-table .table-body .fa {
-      font-size: 1.2rem; }
     .last-miners .last-miners-table .table-body td {
       text-align: center;
-      padding: .5rem; }
+      padding: .5rem;
+      line-height: 1.2rem; }
     .last-miners .last-miners-table .table-body a {
       color: #f0edee;
       text-decoration: none;
       border-bottom: 1px dashed #f0edee; }
+
+@media (max-width: 1199px) {
+  .last-miners {
+    padding: 2rem; }
+    .last-miners .last-miners-table {
+      table-layout: fixed; }
+      .last-miners .last-miners-table td {
+        word-wrap: break-word; } }
+
+@media (max-width: 767px) {
+  .last-miners .last-miners-table th {
+    width: 20%; }
+  .last-miners .last-miners-table .miner-id {
+    width: 40%; } }
 
 footer {
   background-color: #032546;
@@ -169,6 +214,10 @@ footer {
   height: 4rem;
   padding: 1rem;
   font-size: .8rem; }
+
+@media (max-width: 787px) {
+  footer {
+    font-size: .7rem; } }
 
 .css-popup {
   position: fixed;

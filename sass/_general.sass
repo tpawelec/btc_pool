@@ -1,0 +1,28 @@
+body
+	background-color: $background
+	color: $text
+
+.btn
+	background-color: $btn
+	border: none
+	padding: .5rem
+	color: $text
+	+border-rad(10px)
+	&:focus
+		outline: none
+
+@media (max-width: 1199px)
+	body
+		font-size: 14px
+
+@media (max-width: 991px)
+	body
+		font-size: 12px
+
+@media (max-width: 767px)
+	body
+		font-size: 10px
+	.container
+		padding-left: .5rem
+		padding-right: .5rem
+		max-width: 95%

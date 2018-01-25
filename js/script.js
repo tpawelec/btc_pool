@@ -1,6 +1,7 @@
 /*
 TODO:
-login - poszerzanie. submit jako button?
+rwd
+    max-width 575
 */
 
 /*jslint browser: true*/ /*global  $, window*/
@@ -284,7 +285,7 @@ $(document).ready(function () {
     });
 
     /* Login form and popup display */
-    $('#loginForm').submit(function (e) {
+    $('#loginForm').click(function (e) {
         e.preventDefault();
 
         /* PSEUDOCODE
@@ -341,6 +342,18 @@ $(document).ready(function () {
             display: 'none'
         });
     })
-    //callApi();
+
+    /* Check if login */
+    /* PSEUDOCODE
+        if user is NOT logged
+            show login form
+        else
+            hide login form
+    */  
+
+    $('.login').css({
+        display: 'block'
+    });
+    callApi();
    // setInterval(callApi, 10000);
 });
