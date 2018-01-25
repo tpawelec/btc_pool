@@ -1,6 +1,6 @@
 /*
 TODO:
-tooltip - linia pozioma
+login - poszerzanie. submit jako button?
 */
 
 /*jslint browser: true*/ /*global  $, window*/
@@ -20,14 +20,6 @@ var coinUrl = 'http://work.monero.me:12345/api/pool-coin.php';
 var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
 
 
-/*
-These API URLs are for case, when website runs on https protocol and api on http protocol (or reverse).
-If both api and website run on http (or https) protocol delete (or comment) urls under and unucomment these above
-*
-var chartUrl = 'https://crossorigin.me/http://work.monero.me:12345/api/pool-graph.php';
-var coinUrl = 'https://crossorigin.me/http://work.monero.me:12345/api/pool-coin.php';
-var poolUrl = 'https://crossorigin.me/http://work.monero.me:12345/api/pool-front.php';
-*/
 /* DROPDOWN MENU DOM */
 var btn = $('#currencySelect');
 
@@ -78,7 +70,6 @@ function processStats(resp) {
     });
 
     $('.table-body').html(innerHTMLTable);
-    console.log(resp['pool_last_blocks'])
 }
 
 /* 
@@ -123,13 +114,13 @@ function drawChart(resp) {
     }
     labels.reverse();
     Chart.defaults.global.defaultFontColor = "#f0edee";
+    /*
     let parentEventHandler = Chart.Controller.prototype.eventHandler;
     Chart.Controller.prototype.eventHandler = function () {
     let ret = parentEventHandler.apply(this, arguments);
 
     let x = arguments[0].x;
     let y = arguments[0].y;
-    console.log(x);
     this.clear();
     this.draw();
     let yScale = this.scales['y-axis-0'];
@@ -141,6 +132,7 @@ function drawChart(resp) {
 
     return ret;
     };
+    */
     var myChart = new Chart(chartCanvas, {
     type: 'line',
     data: {
@@ -222,7 +214,6 @@ function drawChart(resp) {
 
 function callApi() {
     'use strict';
-    console.log("called");
     /* COIN */
     $.ajax({
         url: coinUrl,
@@ -251,7 +242,6 @@ $(document).ready(function () {
         error: function(jqXHR, exception) {
             if (jqXHR.status === 0) {
                 alert('Not connect.\n Verify Network.');
-                console.log('Uncaught Error.\n' + exception);
             } else if (jqXHR.status == 404) {
                 alert('Requested page not found. [404]');
             } else if (jqXHR.status == 500) {
@@ -293,9 +283,64 @@ $(document).ready(function () {
         callApi();
     });
 
-    /* END */
+    /* Login form and popup display */
+    $('#loginForm').submit(function (e) {
+        e.preventDefault();
 
+        /* PSEUDOCODE
+            call API
+            if user require password
+                display csspopup with '.password-form' displayed
+            else
+                go to userpage
+        */
+        $('.css-popup').css({
+            visibility: "visible",
+            opacity: 1
+        });
+
+        $('.css-popup .close').click(function (e) {
+            e.preventDefault();
+            $('.css-popup').css({
+                visibility: "hidden",
+                opacity: 0
+        });
+        });
+
+    })
     
-    callApi();
+    /* Password prompt on css popup */
+    $('#passwordLogin').click(function (e) {
+        e.preventDefault();
+
+        /*PSEUDOCODE
+        call API
+        if password is incorrect 
+            hide '.password-form' and display '.wrong-password'
+        else
+            go to userpage
+
+        */
+
+        $('.password-form').css({
+            display: 'none'
+        });
+        $('.wrong-password').css({
+            display: 'block'
+        });
+
+    });
+
+    /* Password again */
+    $('#passwordAgain').click(function (e) {
+        e.preventDefault();
+        $('.password-form').css({
+            display: 'block'
+        });
+        $('.wrong-password').css({
+            display: 'none'
+        });
+    })
+    //callApi();
    // setInterval(callApi, 10000);
 });

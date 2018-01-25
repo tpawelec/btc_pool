@@ -1,0 +1,57 @@
+.nav-bar
+	background-color: $nav
+	height: 4rem
+	padding: .5rem
+	position: relative
+	img
+		float: left
+		height: 3rem
+		width: auto
+		margin-right: .5rem
+	.menu
+		list-style-type: none
+		position: relative
+		margin-top: .9rem
+		li
+			float: left
+			display: inline-block
+			width: 6rem
+			text-align: center
+
+	a
+		color: $text
+		text-decoration: none
+		font-size: 1.2rem
+		font-weight: 300
+	.dropdown
+		position: absolute
+		top: 50%
+		+transform-translate(0,-50%)
+		right: 5%
+		height: 2rem
+		.label
+			display: inline-block
+			float: left
+			margin: .5rem 1rem 0 0
+		.nav-btn
+			display: inline-block
+			width: 5rem
+			height: 2rem
+			+border-rad(2px)
+			text-transform: uppercase
+		.dropdown-content
+			background-color: $color-primary-2
+			width: 5rem
+			text-align: center
+			+border-rad(2px)
+			position: absolute
+			right: 0
+			display: none
+			p
+				line-height: 1.5rem
+				border-bottom: 1px solid rgba(54,102,147,.8)
+				cursor: pointer
+				&:last-child
+					border: none
+		.show
+			display: block

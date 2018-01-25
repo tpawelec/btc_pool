@@ -34,7 +34,7 @@
 
 	<!-- LOGIN INPUT -->
 	<div class="login">
-		<form action="POST">
+		<form id="loginForm">
 			<label for="loginId">Login:</label>
 			<input type="text" name="userId" placeholder="Id">
 			<input type="submit" value="Login" class="btn">
@@ -114,6 +114,24 @@
 	<!-- FOOTER -->
 	<footer><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil qui repellendus, facilis temporibus magnam </p>
 		<p>perspiciatis suscipit sit dicta et quia incidunt iusto est soluta consequuntur culpa voluptate cupiditate eos maxime.</p></footer>
+
+	<!-- CSS POPUP -->
+	<div class="css-popup" id="cssPopup">
+		<div class="wrapper">
+			<p class="close">&times;</p>
+		<div class="password-form">
+			<form name="passwordForm">
+				<input type="password" name="password" placeholder="Password">
+				<button class="btn btn-password" id="passwordLogin">Ok</button>
+			</form>
+		</div>
+		<div class="wrong-password">
+		Wrong password
+			<button id="passwordAgain" class="btn btn-repassword">Again</button>
+		</div>
+		<div class="wrong-id">There is no such id</div>
+	</div>
+	</div>
 
 	<!-- JAVASCRIPT 
 	jQuery (from CDN)
