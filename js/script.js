@@ -1,7 +1,7 @@
 /*
 TODO:
-rwd
-    max-width 575
+miner - font const width
+hasgrate jednostki (3 znaczące cyfry)
 */
 
 /*jslint browser: true*/ /*global  $, window*/
@@ -45,11 +45,18 @@ function processStats(resp) {
         if ($(this).attr('id') === 'last_mined_block') {
             $(this).html(resp['pool_last_mined_block_id'] + '<br>(' + convertTime(resp['pool_last_mined_block_time']) + ' minutes ago)');
         } else if($(this).attr('id') === 'pool_fee') {
-            $(this).html(resp[$(this).attr('id')] + ' XMR<br>(' + (resp[$(this).attr('id')] * cPrice).toFixed(2) + ' ' + cCurrency + ')');
-            
+            $(this).text(resp[$(this).attr('id')] * 100 + '%'); 
         } else if($(this).attr('id') === 'pool_network_diff') {
             var diff = moment.unix((resp[$(this).attr('id')] / resp['pool_hashrate']).toFixed(0)).format("DD.MM.YYYY HH:mm:ss Z");
             $(this).html(resp[$(this).attr('id')] + '<br>(' + moment().to(diff) + ')');
+        } if($(this).attr('id') === 'pool_hashrate') { 
+            if(resp[$(this).attr('id')] < 1000) {
+                $(this).text(resp[$(this).attr('id')] + ' H/s');
+            } else if (1000 <= resp[$(this).attr('id')] && resp[$(this).attr('id')] < 10000) {
+                $(this).text(Number(resp[$(this).attr('id')].toPrecision(3)) + ' KH/s')
+            } else if (100000 <= resp[$(this).attr('id')]) {
+                $(this).text(Number(resp[$(this).attr('id')].toPrecision(3)) + ' MH/s')
+            }
         } else {
             $(this).text(resp[$(this).attr('id')]);
         }
