@@ -109,6 +109,18 @@ body {
     .nav-bar .dropdown .show {
       display: block; }
 
+@media (max-width: 575px) {
+  .nav-bar {
+    height: 9rem;
+    padding: .5rem;
+    position: relative; }
+    .nav-bar .menu li {
+      display: block;
+      padding: .5rem;
+      width: 100%; }
+    .nav-bar .dropdown {
+      top: 25%; } }
+
 .login {
   text-align: center;
   width: auto;
@@ -134,6 +146,17 @@ body {
 @media (max-width: 767px) {
   .login input {
     width: 20rem; } }
+
+@media (max-width: 575px) {
+  .login {
+    height: auto; }
+    .login label {
+      display: block;
+      margin: 1rem 0; }
+    .login input {
+      margin-bottom: 1rem; }
+      .login input:focus {
+        width: initial; } }
 
 .pool-stats {
   padding-bottom: 3rem; }
@@ -170,6 +193,10 @@ body {
     height: auto; }
     .pool-stats .row-stats .stats [class*='col-'] {
       padding: 0 2rem .5rem 2rem; } }
+
+@media (max-width: 575px) {
+  .pool-stats .row-stats .stats .row {
+    width: 100%; } }
 
 .last-miners {
   padding: 3rem; }
@@ -218,6 +245,11 @@ footer {
 @media (max-width: 787px) {
   footer {
     font-size: .7rem; } }
+
+@media (max-width: 575px) {
+  footer {
+    height: auto;
+    min-height: 4rem; } }
 
 .css-popup {
   position: fixed;
