@@ -115,9 +115,7 @@ function drawChart(resp) {
     Chart.controllers.LineWithLine = Chart.controllers.line.extend({
         draw: function(ease) {
       Chart.controllers.line.prototype.draw.call(this, ease);
-      console.log("dsgdfg")
       if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
-        console.log("sds");
          var activePoint = this.chart.tooltip._active[0],
              ctx = this.chart.ctx,
              x = activePoint.tooltipPosition().x,
@@ -136,24 +134,6 @@ function drawChart(resp) {
       }
    }
 }); 
-    /*let parentEventHandler = Chart.Controller.prototype.eventHandler;
-    Chart.Controller.prototype.eventHandler = function () {
-    let ret = parentEventHandler.apply(this, arguments);
-
-    let x = arguments[0].x;
-    let y = arguments[0].y;
-    console.log(this.chart.tooltip);
-    this.clear();
-    this.draw();
-    let yScale = this.scales['y-axis-0'];
-    this.chart.ctx.beginPath();
-    this.chart.ctx.moveTo(x, yScale.getPixelForValue(yScale.max));
-    this.chart.ctx.strokeStyle = "#f0edee";
-    this.chart.ctx.lineTo(x, yScale.getPixelForValue(yScale.min));
-    this.chart.ctx.stroke();
-
-    return ret;
-    }; */
     
     var myChart = new Chart(chartCanvas, {
     type: 'LineWithLine',
@@ -229,7 +209,12 @@ function drawChart(resp) {
             bodyFontColor: '#191919',
             bodySpacing: 5,
             titleMarginBottom: 10,
-            titleFontColor: '#191919'
+            titleFontColor: '#191919',
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    return data.datasets[tooltipItem.datasetIndex].label + ": " + numbro(tooltipItem.yLabel).format('3a');
+                    }
+            } 
         },
         legend: {
             position: 'bottom',
