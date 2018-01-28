@@ -367,5 +367,5 @@ $(document).ready(function () {
         display: 'block'
     });
     callApi();
-   // setInterval(callApi, 10000);
+    setInterval(callApi, 10000);
 });

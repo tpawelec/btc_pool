@@ -306,4 +306,30 @@ footer {
   .wrapper .wrong-id {
     display: none; }
 
+.admin-nav {
+  font-family: 'Arial', sans-serif;
+  height: 40px; }
+  .admin-nav .admin-menu {
+    list-style-type: none;
+    position: relative;
+    color: #f0edee;
+    text-decoration: none;
+    font-weight: 300; }
+    .admin-nav .admin-menu li {
+      float: left;
+      display: inline-block;
+      width: 6rem;
+      text-align: center; }
+
+.logs-div {
+  min-height: 85vh;
+  overflow: hidden;
+  display: flex; }
+  .logs-div .log {
+    border: 1px black solid;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 100%; }
+
 /*# sourceMappingURL=style.css.map */
