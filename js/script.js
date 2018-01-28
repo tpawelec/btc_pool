@@ -1,11 +1,7 @@
 /*
 TODO:
-miner - font const width
-hasgrate jednostki (3 znaczące cyfry)
+chart - nizszy
 */
-
-/*jslint browser: true*/ /*global  $, window*/
-/*jshint sub:true*/
 
 /* Currency Variable */
 var cCurrency = "USD";
@@ -42,21 +38,13 @@ function convertTime(timestamp) {
 function processStats(resp) {
     'use strict';
     htmlStats.each(function () {
-        if ($(this).attr('id') === 'last_mined_block') {
-            $(this).html(resp['pool_last_mined_block_id'] + '<br>(' + convertTime(resp['pool_last_mined_block_time']) + ' minutes ago)');
-        } else if($(this).attr('id') === 'pool_fee') {
-            $(this).text(resp[$(this).attr('id')] * 100 + '%'); 
+        if($(this).attr('id') === 'pool_fee') {
+            $(this).text(resp[$(this).attr('id')] * 100 + '%');
         } else if($(this).attr('id') === 'pool_network_diff') {
-            var diff = moment.unix((resp[$(this).attr('id')] / resp['pool_hashrate']).toFixed(0)).format("DD.MM.YYYY HH:mm:ss Z");
-            $(this).html(resp[$(this).attr('id')] + '<br>(' + moment().to(diff) + ')');
-        } if($(this).attr('id') === 'pool_hashrate') { 
-            if(resp[$(this).attr('id')] < 1000) {
-                $(this).text(resp[$(this).attr('id')] + ' H/s');
-            } else if (1000 <= resp[$(this).attr('id')] && resp[$(this).attr('id')] < 10000) {
-                $(this).text(Number(resp[$(this).attr('id')].toPrecision(3)) + ' KH/s')
-            } else if (100000 <= resp[$(this).attr('id')]) {
-                $(this).text(Number(resp[$(this).attr('id')].toPrecision(3)) + ' MH/s')
-            }
+            var diff = moment.unix(resp[$(this).attr('id')] / resp['pool_hashrate']);
+        $(this).html(resp[$(this).attr('id')] + '<br>(' + diff.format("HH:mm:ss") + ')');
+        } else if($(this).attr('id') === 'pool_hashrate') { 
+            $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
         } else {
             $(this).text(resp[$(this).attr('id')]);
         }
@@ -66,12 +54,11 @@ function processStats(resp) {
 
     var innerHTMLTable = '';
     resp['pool_last_blocks'].forEach(function (record) {
-        
         innerHTMLTable += '<tr><td>' + record.block_id + '</td>';
         if(record.anon_miner) {
-            innerHTMLTable += '<td>' + record.miner + '</td>';
+            innerHTMLTable += '<td class="miner-id">' + record.miner + '</td>';
         } else {
-            innerHTMLTable += '<td><a href="#">' + record.miner + '</a></td>';
+            innerHTMLTable += '<td class="miner-id"><a href="#">' + record.miner + '</a></td>';
         }
         innerHTMLTable += '<td>' + record.reward + 'XMR<br>(' + (record.reward * cPrice).toFixed(2) + ' ' + cCurrency + ')</td>';
         innerHTMLTable += '<td>' + convertTime(record.time) + ' minutes ago</td></tr>';
@@ -80,7 +67,7 @@ function processStats(resp) {
     $('.table-body').html(innerHTMLTable);
 }
 
-/* 
+/*
     Take response from pool-coin
 */
 function processCoin(resp) {
@@ -103,6 +90,7 @@ function processCoin(resp) {
 /*
     Take response from pool_chart and draw chart
 */
+
 function drawChart(resp) {
     'use strict';
     var datasets = [[],[]];
@@ -122,13 +110,39 @@ function drawChart(resp) {
     }
     labels.reverse();
     Chart.defaults.global.defaultFontColor = "#f0edee";
-    /*
-    let parentEventHandler = Chart.Controller.prototype.eventHandler;
+    
+    Chart.defaults.LineWithLine = Chart.defaults.line;
+    Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+        draw: function(ease) {
+      Chart.controllers.line.prototype.draw.call(this, ease);
+      console.log("dsgdfg")
+      if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+        console.log("sds");
+         var activePoint = this.chart.tooltip._active[0],
+             ctx = this.chart.ctx,
+             x = activePoint.tooltipPosition().x,
+             topY = this.chart.scales['y-axis-0'].top,
+             bottomY = this.chart.scales['y-axis-0'].bottom;
+
+         // draw line
+         ctx.save();
+         ctx.beginPath();
+         ctx.moveTo(x, topY);
+         ctx.lineTo(x, bottomY);
+         ctx.lineWidth = 2;
+         ctx.strokeStyle = '#07C';
+         ctx.stroke();
+         ctx.restore();
+      }
+   }
+}); 
+    /*let parentEventHandler = Chart.Controller.prototype.eventHandler;
     Chart.Controller.prototype.eventHandler = function () {
     let ret = parentEventHandler.apply(this, arguments);
 
     let x = arguments[0].x;
     let y = arguments[0].y;
+    console.log(this.chart.tooltip);
     this.clear();
     this.draw();
     let yScale = this.scales['y-axis-0'];
@@ -139,10 +153,10 @@ function drawChart(resp) {
     this.chart.ctx.stroke();
 
     return ret;
-    };
-    */
+    }; */
+    
     var myChart = new Chart(chartCanvas, {
-    type: 'line',
+    type: 'LineWithLine',
     data: {
         labels: labels,
         datasets: [{
@@ -174,9 +188,13 @@ function drawChart(resp) {
         maintainAspectRatio: false,
         scales: {
             yAxes: [{
+                id: "y-axis-0",
                 ticks: {
                     beginAtZero:true,
                     autoSkip: true,
+                    callback: function(label, index, labels) {
+                        return numbro(label).format('3a');
+                    }
                 },
                 gridLines: {
                     color: 'rgba(240,237,238,0.5)',
@@ -188,6 +206,7 @@ function drawChart(resp) {
                 }
             }],
             xAxes: [{
+                id: "x-axis-0",
                 ticks: {
                     display: false
                 }
@@ -202,7 +221,8 @@ function drawChart(resp) {
             }
         },
         tooltips: {
-            mode: 'x',
+            intersect: false,
+            mode: 'index',
             backgroundColor: '#f0edee',
             xPadding: 20,
             yPadding: 20,
@@ -316,14 +336,14 @@ $(document).ready(function () {
         });
 
     })
-    
+
     /* Password prompt on css popup */
     $('#passwordLogin').click(function (e) {
         e.preventDefault();
 
         /*PSEUDOCODE
         call API
-        if password is incorrect 
+        if password is incorrect
             hide '.password-form' and display '.wrong-password'
         else
             go to userpage
@@ -356,7 +376,7 @@ $(document).ready(function () {
             show login form
         else
             hide login form
-    */  
+    */
 
     $('.login').css({
         display: 'block'
