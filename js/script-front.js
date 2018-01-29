@@ -42,7 +42,9 @@ function processStats(resp) {
             $(this).text(resp[$(this).attr('id')] * 100 + '%');
         } else if($(this).attr('id') === 'pool_network_diff') {
             var diff = moment.unix(resp[$(this).attr('id')] / resp['pool_hashrate']);
-        $(this).html(resp[$(this).attr('id')] + '<br>(' + diff.format("HH:mm:ss") + ')');
+            var now = moment();
+            var next = now.add(diff, 'seconds');
+        $(this).html(resp[$(this).attr('id')] + '<br>(' + now.to(next) + ')');
         } else if($(this).attr('id') === 'pool_hashrate') { 
             $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
         } else {

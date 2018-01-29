@@ -15,13 +15,27 @@
 		text-decoration: none
 		font-weight: 300
 
-.logs-div
-	min-height: 85vh
-	overflow: hidden
-	display: flex
-	.log
-		border: 1px black solid
+#logsSection
+	.logs-div
+		min-height: 85vh
+		overflow: hidden
 		display: flex
-		flex: 1
-		flex-direction: column
-		min-width: 100%
+		.log
+			border: 1px black solid
+			display: flex
+			flex: 1
+			flex-direction: column
+			max-height: 85vh
+			overflow-y: scroll
+			h2
+				text-align: center;
+			table
+				font-size: .8rem
+				tr:nth-child(even)
+					background-color: #1B5389
+	.search-form
+		width: 400px;
+		margin: 0 auto;
+
+	.highlighted
+		background-color: #466626

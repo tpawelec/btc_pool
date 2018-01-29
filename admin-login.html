@@ -17,13 +17,13 @@
 		}
 
 		.wrapper {
-			height: 400px;
-			width: 400px;
+			height: 200px;
+			width: 200px;
 			position: absolute;
   			top: 50%;
   			left: 50%;
 
-  			margin: 205px 0 0 -200px;
+  			margin: 110px 0 0 -110px;
 		}
 
 		label {
@@ -31,14 +31,16 @@
 		}
 		input {
 			padding: 0;
+			margin-top: 10px;
 		}
 	</style>
 	<div class="wrapper">
-	<form action="POST">
+	<form action="POST" id="adminLoginForm">
 		<label for="adminId">Login: </label>
 		<input type="text" name="adminId">
 		<label for="adminPassword">Password:</label>
 		<input type="password" name="adminPassword">
+		<input type="submit" value="Login">
 	</form>
 </div>
 </body>
