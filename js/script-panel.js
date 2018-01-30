@@ -32,18 +32,24 @@ function showLogs(log1, log2) {
 	for(var arg = 0; arg < arguments.length; arg++) {
 		var keys = Object.keys(arguments[arg][0]);
 		var logObject = arguments[arg][0][keys[0]];
+		var columns = logObject.headers.length;
 		var $logDiv = $("<div class=\"log\"><h2>" + logObject.tile + "</h2></div>");
 		var $logTable = $("<table id=\"" + keys[0] + "\"><thead class=\"header\"><tr></tr></thead><tbody class=\"log-body\"></tbody>")
 		$logDiv.append($logTable);
 		$logsSection.append($logDiv);
 
-		for(var headerIndex = 0; headerIndex < logObject.headers.length; headerIndex++) {
+		for(var headerIndex = 0; headerIndex < columns; headerIndex++) {
 			$('#' + keys[0] + ' .header tr').append("<th>" + logObject.headers[headerIndex] + "</th>");
 		}
 
-		var $logTableBody = $('#' + keys[0] + ' .log-body')
-		for(var recordIndex = 0; recordIndex < logObject.body.length; recordIndex++) {
-			$logTableBody.append($("<tr><td>" + logObject.body[recordIndex][0] + "</td><td>" + logObject.body[recordIndex][1] + "</td></tr>"))
+		var $logTableBody = $('#' + keys[0] + ' .log-body');
+		for(var recordIndex = logObject.body.length - 1; recordIndex >= 0; recordIndex--) {
+			$logTableBody.append("<tr></tr>");
+			var $row = $logTableBody.find("tr:last-child");
+			for(var colCell = 0; colCell < columns; colCell++) {
+				$row.append("<td>" + logObject.body[recordIndex][colCell] + "</td>")
+			} 
+			//<td>" + logObject.body[recordIndex][0] + "</td><td>" + logObject.body[recordIndex][1] + "</td>
 		}
 	}
 }
@@ -61,18 +67,17 @@ function gatherLogs() {
 	.fail( 
 		showError);
 }
-$(document).ready(function () {
-	gatherLogs();
 
-	//setTimeout(gatherLogs, 10000);
-
-	/* Search Function */
-	$("#searchButton").click(function (e) {
-		e.preventDefault();
-		if ($('#searchField').val().length !== 0) {
+function highlightWords () {
+	if ($('#searchField').val().length !== 0) {
 
 			$('table').each(function() {
 
+			var spans = $(this).find("span");
+			spans.each(function () {
+				//console.log($(this))
+				$(this).replaceWith($(this).text());
+			})
     		//Handle special characters used in regex
     		var searchregexp = new RegExp($("#searchField").val().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), "gi");
 
@@ -82,6 +87,22 @@ $(document).ready(function () {
     });
 
 		}
+}
+$(document).ready(function () {
+	gatherLogs();
 
+	//setTimeout(gatherLogs, 10000);
+
+	/* Search Function */
+	$("#searchButton").click(function (e) {
+		e.preventDefault();
+		highlightWords();
+
+	});
+
+	$("#searchField").keypress(function (e) {
+		if(e.which == 13) {
+			highlightWords();
+		}
 	})
 })
