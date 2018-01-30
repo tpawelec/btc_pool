@@ -1,16 +1,16 @@
 /*
 TODO
-Search engine
-Fix refreshing (flag?)
+Search engine!!
 */
 /* API Urls */
 
 var logApiBase = "http://work.monero.me:12345/api/admin-log.php?auth=a&name=";
 /* var logApiBase = "http://work.monero.me:12345/api/admin-log.php?" // auth=a&name=b auth and name will be filled later */
 
-function loadLogs(resp) {
-	console.log(resp);
-}
+/* "Flags" */
+var onLoad = true; // when site is loaded first time it's set to true so all tables can be set up
+				   // after first load it's set to false so after refreshing
+				   // rows of existing tables are edited
 
 /*
 	There is one general function for calling LOG API, which takes one argument "name".
@@ -34,7 +34,7 @@ function showLogs(log1, log2) {
 		var logObject = arguments[arg][0][keys[0]];
 		var columns = logObject.headers.length;
 		var $logDiv = $("<div class=\"log\"><h2>" + logObject.tile + "</h2></div>");
-		var $logTable = $("<table id=\"" + keys[0] + "\"><thead class=\"header\"><tr></tr></thead><tbody class=\"log-body\"></tbody>")
+		var $logTable = $("<table id=\"" + keys[0] + "\"><thead class=\"header\"><tr></tr></thead><tbody class=\"log-body\"></tbody></table>")
 		$logDiv.append($logTable);
 		$logsSection.append($logDiv);
 
@@ -43,14 +43,42 @@ function showLogs(log1, log2) {
 		}
 
 		var $logTableBody = $('#' + keys[0] + ' .log-body');
-		for(var recordIndex = logObject.body.length - 1; recordIndex >= 0; recordIndex--) {
+		//for(var recordIndex = logObject.body.length - 1; recordIndex >= 0; recordIndex--) {
+		// ^ whole log or last 50 entries \/
+		for(var recordIndex = logObject.body.length - 1; recordIndex >= (logObject.body.length / 2); recordIndex--) {
 			$logTableBody.append("<tr></tr>");
 			var $row = $logTableBody.find("tr:last-child");
 			for(var colCell = 0; colCell < columns; colCell++) {
 				$row.append("<td>" + logObject.body[recordIndex][colCell] + "</td>")
 			} 
-			//<td>" + logObject.body[recordIndex][0] + "</td><td>" + logObject.body[recordIndex][1] + "</td>
 		}
+
+		var searchForm = '<form class="search-form">\
+						<input id="searchField' + keys[0] + '"  type="text" name="Search">\
+						<button id="searchButton' + keys[0] + '">Search</button></form>'
+		$logTable.after(searchForm);
+	}
+}
+
+function refreshTables(log1, log2) {
+	var $logsSection = $("#logsTables");
+	for(var arg = 0; arg < arguments.length; arg++) {
+		var keys = Object.keys(arguments[arg][0]);
+		var logObject = arguments[arg][0][keys[0]];
+		var columns = logObject.headers.length;
+
+		var $logTableBody = $('#' + keys[0] + ' .log-body');
+		$logTableBody.find("tr").remove();
+		//for(var recordIndex = logObject.body.length - 1; recordIndex >= 0; recordIndex--) {
+		// ^ whole log or last 50 entries \/
+		for(var recordIndex = logObject.body.length - 1; recordIndex >= (logObject.body.length / 2); recordIndex--) {
+			$logTableBody.append("<tr></tr>");
+			var $row = $logTableBody.find("tr:last-child");
+			for(var colCell = 0; colCell < columns; colCell++) {
+				$row.append("<td>" + logObject.body[recordIndex][colCell] + "</td>")
+			} 
+		}
+
 	}
 }
 /*
@@ -68,41 +96,58 @@ function gatherLogs() {
 		showError);
 }
 
-function highlightWords () {
-	if ($('#searchField').val().length !== 0) {
-
-			$('table').each(function() {
-
-			var spans = $(this).find("span");
-			spans.each(function () {
-				//console.log($(this))
-				$(this).replaceWith($(this).text());
-			})
-    		//Handle special characters used in regex
-    		var searchregexp = new RegExp($("#searchField").val().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), "gi");
-
-        //$& will maintain uppercase and lowercase characters.
-        $(this).html($(this).html().replace(searchregexp, "<span class = 'highlight'>$&</span>"));
-        
-    });
-
-		}
+function refreshLogs() {
+	$.when(
+		callApiLog("a"), 
+		callApiLog("dfgd"))
+	.done(
+		refreshTables)
+	.fail( 
+		showError);
 }
+
+function highlightWords (id) {
+	if($("#searchField" + id).val().length !== 0) {
+
+		var searchregexp = new RegExp('[a-z]*' + $('#searchField' + id).val() + "[a-z]*", "gi");
+		console.log(searchregexp);
+		var i = 0;
+		$("#" + id + " .log-body tr").each(function() {
+			
+			if(searchregexp.test($(this).siblings().text())) {
+				console.log(i);
+				i++;
+				//console.log($(this).siblings().text());
+				//$(this).parent().remove();
+			} 
+
+		})
+	}
+}
+
 $(document).ready(function () {
 	gatherLogs();
 
-	//setTimeout(gatherLogs, 10000);
+	setInterval(refreshLogs, 10000);
 
 	/* Search Function */
-	$("#searchButton").click(function (e) {
+	$("body").on('click', 'button', function (e) {
 		e.preventDefault();
-		highlightWords();
-
+		var tableId = e.currentTarget.id.substr('searchButton'.length);
+		highlightWords(tableId);
+		
 	});
+
+	/*$("body button").click(function (e) {
+		e.preventDefault();
+		console.log(e.currentTarget.id);
+		highlightWords(e);
+		
+	}); */
 
 	$("#searchField").keypress(function (e) {
 		if(e.which == 13) {
-			highlightWords();
+			highlightWords(e);
 		}
 	})
 })

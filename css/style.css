@@ -341,7 +341,9 @@ footer {
 
 #logsSection .search-form {
   width: 400px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  position: absolute;
+  bottom: 5px; }
 
 #logsSection .highlight {
   background-color: #466626; }
