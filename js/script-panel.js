@@ -8,9 +8,7 @@ var logApiBase = "http://work.monero.me:12345/api/admin-log.php?auth=a&name=";
 /* var logApiBase = "http://work.monero.me:12345/api/admin-log.php?" // auth=a&name=b auth and name will be filled later */
 
 /* "Flags" */
-var onLoad = true; // when site is loaded first time it's set to true so all tables can be set up
-				   // after first load it's set to false so after refreshing
-				   // rows of existing tables are edited
+var searchF = '';
 
 /*
 	There is one general function for calling LOG API, which takes one argument "name".
@@ -55,12 +53,13 @@ function showLogs(log1, log2) {
 
 		var searchForm = '<form class="search-form">\
 						<input id="searchField' + keys[0] + '"  type="text" name="Search">\
-						<button id="searchButton' + keys[0] + '">Search</button></form>'
+						</form>'
 		$logTable.after(searchForm);
 	}
 }
 
 function refreshTables(log1, log2) {
+	console.log("reff")
 	var $logsSection = $("#logsTables");
 	for(var arg = 0; arg < arguments.length; arg++) {
 		var keys = Object.keys(arguments[arg][0]);
@@ -75,10 +74,14 @@ function refreshTables(log1, log2) {
 			$logTableBody.append("<tr></tr>");
 			var $row = $logTableBody.find("tr:last-child");
 			for(var colCell = 0; colCell < columns; colCell++) {
-				$row.append("<td>" + logObject.body[recordIndex][colCell] + "</td>")
+					$row.append("<td>" + logObject.body[recordIndex][colCell] + "</td>");
 			} 
 		}
 
+	}
+
+	if(searchF != '') {
+		filterTable("a");
 	}
 }
 /*
@@ -106,20 +109,17 @@ function refreshLogs() {
 		showError);
 }
 
-function highlightWords (id) {
+function filterTable (id) {
 	if($("#searchField" + id).val().length !== 0) {
 
-		var searchregexp = new RegExp('[a-z]*' + $('#searchField' + id).val() + "[a-z]*", "gi");
-		console.log(searchregexp);
-		var i = 0;
-		$("#" + id + " .log-body tr").each(function() {
-			
-			if(searchregexp.test($(this).siblings().text())) {
-				console.log(i);
-				i++;
-				//console.log($(this).siblings().text());
-				//$(this).parent().remove();
-			} 
+		//var searchregexp = new RegExp('[a-z]*' + $('#searchField' + id).val() + "[a-z]*", "gi");
+		var searchregexp = new RegExp('[a-z]*' + searchF + "[a-z]*", "gi");
+		$("#" + id + " > tbody tr").each(function() {
+			if(!searchregexp.test($(this).children().text())) {
+				$(this).css({'display': 'none'});
+			} else {
+				$(this).css({'display': 'table-row'});
+			}
 
 		})
 	}
@@ -138,12 +138,14 @@ $(document).ready(function () {
 		
 	});
 
-	/*$("body button").click(function (e) {
-		e.preventDefault();
-		console.log(e.currentTarget.id);
-		highlightWords(e);
-		
-	}); */
+	$("body").on('keyup', 'input', function (e) {
+		if((e.which > 32 && e.which < 127) || e.which == 08) {
+			var tableId = e.currentTarget.id.substr('searchField'.length);
+			searchF = e.currentTarget.value;
+			console.log(searchF);
+			filterTable(tableId);
+		}
+	})
 
 	$("#searchField").keypress(function (e) {
 		if(e.which == 13) {
