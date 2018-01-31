@@ -8,7 +8,7 @@ var logApiBase = "http://work.monero.me:12345/api/admin-log.php?auth=a&name=";
 /* var logApiBase = "http://work.monero.me:12345/api/admin-log.php?" // auth=a&name=b auth and name will be filled later */
 
 /* "Flags" */
-var searchF = '';
+var searchF = {};
 
 /*
 	There is one general function for calling LOG API, which takes one argument "name".
@@ -33,6 +33,7 @@ function showLogs(log1, log2) {
 		var columns = logObject.headers.length;
 		var $logDiv = $("<div class=\"log\"><h2>" + logObject.tile + "</h2></div>");
 		var $logTable = $("<table id=\"" + keys[0] + "\"><thead class=\"header\"><tr></tr></thead><tbody class=\"log-body\"></tbody></table>")
+		searchF[keys[0]] = '';
 		$logDiv.append($logTable);
 		$logsSection.append($logDiv);
 
@@ -78,11 +79,12 @@ function refreshTables(log1, log2) {
 			} 
 		}
 
+		if(searchF[keys[0]] != '') {
+			filterTable(keys[0]);
+		}
 	}
 
-	if(searchF != '') {
-		filterTable("a");
-	}
+	
 }
 /*
 	"Container" for calling log APIs. There are two mock-APIs: "a" and "b". 
@@ -110,10 +112,10 @@ function refreshLogs() {
 }
 
 function filterTable (id) {
-	if($("#searchField" + id).val().length !== 0) {
+	if(searchF[id].length !== 0) {
 
 		//var searchregexp = new RegExp('[a-z]*' + $('#searchField' + id).val() + "[a-z]*", "gi");
-		var searchregexp = new RegExp('[a-z]*' + searchF + "[a-z]*", "gi");
+		var searchregexp = new RegExp('[a-z]*' + searchF[id] + "[a-z]*", "gi");
 		$("#" + id + " > tbody tr").each(function() {
 			if(!searchregexp.test($(this).children().text())) {
 				$(this).css({'display': 'none'});
@@ -141,7 +143,7 @@ $(document).ready(function () {
 	$("body").on('keyup', 'input', function (e) {
 		if((e.which > 32 && e.which < 127) || e.which == 08) {
 			var tableId = e.currentTarget.id.substr('searchField'.length);
-			searchF = e.currentTarget.value;
+			searchF[tableId] = e.currentTarget.value;
 			console.log(searchF);
 			filterTable(tableId);
 		}
