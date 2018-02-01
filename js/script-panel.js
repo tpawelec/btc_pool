@@ -75,9 +75,9 @@ function refreshTables(log1, log2) {
 			} 
 		}
 
-		if(searchF[keys[0]] != '') {
-			filterTable(keys[0]);
-		}
+		
+		filterTable(keys[0]);
+		
 	}
 
 	
