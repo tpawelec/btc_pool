@@ -20,10 +20,6 @@ function callApiLog(name) {
 function showError() {
 	alert("There is problem with API");
 }
-/*
-	NOTE:
-	In mock-api there is probably typo: tile instead of title
-*/
 
 function showLogs(log1, log2) {
 	var $logsSection = $("#logsTables");
@@ -31,7 +27,7 @@ function showLogs(log1, log2) {
 		var keys = Object.keys(arguments[arg][0]);
 		var logObject = arguments[arg][0][keys[0]];
 		var columns = logObject.headers.length;
-		var $logDiv = $("<div class=\"log\"><h2>" + logObject.tile + "</h2></div>");
+		var $logDiv = $("<div class=\"log\"><h2>" + logObject.title + "</h2></div>");
 		var $logTable = $("<table id=\"" + keys[0] + "\"><thead class=\"header\"><tr></tr></thead><tbody class=\"log-body\"></tbody></table>")
 		searchF[keys[0]] = '';
 		$logDiv.append($logTable);
@@ -56,11 +52,11 @@ function showLogs(log1, log2) {
 						<input id="searchField' + keys[0] + '"  type="text" name="Search">\
 						</form>'
 		$logTable.after(searchForm);
+		setZebra(keys[0]);
 	}
 }
 
 function refreshTables(log1, log2) {
-	console.log("reff")
 	var $logsSection = $("#logsTables");
 	for(var arg = 0; arg < arguments.length; arg++) {
 		var keys = Object.keys(arguments[arg][0]);
@@ -111,11 +107,23 @@ function refreshLogs() {
 		showError);
 }
 
+function setZebra(id) {
+	var rowIndex = 0;
+	$("#" + id + " > tbody tr").each(function() {
+				if($(this).css('display') === 'table-row') {
+					if(rowIndex % 2 === 0) {
+						$(this).css({'background-color': '#1B5389'});
+					} else {
+						$(this).css({'background-color': 'initial'});
+					}
+					rowIndex++;
+				}
+	})
+}
 function filterTable (id) {
 	if(searchF[id].length !== 0) {
-
 		//var searchregexp = new RegExp('[a-z]*' + $('#searchField' + id).val() + "[a-z]*", "gi");
-		var searchregexp = new RegExp('[a-z]*' + searchF[id] + "[a-z]*", "gi");
+		var searchregexp = new RegExp(searchF[id], "g");
 		$("#" + id + " > tbody tr").each(function() {
 			if(!searchregexp.test($(this).children().text())) {
 				$(this).css({'display': 'none'});
@@ -124,7 +132,12 @@ function filterTable (id) {
 			}
 
 		})
+	} else {
+		$("#" + id + " > tbody tr").each(function() {
+				$(this).css({'display': 'table-row'});
+		})
 	}
+	setZebra(id);
 }
 
 $(document).ready(function () {
@@ -144,7 +157,6 @@ $(document).ready(function () {
 		if((e.which > 32 && e.which < 127) || e.which == 08) {
 			var tableId = e.currentTarget.id.substr('searchField'.length);
 			searchF[tableId] = e.currentTarget.value;
-			console.log(searchF);
 			filterTable(tableId);
 		}
 	})

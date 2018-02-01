@@ -335,9 +335,9 @@ footer {
     #logsSection .logs-div .log h2 {
       text-align: center; }
     #logsSection .logs-div .log table {
-      font-size: .8rem; }
-      #logsSection .logs-div .log table tr:nth-child(even) {
-        background-color: #1B5389; }
+      font-size: .8rem;
+      table-layout: fixed;
+      width: 100%; }
 
 #logsSection .search-form {
   width: 400px;
