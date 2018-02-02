@@ -7,9 +7,9 @@
 </head>
 <body>
 	<div class="nav-bar admin-nav">
-		<ul class="admin-menu">
-			<li><a href="logsSection">Logs</a></li>
-			<li><a href="#">Link 2</a></li>
+		<ul class="admin-menu" id="adminMenu">
+			<li id="logs"><a href="#">Logs</a></li>
+			<li id="action"><a href="#">Actions</a></li>
 		</ul>
 	</div>
 		<div id="logsSection">
@@ -19,6 +19,17 @@
 			<input id="searchField" type="text" name="Search">
 			<button id="searchButton">Search</button>
 		</form>-->
+		</div>
+		<div id="actionSection">
+			<section class="admin-actions">
+			<label for="userId">User ID:</label>
+			<input type="text" name="userId">
+		</section>
+			<section class="buttons">
+			<button id="banUser">Ban User</button>
+			<button id="unbanUser">UnBan User</button>
+			<button id="resetPassword">Reset Password</button>
+		</section>
 		</div>
 	<!-- JAVASCRIPT 
 	jQuery (from CDN)

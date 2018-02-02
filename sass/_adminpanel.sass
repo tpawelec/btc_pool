@@ -15,9 +15,12 @@
 		text-decoration: none
 		font-weight: 300
 
+
+
 #logsSection
+	//max-height: 100vh
 	.logs-div
-		min-height: 85vh
+		height: 90%
 		overflow: hidden
 		display: flex
 		.log
@@ -25,7 +28,7 @@
 			display: flex
 			flex: 1
 			flex-direction: column
-			max-height: 85vh
+			max-height: 100%
 			overflow-y: scroll
 			h2
 				text-align: center
@@ -38,13 +41,18 @@
 					-webkit-transition: initial
 					-ms-transition: initial
 					-o-transition: initial
-				//tr:nth-child(even)
-				//	background-color: #1B5389
 	.search-form
 		width: 400px
 		margin: 0 auto
 		position: absolute
-		bottom: 5px
-
+		bottom: 1rem
+		text-align: center
+	
 	.highlight
 		background-color: #466626
+
+#actionSection
+	display: none
+	.admin-actions
+		width: 200px
+		margin: 0 auto

@@ -49,6 +49,7 @@ function showLogs(log1, log2) {
 		}
 
 		var searchForm = '<form class="search-form">\
+						<label for="Search">Search (regexp):</label>\
 						<input id="searchField' + keys[0] + '"  type="text" name="Search">\
 						</form>'
 		$logTable.after(searchForm);
@@ -141,6 +142,19 @@ function filterTable (id) {
 }
 
 $(document).ready(function () {
+
+	var winHeight = window.innerHeight;
+
+	$('#logsSection').css({'height': winHeight});
+
+	$('#adminMenu li').click(function (e) {
+		e.preventDefault();
+
+		var sectionId = e.currentTarget.id + "Section";
+		
+		$('body > div:not(:first-child)').css({'display': 'none'});
+		$('#'+sectionId).css({'display': 'block'});
+	});
 	gatherLogs();
 
 	setInterval(refreshLogs, 10000);
