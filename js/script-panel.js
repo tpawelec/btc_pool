@@ -188,9 +188,9 @@ $(document).ready(function () {
 			method: 'POST',
 			data: {
 				name: 'IP',
-				action: 'Ban',
-				data: 'fddsfsdfdf',
-				auth: 'a'
+				action: e.currentTarget.id,
+				data: inputValue,
+				auth: authKey
 			}
 		});
 		}
