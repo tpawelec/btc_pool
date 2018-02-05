@@ -360,8 +360,15 @@ footer {
 
 #actionSection {
   display: none; }
-  #actionSection .admin-actions {
-    width: 200px;
-    margin: 0 auto; }
+  #actionSection input {
+    width: 400px; }
+    #actionSection input:focus {
+      width: 400px; }
+  #actionSection section {
+    display: block;
+    width: 600px;
+    margin: 0 auto 20px auto; }
+  #actionSection .buttons {
+    text-align: center; }
 
 /*# sourceMappingURL=style.css.map */

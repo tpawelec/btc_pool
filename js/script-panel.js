@@ -4,7 +4,9 @@ Search engine!!
 */
 /* API Urls */
 
-var logApiBase = "http://work.monero.me:12345/api/admin-log.php?auth=a&name=";
+var logApiBase = "http://work.monero.me:12345/api/admin-log.php"; //?auth=a&name=";
+var userActionUrl = 'http://work.monero.me:12345/api/admin-action.php';
+var authKey = 'a'
 /* var logApiBase = "http://work.monero.me:12345/api/admin-log.php?" // auth=a&name=b auth and name will be filled later */
 
 /* "Flags" */
@@ -13,8 +15,8 @@ var searchF = {};
 /*
 	There is one general function for calling LOG API, which takes one argument "name".
 */
-function callApiLog(name) {
-	return $.get(logApiBase + name);
+function callApiLog(n) {
+	return $.get(logApiBase,{auth: authKey, name: n});
 }
 
 function showError() {
@@ -155,29 +157,42 @@ $(document).ready(function () {
 		$('body > div:not(:first-child)').css({'display': 'none'});
 		$('#'+sectionId).css({'display': 'block'});
 	});
+
 	gatherLogs();
 
 	setInterval(refreshLogs, 10000);
 
 	/* Search Function */
-	$("body").on('click', 'button', function (e) {
-		e.preventDefault();
-		var tableId = e.currentTarget.id.substr('searchButton'.length);
-		highlightWords(tableId);
-		
-	});
 
-	$("body").on('keyup', 'input', function (e) {
+	$("body").on('keyup', '[id*="searchField"]', function (e) {
 		if((e.which > 32 && e.which < 127) || e.which == 08) {
 			var tableId = e.currentTarget.id.substr('searchField'.length);
 			searchF[tableId] = e.currentTarget.value;
 			filterTable(tableId);
 		}
-	})
+	});
 
 	$("#searchField").keypress(function (e) {
 		if(e.which == 13) {
 			highlightWords(e);
+		}
+	});
+
+	$('#actionSection button').on('keyup', function (e) {
+		e.preventDefault();
+		var inputValue = $('#dataVal').val();
+		console.log(e.currentTarget.id);
+		if(inputValue.length > 0) {
+		$.ajax({
+			url: userActionUrl,
+			method: 'POST',
+			data: {
+				name: 'IP',
+				action: 'Ban',
+				data: 'fddsfsdfdf',
+				auth: 'a'
+			}
+		});
 		}
 	})
 })
