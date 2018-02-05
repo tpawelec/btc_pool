@@ -178,16 +178,15 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#actionSection button').on('keyup', function (e) {
+	$('#actionSection button').click(function (e) {
 		e.preventDefault();
 		var inputValue = $('#dataVal').val();
-		console.log(e.currentTarget.id);
 		if(inputValue.length > 0) {
 		$.ajax({
 			url: userActionUrl,
 			method: 'POST',
 			data: {
-				name: 'IP',
+				name: e.currentTarget.parentNode.id,
 				action: e.currentTarget.id,
 				data: inputValue,
 				auth: authKey
