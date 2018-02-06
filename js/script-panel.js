@@ -85,6 +85,7 @@ function refreshTables(log1, log2) {
 
 	
 }
+
 /*
 	"Container" for calling log APIs. There are two mock-APIs: "a" and "b". 
 	When official API will be relased add/remove invokation of callApiLog, change name
@@ -190,7 +191,9 @@ $(document).ready(function () {
 				action: e.currentTarget.id,
 				data: inputValue,
 				auth: authKey
-			}
+			},
+			success: (response) => $('.prompt').text(response.result),
+			error: (response) => $('.prompt').text(response.error)
 		});
 		}
 	})
