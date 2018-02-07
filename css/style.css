@@ -111,7 +111,7 @@ body {
 
 @media (max-width: 575px) {
   .nav-bar {
-    height: 9rem;
+    height: 11rem;
     padding: .5rem;
     position: relative; }
     .nav-bar .menu li {
@@ -119,7 +119,8 @@ body {
       padding: .5rem;
       width: 100%; }
     .nav-bar .dropdown {
-      top: 25%; } }
+      top: 85%;
+      right: 30%; } }
 
 .login,
 .admin-actions {
@@ -202,7 +203,10 @@ body {
     width: 100%; } }
 
 .last-miners {
-  padding: 3rem 3rem 1.5rem 3rem; }
+  padding: 3rem 0 1.5rem 0; }
+  .last-miners .container {
+    overflow-x: scroll;
+    margin: 0 auto; }
   .last-miners h2 {
     font-weight: 700;
     font-size: 2rem;
@@ -210,10 +214,21 @@ body {
     text-align: center; }
   .last-miners .last-miners-table {
     width: 100%;
+    min-width: 600px;
     font-size: .8rem; }
     .last-miners .last-miners-table .header {
       font-weight: 700;
       height: 3rem; }
+      .last-miners .last-miners-table .header th:nth-of-type(1) {
+        width: 15%; }
+      .last-miners .last-miners-table .header th:nth-of-type(2) {
+        width: 55%; }
+      .last-miners .last-miners-table .header th:nth-of-type(3) {
+        width: 15%; }
+      .last-miners .last-miners-table .header th:nth-of-type(4) {
+        width: 15%; }
+    .last-miners .last-miners-table .table-body tr:nth-child(even) {
+      background-color: #1B5389; }
     .last-miners .last-miners-table .table-body td {
       text-align: center;
       padding: .5rem;
@@ -238,7 +253,7 @@ body {
   .last-miners .last-miners-table th {
     width: 20%; }
   .last-miners .last-miners-table .miner-id {
-    width: 40%; } }
+    width: 55%; } }
 
 footer {
   background-color: #032546;

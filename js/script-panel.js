@@ -50,10 +50,9 @@ function showLogs(log1, log2) {
 			} 
 		}
 
-		var searchForm = '<form class="search-form">\
-						<label for="Search">Search (regexp):</label>\
-						<input id="searchField' + keys[0] + '"  type="text" name="Search">\
-						</form>'
+		var searchForm = '<div class="search-form">\
+						<label for="Search">Search (type regex and press Enter):</label>\
+						<input id="searchField' + keys[0] + '"  type="text" name="Search"></div>'
 		$logTable.after(searchForm);
 		setZebra(keys[0]);
 	}
@@ -127,7 +126,7 @@ function setZebra(id) {
 function filterTable (id) {
 	if(searchF[id].length !== 0) {
 		//var searchregexp = new RegExp('[a-z]*' + $('#searchField' + id).val() + "[a-z]*", "gi");
-		var searchregexp = new RegExp(searchF[id], "g");
+		var searchregexp = new RegExp(unescape(searchF[id]), "g");
 		$("#" + id + " > tbody tr").each(function() {
 			if(!searchregexp.test($(this).children().text())) {
 				$(this).css({'display': 'none'});
@@ -166,18 +165,14 @@ $(document).ready(function () {
 	/* Search Function */
 
 	$("body").on('keyup', '[id*="searchField"]', function (e) {
-		if((e.which > 32 && e.which < 127) || e.which == 08) {
-			var tableId = e.currentTarget.id.substr('searchField'.length);
-			searchF[tableId] = e.currentTarget.value;
+		var tableId = e.currentTarget.id.substr('searchField'.length);
+		if (e.which == 13 || e.keyCode == 13) {
+			e.preventDefault();
+			searchF[tableId] = escape(e.currentTarget.value);
 			filterTable(tableId);
 		}
 	});
 
-	$("#searchField").keypress(function (e) {
-		if(e.which == 13) {
-			highlightWords(e);
-		}
-	});
 
 	$('#actionSection button').click(function (e) {
 		e.preventDefault();

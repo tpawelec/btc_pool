@@ -1,5 +1,8 @@
 .last-miners
-	padding: 3rem 3rem 1.5rem 3rem
+	padding: 3rem 0 1.5rem 0
+	.container
+		overflow-x: scroll
+		margin: 0 auto
 	h2
 		font-weight: 700
 		font-size: 2rem
@@ -7,11 +10,22 @@
 		text-align: center
 	.last-miners-table
 		width: 100%
+		min-width: 600px
 		font-size: .8rem
 		.header
 			font-weight: 700
 			height: 3rem
+			th:nth-of-type(1)
+				width: 15%
+			th:nth-of-type(2)
+				width: 55%
+			th:nth-of-type(3)
+				width: 15%
+			th:nth-of-type(4)
+				width: 15%
 		.table-body
+			tr:nth-child(even)
+				background-color: #1B5389
 			td
 				text-align: center
 				padding: .5rem
@@ -38,4 +52,4 @@
 			th
 				width: 20%
 			.miner-id
-				width: 40%
+				width: 55%

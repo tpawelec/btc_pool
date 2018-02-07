@@ -41,10 +41,10 @@ function processStats(resp) {
         if($(this).attr('id') === 'pool_fee') {
             $(this).text(resp[$(this).attr('id')] * 100 + '%');
         } else if($(this).attr('id') === 'pool_network_diff') {
-            var diff = moment.unix(resp[$(this).attr('id')] / resp['pool_hashrate']);
-            var now = moment();
-            var next = now.add(diff, 'seconds');
-        $(this).html(resp[$(this).attr('id')] + '<br>(' + now.to(next) + ')');
+            var diff = resp[$(this).attr('id')] / resp['pool_hashrate'];
+            //var now = moment();
+            var next = moment().add(diff, 'seconds');
+        $(this).html(resp[$(this).attr('id')] + '<br>(' + moment().to(next, true) + ')');
         } else if($(this).attr('id') === 'pool_hashrate') { 
             $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
         } else {
@@ -95,13 +95,14 @@ function processCoin(resp) {
 
 function drawChart(resp) {
     'use strict';
-    var datasets = [[],[]];
+    var datasets = [];
     var serverNames = [];
     var labels = [];
     var i = 0;
 
     for(var serverName in resp.pool_hashrate_graph) {
         serverNames.push(serverName);
+        datasets[i] = [];
         for(var number in resp.pool_hashrate_graph[serverName]) {
             datasets[i].push(resp.pool_hashrate_graph[serverName][number][1]);
             if (i === 0) {
@@ -109,6 +110,27 @@ function drawChart(resp) {
         }
         }
         i++;
+    }
+
+    var GraphArraySet = [];
+    var chartColors = ['#ff0000', '#00ff00', '#0000dd', '#ffd400', '#ff00ff', 
+                        '#00ffff', '#000000', '#008620', '#001a9f', '#0096ff', 
+                        '#dccf00', '#8d0088', '#890101', '#beb4b4', '#686868', 
+                        '#97EAD2', '#69dcfc', '#9BC1BC', '#E6EBE0', '#E1AA7D',
+                        '#B97375'];
+    for(var i = 0; i < serverNames.length; i++) {
+    	GraphArraySet[i] = {
+    		label: serverNames[i],
+            fill: true,
+            data: datasets[i],
+            borderColor: chartColors[i],
+            backgroundColor: chartColors[i],
+            borderWidth: 1,
+            pointBackgroundColor: chartColors[i],
+            pointRadius: 1,
+            showLine: true,
+            fill: false
+    	}
     }
     labels.reverse();
     Chart.defaults.global.defaultFontColor = "#f0edee";
@@ -140,29 +162,8 @@ function drawChart(resp) {
     var myChart = new Chart(chartCanvas, {
     type: 'LineWithLine',
     data: {
-        labels: labels,
-        datasets: [{
-            label: serverNames[0],
-            fill: true,
-            data: datasets[0],
-            borderColor: 'rgba(0,225,0,1)',
-            backgroundColor: 'rgba(0,225,0,1)',
-            borderWidth: 1,
-            pointBackgroundColor: 'rgba(0,99,132,1)',
-            pointRadius: 1,
-            showLine: false
-        },
-        {
-            label: serverNames[1],
-            fill: true,
-            data: datasets[1],
-            borderColor: 'rgba(128,0,0,1)',
-            backgroundColor: 'rgba(128,0,0,1)',
-            borderWidth: 1,
-            pointBackgroundColor: 'rgba(128,0,0,1)',
-            pointRadius: 1.5,
-            showLine: false
-        }]
+    	labels: labels,
+    	datasets: GraphArraySet
     },
     options: {
         animation: false,
@@ -223,7 +224,7 @@ function drawChart(resp) {
             boxWidth: 50
         }
     }
-});
+}); 
 }
 /* STATS AND CHART */
 
