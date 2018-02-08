@@ -205,7 +205,7 @@ body {
 .last-miners {
   padding: 3rem 0 1.5rem 0; }
   .last-miners .container {
-    overflow-x: scroll;
+    overflow-x: auto;
     margin: 0 auto; }
   .last-miners h2 {
     font-weight: 700;
@@ -385,10 +385,5 @@ footer {
     margin: 0 auto 20px auto; }
   #actionSection .buttons {
     text-align: center; }
-  #actionSection .prompt {
-    height: auto;
-    min-height: 100px;
-    text-align: center;
-    font-size: 20px; }
 
 /*# sourceMappingURL=style.css.map */

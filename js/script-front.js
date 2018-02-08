@@ -315,15 +315,17 @@ $(document).ready(function () {
             opacity: 1
         });
 
-        $('.css-popup .close').click(function (e) {
+        
+
+    });
+
+    $('.css-popup .close').click(function (e) {
             e.preventDefault();
             $('.css-popup').css({
                 visibility: "hidden",
                 opacity: 0
         });
         });
-
-    })
 
     /* Password prompt on css popup */
     $('#passwordLogin').click(function (e) {

@@ -55,6 +55,7 @@ function showLogs(log1, log2) {
 						<input id="searchField' + keys[0] + '"  type="text" name="Search"></div>'
 		$logTable.after(searchForm);
 		setZebra(keys[0]);
+		searchF[keys[0]] = '';
 	}
 }
 
@@ -173,8 +174,24 @@ $(document).ready(function () {
 		}
 	});
 
+	$('#makeWidget').click(function (e) {
+		e.preventDefault();
+		/*
+		Check regular expresions and generate corresponding widgets
+		*/
+		var re = new RegExp('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$', "g");
+		if(re.test($('#dataVal').val())) {
+				console.log("sdff");
+			var widget = '<section id="userActions">\
+							<button id="banUser" class="btn">Ban User</button>\
+							<button id="unbanUser" class="btn">UnBan User</button>\
+							<button id="resetPassword" class="btn">Reset Password</button>\
+						</section>';
+			$('#actionSection .buttons').html(widget);
+		}
+	});
+	$('#actionSection button:not(#makeWidget)').click(function (e) {
 
-	$('#actionSection button').click(function (e) {
 		e.preventDefault();
 		var inputValue = $('#dataVal').val();
 		if(inputValue.length > 0) {
@@ -187,9 +204,29 @@ $(document).ready(function () {
 				data: inputValue,
 				auth: authKey
 			},
-			success: (response) => $('.prompt').text(response.result),
-			error: (response) => $('.prompt').text(response.error)
+			success: function (response) {
+				$('.prompt').text(response.result);
+				$('.css-popup').css({
+            		visibility: "visible",
+            		opacity: 1
+        		});
+			},
+			error: function (response) {
+				$('.prompt').text(response.error);
+				$('.css-popup').css({
+		            visibility: "visible",
+        		    opacity: 1
+        		});
+			}
 		});
 		}
-	})
+	});
+
+	$('.css-popup .close').click(function (e) {
+            e.preventDefault();
+            $('.css-popup').css({
+                visibility: "hidden",
+                opacity: 0
+        });
+        });
 })
