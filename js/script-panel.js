@@ -23,6 +23,9 @@ function showError() {
 	alert("There is problem with API");
 }
 
+/*
+
+*/
 function showLogs(log1, log2) {
 	var $logsSection = $("#logsTables");
 	for(var arg = 0; arg < arguments.length; arg++) {
@@ -89,7 +92,7 @@ function refreshTables(log1, log2) {
 /*
 	"Container" for calling log APIs. There are two mock-APIs: "a" and "b". 
 	When official API will be relased add/remove invokation of callApiLog, change name
-	and add argument in showLogs definition.
+	and add argument in showLogs and refreshLog definition.
 */
 function gatherLogs() {
 	$.when(
@@ -111,6 +114,27 @@ function refreshLogs() {
 		showError);
 }
 
+function callWidgetApi(data) {
+	$.ajax({
+		url: userActionUrl,
+		method: 'GET',
+		data: {
+			auth: authKey,
+			name: data
+		},
+		success: function (resp) {
+			$('.api-field').text(resp.data).
+			css({'display': 'flex'});
+		},
+		error: function(resp) {
+			console.log(resp.error);
+		}
+	});
+
+}
+/*
+	Sets diffrent color for even rows.
+*/
 function setZebra(id) {
 	var rowIndex = 0;
 	$("#" + id + " > tbody tr").each(function() {
@@ -124,6 +148,9 @@ function setZebra(id) {
 				}
 	})
 }
+/*
+	Filters table by regexptyped in input field
+*/
 function filterTable (id) {
 	if(searchF[id].length !== 0) {
 		//var searchregexp = new RegExp('[a-z]*' + $('#searchField' + id).val() + "[a-z]*", "gi");
@@ -142,6 +169,29 @@ function filterTable (id) {
 		})
 	}
 	setZebra(id);
+}
+
+/*
+	Function for generating widgets/buttons
+*/
+
+function generateWidget() {
+		
+	var dataValue = $('#dataVal').val();
+		/*
+		Check regular expresions and generate corresponding widgets
+		*/
+	var re = new RegExp('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$', "g");
+		if(re.test(dataValue)) {
+			var widget = '<section id="userActions">\
+							<button id="banUser" class="btn">Ban User</button>\
+							<button id="unbanUser" class="btn">UnBan User</button>\
+							<button id="resetPassword" class="btn">Reset Password</button>\
+						</section>';
+			$('#actionSection .buttons').html(widget);
+		}
+	callWidgetApi(dataValue);
+	setInterval(function(){callWidgetApi(dataValue)},10000);
 }
 
 $(document).ready(function () {
@@ -176,18 +226,14 @@ $(document).ready(function () {
 
 	$('#makeWidget').click(function (e) {
 		e.preventDefault();
-		/*
-		Check regular expresions and generate corresponding widgets
-		*/
-		var re = new RegExp('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$', "g");
-		if(re.test($('#dataVal').val())) {
-				console.log("sdff");
-			var widget = '<section id="userActions">\
-							<button id="banUser" class="btn">Ban User</button>\
-							<button id="unbanUser" class="btn">UnBan User</button>\
-							<button id="resetPassword" class="btn">Reset Password</button>\
-						</section>';
-			$('#actionSection .buttons').html(widget);
+		generateWidget();
+		
+	});
+
+	$('#dataVal').on('keyup', function (e) {
+		e.preventDefault();
+		if(e.which == 13 || e.keyCode == 13) {
+			generateWidget();
 		}
 	});
 	$('#actionSection button:not(#makeWidget)').click(function (e) {
