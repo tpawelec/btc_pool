@@ -12,6 +12,9 @@ var authKey = 'a'
 /* "Flags" */
 var searchF = {};
 
+/* Array for autocomplete */
+var autoComplete = [];
+var autocompleteInterval;
 /*
 	There is one general function for calling LOG API, which takes one argument "name".
 */
@@ -114,24 +117,6 @@ function refreshLogs() {
 		showError);
 }
 
-function callWidgetApi(data) {
-	$.ajax({
-		url: userActionUrl,
-		method: 'GET',
-		data: {
-			auth: authKey,
-			name: data
-		},
-		success: function (resp) {
-			$('.api-field').text(resp.data).
-			css({'display': 'flex'});
-		},
-		error: function(resp) {
-			console.log(resp.error);
-		}
-	});
-
-}
 /*
 	Sets diffrent color for even rows.
 */
@@ -170,7 +155,20 @@ function filterTable (id) {
 	}
 	setZebra(id);
 }
-
+function fillAutocompleteArray(val) {
+	autoComplete = []
+	jQuery.ajaxSetup({async: false});
+	$.when(
+			$.get( userActionUrl, { name: val, auth: authKey } ))
+  		.done(function( response ) {
+    		autoComplete.push(response.data);
+  		});
+  		
+  	jQuery.ajaxSetup({async: true});
+$('#dataVal').autocomplete({
+		source: autoComplete
+	});
+}
 /*
 	Function for generating widgets/buttons
 */
@@ -190,10 +188,18 @@ function generateWidget() {
 						</section>';
 			$('#actionSection .buttons').html(widget);
 		}
-	callWidgetApi(dataValue);
 	setInterval(function(){callWidgetApi(dataValue)},10000);
 }
 
+
+/*
+
+
+	Document on ready
+
+
+
+*/
 $(document).ready(function () {
 
 	var winHeight = window.innerHeight;
@@ -234,10 +240,26 @@ $(document).ready(function () {
 		e.preventDefault();
 		if(e.which == 13 || e.keyCode == 13) {
 			generateWidget();
+		} else {
+			fillAutocompleteArray(e.currentTarget.value);
+		}
+
+		if(e.currentTarget.value !== 0) {
+			autocompleteInterval = setInterval(function() {
+				fillAutocompleteArray(e.currentTarget.value);
+				console.log("autoref");
+			}, 10000);
+		} else {
+			clearInterval(autocompleteInterval);
 		}
 	});
-	$('#actionSection button:not(#makeWidget)').click(function (e) {
 
+
+	$('#dataVal').autocomplete({
+		source: autoComplete
+	});
+	$('body').on('click', '#actionSection .buttons button', function (e) {
+		console.log("asd");
 		e.preventDefault();
 		var inputValue = $('#dataVal').val();
 		if(inputValue.length > 0) {
