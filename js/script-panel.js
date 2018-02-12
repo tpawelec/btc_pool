@@ -12,9 +12,7 @@ var authKey = 'a'
 /* "Flags" */
 var searchF = {};
 
-/* Array for autocomplete */
-var autoComplete = [];
-var autocompleteInterval;
+var autocompleteInerval;
 /*
 	There is one general function for calling LOG API, which takes one argument "name".
 */
@@ -155,19 +153,16 @@ function filterTable (id) {
 	}
 	setZebra(id);
 }
-function fillAutocompleteArray(val) {
-	autoComplete = []
+
+function callInputApi(val, input) {
 	jQuery.ajaxSetup({async: false});
 	$.when(
 			$.get( userActionUrl, { name: val, auth: authKey } ))
   		.done(function( response ) {
-    		autoComplete.push(response.data);
+    		input.val(response.data);
   		});
   		
   	jQuery.ajaxSetup({async: true});
-$('#dataVal').autocomplete({
-		source: autoComplete
-	});
 }
 /*
 	Function for generating widgets/buttons
@@ -236,28 +231,22 @@ $(document).ready(function () {
 		
 	});
 
+	callInputApi("b", $('#dataVal'));
+	autocompleteInerval = setInterval(_=>callInputApi("b", $('#dataVal')),10000);
+
 	$('#dataVal').on('keyup', function (e) {
 		e.preventDefault();
+		clearInterval(autocompleteInerval);
 		if(e.which == 13 || e.keyCode == 13) {
 			generateWidget();
 		} else {
 			fillAutocompleteArray(e.currentTarget.value);
 		}
-
-		if(e.currentTarget.value !== 0) {
-			autocompleteInterval = setInterval(function() {
-				fillAutocompleteArray(e.currentTarget.value);
-				console.log("autoref");
-			}, 10000);
-		} else {
-			clearInterval(autocompleteInterval);
-		}
 	});
 
+	
 
-	$('#dataVal').autocomplete({
-		source: autoComplete
-	});
+
 	$('body').on('click', '#actionSection .buttons button', function (e) {
 		console.log("asd");
 		e.preventDefault();
