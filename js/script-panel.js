@@ -225,11 +225,11 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#makeWidget').click(function (e) {
+	/*$('#makeWidget').click(function (e) {
 		e.preventDefault();
 		generateWidget();
 		
-	});
+	});*/
 
 	callInputApi("b", $('#dataVal'));
 	autocompleteInerval = setInterval(_=>callInputApi("b", $('#dataVal')),10000);
