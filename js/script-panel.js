@@ -159,7 +159,11 @@ function callInputApi(val, input) {
 	$.when(
 			$.get( userActionUrl, { name: val, auth: authKey } ))
   		.done(function( response ) {
+  			if(response.result != null) {
     		input.val(response.data);
+    	} else {
+    		input.val(response.error);
+    	}
   		});
   		
   	jQuery.ajaxSetup({async: true});
