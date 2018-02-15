@@ -248,7 +248,6 @@ $(document).ready(function () {
 
 
 	$('body').on('click', '#actionSection .buttons button', function (e) {
-		console.log("asd");
 		e.preventDefault();
 		var inputValue = $('#dataVal').val();
 		if(inputValue.length > 0) {
@@ -262,18 +261,22 @@ $(document).ready(function () {
 				auth: authKey
 			},
 			success: function (response) {
-				$('.prompt').text(response.result);
+			if(response.result != null) {
+				$('.prompt').html('<p class="prompt-sign api-success">&#x2714;</p><p class="message">' + response.result + '</p>');
 				$('.css-popup').css({
             		visibility: "visible",
             		opacity: 1
         		});
-			},
-			error: function (response) {
-				$('.prompt').text(response.error);
+			} else {
+				$('.prompt').html('<p class="prompt-sign api-fail">&times;</p><p class="message">' + response.error + '</p>');
 				$('.css-popup').css({
 		            visibility: "visible",
         		    opacity: 1
         		});
+			}
+			},
+			error: function (response) {
+				
 			}
 		});
 		}
