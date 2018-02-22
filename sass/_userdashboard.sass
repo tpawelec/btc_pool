@@ -1,0 +1,35 @@
+.miner-id
+	font-size: 1.5rem
+	text-align: center
+	#minerId
+		font-weight: 700
+		font-style: italic
+	p
+		display: inline-block
+
+.dashboard-pplns
+	#pplnsWindow
+		padding: 0
+		height: 50px
+		min-height: 50px
+		width: 700px
+		list-style-type: none
+		margin: 0 auto
+		li
+			height: 100%
+			box-sizing: border-box
+		.block
+			border: 1.5px solid #f0edee
+			float: left
+			position: relative
+			&:after
+				content: ''
+				background-color: #000
+				width: 6px
+				height: 60px
+				position: absolute
+				right: -3px
+				top: -5px
+				z-index: 1000
+			& > li
+				background-color: #f0edee

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Description" content="Pool statistic for mining Monero">
+	<meta name="keywords" content="bitcoin, cryptocurrency, monero, xmr, minig, stats">
+	<meta name="google" content="notranslate">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/grid.min.css">
+	<link rel="stylesheet" href="css/style.min.css">
+	<title>Monero Mining</title>
+</head>
+<body>
+	<!-- MENU -->
+	<div class="nav-bar">
+		<img src="http://via.placeholder.com/200x50" alt="Lorem ipsum">
+		<ul class="menu">
+			<li><a href="#">Link 1</a></li>
+			<li><a href="#">Link 2</a></li>
+		</ul>
+
+		<div class="dropdown">
+			<p class="label">Currency:</p>
+			<button id="currencySelect" class="btn nav-btn">USD</button>
+			<div class="dropdown-content">
+				<p id="USD">USD</p>
+				<p id="EUR">EUR</p>
+				<p id="GBP">GBP</p>
+				<p id="BTC">BTC</p>
+			</div>
+		</div>
+	</div>
+		<div class="miner-id">
+			<p>Miner: </p>
+			<p id="minerId"></p>
+		</div>
+
+	<div id="dashBoardSection">
+		<div class="container">
+			<section class="dashboard-stats">
+				
+			</section>
+			<section class="dashboard-chart">
+				
+			</section>
+			<section class="dashboard-pplns">
+				<ul id="pplnsWindow">
+					
+				</ul>
+			</section>
+		</div>
+	</div>
+	<!-- JAVASCRIPT 
+	jQuery (from CDN)
+	chart.js (local)
+	moment.js (local)
+	numbro.js (from CDN)
+	own script.js (local)
+	-->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="js/chart.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/numbro/2.0.0/numbro.min.js"></script>
+	<script src="js/user-script.js"></script>
+</body>
+</html>

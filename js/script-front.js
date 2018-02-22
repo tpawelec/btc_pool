@@ -1,8 +1,3 @@
-/*
-TODO:
-chart - nizszy
-*/
-
 /* Currency Variable */
 var cCurrency = "USD";
 var cPrice = '';

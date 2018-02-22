@@ -1,6 +1,6 @@
 /* Hex codes for colors */
 /* fonts */
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700|Source+Code+Pro");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700,700i|Source+Code+Pro");
 /* mixins */
 * {
   margin: 0;
@@ -402,9 +402,44 @@ footer {
   font-weight: 700; }
 
 .api-success {
-  color: #900; }
+  color: #090; }
 
 .api-fail {
-  color: #090; }
+  color: #900; }
+
+.miner-id {
+  font-size: 1.5rem;
+  text-align: center; }
+  .miner-id #minerId {
+    font-weight: 700;
+    font-style: italic; }
+  .miner-id p {
+    display: inline-block; }
+
+.dashboard-pplns #pplnsWindow {
+  padding: 0;
+  height: 50px;
+  min-height: 50px;
+  width: 700px;
+  list-style-type: none;
+  margin: 0 auto; }
+  .dashboard-pplns #pplnsWindow li {
+    height: 100%;
+    box-sizing: border-box; }
+  .dashboard-pplns #pplnsWindow .block {
+    border: 1.5px solid #f0edee;
+    float: left;
+    position: relative; }
+    .dashboard-pplns #pplnsWindow .block:after {
+      content: '';
+      background-color: #000;
+      width: 6px;
+      height: 60px;
+      position: absolute;
+      right: -3px;
+      top: -5px;
+      z-index: 1000; }
+    .dashboard-pplns #pplnsWindow .block > li {
+      background-color: #f0edee; }
 
 /*# sourceMappingURL=style.css.map */
