@@ -1,7 +1,3 @@
-/* Currency Variable */
-var cCurrency = "USD";
-var cPrice = '';
-
 /* User id */
 var userId = 'a';
 
@@ -24,7 +20,6 @@ function loadData(resp) {
 	})
 
 	var factor = Math.floor(totalShares / pplnsWidth)
-	console.log(pplnsWidth);
 
 	pplns.forEach(function(block, index) {
 		pplnsDOM.append('<li class="block" id='+ index +'></li>');
@@ -34,6 +29,30 @@ function loadData(resp) {
 		currBlock.append('<li style="width: ' + Math.floor((block.user_shares*10) / factor) + 'px"></li>');
 
 	})
+	$('body').on('mouseover', '.block', function(e) {
+		e.preventDefault();
+		if(e.target === this) {
+			var i = e.target.id;
+		} else {
+			var i = e.target.parentNode.id;
+		}
+			if(pplns[i].block_id === null) {
+				$('#blockId').text('null');
+			} else {
+				$('#blockId').text(pplns[i].block_id);
+			}
+			$('#shares').text(pplns[i].user_shares);
+			$('#payout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + ') ' + cCurrency);
+			$('#onHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
+		
+	});
+
+	$('body').on('mouseout', '.block', function(e){ 
+	//	if(e.target === this) {
+			$('#onHover').css({'display' : 'none', 'opacity' : 0}); 
+	//	}
+	});
+
 }
 
 function callApi() {
@@ -46,35 +65,42 @@ function callApi() {
 		success: (response) => loadData(response),
 		error: (response) => showError(response)
 	});
+
+	 $.ajax({
+        url: coinUrl,
+        method: 'GET',
+        success: (response) => processCoin(response)
+    });
 }
+
+function processCoin(resp) {
+    'use strict';
+    cPrice = resp['pool_coin_price'][cCurrency];
+	}
 $(document).ready(function () {
 
     'use strict';
-    
-    /* DROPDOWN MENU WITH CURRENCIES */
-    btn.click(function () {
-        $('.dropdown-content').toggleClass('show');
-    });
-
-    /*
-    When clicked anywhere else dropdown menu is closed
-    */
-    $(window).click(function (e) {
-        if (e.target.id !== 'currencySelect') {
-            if ($('.dropdown-content').hasClass('show')) {
-                $('.dropdown-content').toggleClass('show');
-            }
-        }
-
-    });
 
     /* Show miner ID on Dashboard */
     $('#minerId').text(userId);
 
     var winWidth = $('.container').width();
-    console.log(winWidth)
     pplnsWidth = Math.floor(winWidth * 0.9);
     pplnsDOM.css({'width': pplnsWidth});
 
     callApi();
+
+    /*
+    When clicked on currency variable and html content is updated. Then API is called.
+    */
+    $('.dropdown-content p').click(function (e) {
+        cCurrency = e.currentTarget.id;
+        btn.text(cCurrency);
+        /* COIN */
+    $.ajax({
+        url: coinUrl,
+        method: 'GET',
+        success: (response) => processCoin(response)
+    });
+    });
 });

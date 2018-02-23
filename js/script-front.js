@@ -1,19 +1,6 @@
-/* Currency Variable */
-var cCurrency = "USD";
-var cPrice = '';
 
 /* Stats DOM */
 var htmlStats = $('.pool-stats p');
-
-/* API Urls */
-
-var chartUrl = 'http://work.monero.me:12345/api/pool-graph.php';
-var coinUrl = 'http://work.monero.me:12345/api/pool-coin.php';
-var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
-
-
-/* DROPDOWN MENU DOM */
-var btn = $('#currencySelect');
 
 /* CHART DOM*/
 var chartCanvas = document.getElementById("myChart").getContext('2d');
@@ -268,22 +255,7 @@ $(document).ready(function () {
             }
         }
     });
-    /* DROPDOWN MENU WITH CURRENCIES */
-    btn.click(function () {
-        $('.dropdown-content').toggleClass('show');
-    });
-
-    /*
-    When clicked anywhere else dropdown menu is closed
-    */
-    $(window).click(function (e) {
-        if (e.target.id !== 'currencySelect') {
-            if ($('.dropdown-content').hasClass('show')) {
-                $('.dropdown-content').toggleClass('show');
-            }
-        }
-
-    });
+    
 
     /*
     When clicked on currency variable and html content is updated. Then API is called.

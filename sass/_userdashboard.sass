@@ -19,17 +19,34 @@
 			height: 100%
 			box-sizing: border-box
 		.block
-			border: 1.5px solid #f0edee
+			border: 1px solid #f0edee
 			float: left
 			position: relative
 			&:after
 				content: ''
-				background-color: #000
-				width: 6px
-				height: 60px
+				background-color: #101010
+				width: 2px
+				height: 80px
 				position: absolute
-				right: -3px
-				top: -5px
+				right: -1px
+				top: -15px
 				z-index: 1000
+			&:last-child:after
+				display: none
 			& > li
 				background-color: #f0edee
+
+#onHover
+	position: absolute
+	height: auto
+	width: 220px
+	background-color: #f0edff
+	padding: 10px
+	color: #191919
+	z-index: 2000
+	display: none
+	opacity: 0
+	+border-rad(10px)
+	+transition(opacity, 3s)
+	p
+		display: inline-block
