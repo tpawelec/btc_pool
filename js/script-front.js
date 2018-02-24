@@ -95,7 +95,7 @@ function drawChart(resp) {
     }
 
     var GraphArraySet = [];
-    var chartColors = ['#ff0000', '#00ff00', '#0000dd', '#ffd400', '#ff00ff', 
+    var chartColors = ['#ff0000', '#00ff00', '#2992dd', '#ffd400', '#ff00ff', 
                         '#00ffff', '#000000', '#008620', '#001a9f', '#0096ff', 
                         '#dccf00', '#8d0088', '#890101', '#beb4b4', '#686868', 
                         '#97EAD2', '#69dcfc', '#9BC1BC', '#E6EBE0', '#E1AA7D',
