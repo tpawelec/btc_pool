@@ -57,7 +57,7 @@ function loadData(resp) {
 			} else {
 				$('#blockId').text(pplns[i].block_id);
 			}
-			$('#sharesPplns').text(pplns[i].user_shares);
+			$('#sharesPplns').text(pplns[i].user_shares + '/' + pplns[i].total_shares);
 			$('#userPayout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + ') ' + cCurrency);
 			$('#onHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
 		
@@ -78,7 +78,13 @@ function loadData(resp) {
 		} else if($(this).attr('id') === 'workers') {
 			$(this).text(activeWorkers + '/' + workers.length)
 		}else if($(this).attr('id') === 'balance') {
-			$(this).text(resp.balance)
+			var widthPerc = (resp.balance / resp.payout_balance)*100;
+			console.log(widthPerc)
+			var value = '<span>' + resp.balance + '</span> \
+								<ul id="balanceBar">\
+									<li class="userShares" style="width:' + widthPerc + '%;"></li>\
+								</ul>';
+			$(this).html(value);
 		} else if($(this).attr('id') === 'cur_hashrate' || $(this).attr('id') === 'avg_hashrate') { 
             $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
         }

@@ -187,7 +187,8 @@ body {
     height: 2.5rem;
     display: flex;
     align-items: center;
-    justify-content: center; }
+    justify-content: center;
+    align-content: center; }
   .pool-stats .row-stats .chart {
     margin-top: 4rem;
     height: 75%; }
@@ -460,7 +461,7 @@ footer {
       border-color: #366693; }
     .dashboard-pplns #pplnsWindow .block:after {
       content: '';
-      background-color: #101010;
+      background-color: #cb2f07;
       width: 2px;
       height: 80px;
       position: absolute;
@@ -482,6 +483,28 @@ footer {
   font-size: .9rem;
   margin-top: .5rem; }
 
+.dashboard-pplns .legend {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: .8rem; }
+  .dashboard-pplns .legend p {
+    display: inline-block;
+    margin: 1rem .7rem;
+    position: relative; }
+    .dashboard-pplns .legend p:before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      top: .1rem;
+      left: -1rem; }
+  .dashboard-pplns .legend .mined-blocks:before {
+    background-color: #cb2f07; }
+  .dashboard-pplns .legend .user-shares:before {
+    background-color: #f0edee; }
+  .dashboard-pplns .legend .other-shares:before {
+    border: 1px solid #f0edee; }
+
 .pool-stats .row-stats {
   margin: 0 auto; }
   .pool-stats .row-stats .stats {
@@ -489,20 +512,33 @@ footer {
     .pool-stats .row-stats .stats [class*='col-'] {
       padding: 0 .5rem 1rem .5rem;
       margin: 1rem 0; }
-    .pool-stats .row-stats .stats .title {
-      background-color: #1B5389;
-      height: 3rem;
-      text-transform: uppercase;
-      margin-top: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center; }
     .pool-stats .row-stats .stats .value {
-      background-color: #366693;
-      height: 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center; }
+      min-height: 4rem;
+      flex-wrap: wrap;
+      padding: .5rem; }
+    .pool-stats .row-stats .stats span {
+      margin: 0 auto .5rem auto;
+      width: 100%; }
+
+.pool-stats #balanceBar {
+  align-self: center;
+  padding: 0;
+  margin: 0 auto;
+  list-style-type: none;
+  height: 25px;
+  width: 90%;
+  border: 1px solid white;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  float: none; }
+  .pool-stats #balanceBar li {
+    float: left;
+    height: 100%; }
+  .pool-stats #balanceBar .userShares {
+    background-color: #f0edee; }
+  .pool-stats #balanceBar .otherShares {
+    width: auto; }
 
 #onHover {
   position: absolute;
