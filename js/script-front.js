@@ -32,8 +32,6 @@ function processStats(resp) {
         } else {
             $(this).text(resp[$(this).attr('id')]);
         }
-
-        //time (seconds) = network diff / hashrate
     });
 
     var innerHTMLTable = '';

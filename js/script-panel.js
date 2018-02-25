@@ -154,19 +154,17 @@ function filterTable (id) {
 	setZebra(id);
 }
 
-function callInputApi(val, input) {
-	jQuery.ajaxSetup({async: false});
+function callInputApi(value, input) {
 	$.when(
-			$.get( userActionUrl, { name: val, auth: authKey } ))
+			$.get( userActionUrl, { name: value, auth: authKey } ))
   		.done(function( response ) {
-  			if(response.result != null) {
-    		input.val(response.data);
+  			if(response.error === null) {
+    		$('#dataVal').val(response.data);
     	} else {
-    		input.val(response.error);
+    		$('#dataVal').val(response.error);
     	}
   		});
   		
-  	jQuery.ajaxSetup({async: true});
 }
 /*
 	Function for generating widgets/buttons
@@ -187,7 +185,6 @@ function generateWidget() {
 						</section>';
 			$('#actionSection .buttons').html(widget);
 		}
-	setInterval(function(){callWidgetApi(dataValue)},10000);
 }
 
 
@@ -244,7 +241,7 @@ $(document).ready(function () {
 		if(e.which == 13 || e.keyCode == 13) {
 			generateWidget();
 		} else {
-			fillAutocompleteArray(e.currentTarget.value);
+			//fillAutocompleteArray(e.currentTarget.value);
 		}
 	});
 

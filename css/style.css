@@ -107,7 +107,8 @@ body {
         .nav-bar .dropdown .dropdown-content p:last-child {
           border: none; }
     .nav-bar .dropdown .show {
-      display: block; }
+      display: block;
+      z-index: 3000; }
 
 @media (max-width: 575px) {
   .nav-bar {
@@ -332,10 +333,7 @@ footer {
   height: 40px; }
   .admin-nav .admin-menu {
     list-style-type: none;
-    position: relative;
-    color: #f0edee;
-    text-decoration: none;
-    font-weight: 300; }
+    position: relative; }
     .admin-nav .admin-menu li {
       float: left;
       display: inline-block;
@@ -409,6 +407,17 @@ footer {
 .api-fail {
   color: #900; }
 
+.menu {
+  list-style-type: none;
+  position: relative; }
+  .menu li {
+    float: left;
+    display: inline-block;
+    width: 7rem;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 700; }
+
 .miner-id {
   font-size: 1.5rem;
   text-align: center;
@@ -419,9 +428,19 @@ footer {
   .miner-id p {
     display: inline-block; }
 
-#dashBoardSection canvas {
-  width: 100%;
-  height: 450px; }
+.header {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 1.5rem; }
+
+#dashBoardSection {
+  display: block; }
+  #dashBoardSection canvas {
+    width: 100%;
+    height: 400px !important; }
+
+#payoutSection {
+  display: none; }
 
 .dashboard-pplns #pplnsWindow {
   padding: 0;
@@ -453,10 +472,42 @@ footer {
     .dashboard-pplns #pplnsWindow .block .shares {
       background-color: #f0edee; }
 
+.dashboard-pplns .note-factor {
+  text-align: right;
+  font-size: .7rem;
+  margin-top: 1.2rem; }
+
+.dashboard-pplns .note-info {
+  text-align: right;
+  font-size: .9rem;
+  margin-top: .5rem; }
+
+.pool-stats .row-stats {
+  margin: 0 auto; }
+  .pool-stats .row-stats .stats {
+    justify-content: space-around; }
+    .pool-stats .row-stats .stats [class*='col-'] {
+      padding: 0 .5rem 1rem .5rem;
+      margin: 1rem 0; }
+    .pool-stats .row-stats .stats .title {
+      background-color: #1B5389;
+      height: 3rem;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+    .pool-stats .row-stats .stats .value {
+      background-color: #366693;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+
 #onHover {
   position: absolute;
   height: auto;
-  width: 220px;
+  width: auto;
   background-color: #f0edff;
   padding: 10px;
   color: #191919;

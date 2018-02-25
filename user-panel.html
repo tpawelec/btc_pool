@@ -14,9 +14,9 @@
 	<!-- MENU -->
 	<div class="nav-bar">
 		<img src="http://via.placeholder.com/200x50" alt="Lorem ipsum">
-		<ul class="menu">
-			<li><a href="#">Link 1</a></li>
-			<li><a href="#">Link 2</a></li>
+		<ul class="menu" id="userMenu">
+			<li id="dashBoard">Dashboard</li>
+			<li id="payout">Payout</li>
 		</ul>
 
 		<div class="dropdown">
@@ -30,18 +30,42 @@
 			</div>
 		</div>
 	</div>
-		<div class="miner-id">
+		<section class="miner-id">
 			<p>Miner: </p>
 			<p id="minerId"></p>
-		</div>
+		</section>
 
 	<div id="dashBoardSection">
 		<div class="container">
-			<div class="row">
-			
+			<div class="row pool-stats">
+				<div class="col-md-10 row-stats">
+					<div class="row stats">
+						<div class="col-md-2 col-sm-4 col-6">
+							<h4 class="title">current hashrate</h4>
+							<p class="value" id="cur_hashrate">00000</p>
+						</div>
+						<div class="col-md-2 col-sm-4 col-6">
+							<h4 class="title">average shashrate</h4>
+							<p class="value" id="avg_hashrate">00000</p>
+						</div>
+						<div class="col-md-2 col-sm-4 col-6">
+							<h4 class="title">balance</h4>
+							<p class="value" id="balance">00000</p>
+						</div>
+						<div class="col-md-2 col-sm-4 col-6">
+							<h4 class="title">worker count</h4>
+							<p class="value" id="workers">00000</p>
+						</div>
+						<div class="col-md-2 col-sm-4 col-6">
+							<h4 class="title">shares</h4>
+							<p class="value" id="shares">00000</p>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="row">
 				<div class="chart col-md-12 col-lg-12">
+					<h2 class="header">Hashrate Graph</h2>
 					<canvas id="myChart" width="400" height="400" class="chart-canvas"></canvas>
 				</div>
 			</div>
@@ -51,9 +75,12 @@
 	<div id="payoutSection">
 		<div class="container">
 			<section class="dashboard-pplns">
+				<h2 class="header">PPLNS Window Graph</h2>
 				<ul id="pplnsWindow">
 					
 				</ul>
+				<p class="note-factor">User shares are exaggerated <span></span>x for clarity.</p>
+				<p class="note-info">If a block is found now, your payout will be approximately <span></span></p>
 			</section>
 		</div>
 	</div>
@@ -62,9 +89,9 @@
 		<p class="title">Block ID: </p>
 		<p id="blockId"></p><br>
 		<p class="title">Shares: </p>
-		<p id="shares"></p><br>
+		<p id="sharesPplns"></p><br>
 		<p class="title">Payout: </p>
-		<p id="payout"></p><br>
+		<p id="userPayout"></p><br>
 	</div>
 	<!-- JAVASCRIPT 
 	jQuery (from CDN)

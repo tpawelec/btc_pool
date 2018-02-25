@@ -12,24 +12,38 @@ var chartCanvas = document.getElementById("myChart").getContext('2d');
 
 var pplnsWidth;
 
+
+/* Variable for multiplier in pplns graph */
+var pplnsMultiplier = 10;
+
 function loadData(resp) {
 	var pplns = resp.pplns_window;
 	var chart = resp.hashrate_graph;
+	var workers = resp.workers;
 	var totalShares = 0;
+	var payoutSum = 0;
+	var activeWorkers = 0;
 
 	pplns.forEach(function(block){
 		totalShares += block.total_shares;
-	})
+		payoutSum += block.user_payout;
+	});
 
-	var factor = Math.floor(totalShares / pplnsWidth)
+	var factor = Math.floor(totalShares / pplnsWidth);
 
 	pplns.forEach(function(block, index) {
 		pplnsDOM.append('<li class="block" id='+ index +'></li>');
 		var currBlock = $('#pplnsWindow > .block:nth-child(' + (index + 1) +')');
 
 		currBlock.css({'width': Math.floor(block.total_shares / factor)});
-		currBlock.append('<li class="shares" style="width: ' + Math.floor((block.user_shares*10) / factor) + 'px"></li>');
+		currBlock.append('<li class="shares" style="width: ' + Math.floor((block.user_shares*pplnsMultiplier) / factor) + 'px"></li>');
 
+	});
+
+	workers.forEach(function(worker) {
+		if(worker.active === true) {
+			activeWorkers += 1;
+		}
 	})
 	$('body').on('mouseover', '.block', function(e) {
 		e.preventDefault();
@@ -39,12 +53,12 @@ function loadData(resp) {
 			var i = e.target.parentNode.id;
 		}
 			if(pplns[i].block_id === null) {
-				$('#blockId').text('null');
+				$('#blockId').text('Currently mined block');
 			} else {
 				$('#blockId').text(pplns[i].block_id);
 			}
-			$('#shares').text(pplns[i].user_shares);
-			$('#payout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + ') ' + cCurrency);
+			$('#sharesPplns').text(pplns[i].user_shares);
+			$('#userPayout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + ') ' + cCurrency);
 			$('#onHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
 		
 	});
@@ -53,6 +67,22 @@ function loadData(resp) {
 			$('#onHover').css({'display' : 'none', 'opacity' : 0}); 
 	});
 
+	$('.note-factor span').text(pplnsMultiplier);
+	$('.note-info span').text(payoutSum);
+
+	var $userStats = $('#dashBoardSection p');
+	$userStats.each(function() {
+		if($(this).attr('id') === 'shares') {
+			var minerShares = resp.valid_shares + resp.invalid_shares;
+			$(this).text(resp.valid_shares + ' (' + (resp.valid_shares/minerShares)*100 + '%) / ' + resp.invalid_shares + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
+		} else if($(this).attr('id') === 'workers') {
+			$(this).text(activeWorkers + '/' + workers.length)
+		}else if($(this).attr('id') === 'balance') {
+			$(this).text(resp.balance)
+		} else if($(this).attr('id') === 'cur_hashrate' || $(this).attr('id') === 'avg_hashrate') { 
+            $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
+        }
+	});
 	drawChart(chart);
 
 }
@@ -215,6 +245,14 @@ function processCoin(resp) {
 $(document).ready(function () {
 
     'use strict';
+    $('#userMenu li').click(function (e) {
+		e.preventDefault();
+
+		var sectionId = e.currentTarget.id + "Section";
+		
+		$('body > div:not(:first-child)').css({'display': 'none'});
+		$('#'+sectionId).css({'display': 'block'});
+	});
 
     /* Show miner ID on Dashboard */
     $('#minerId').text(userId);
