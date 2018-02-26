@@ -11,10 +11,14 @@ var pplnsDOM =$('#pplnsWindow');
 var chartCanvas = document.getElementById("myChart").getContext('2d');
 
 var pplnsWidth;
-
+var balance;
 
 /* Variable for multiplier in pplns graph */
 var pplnsMultiplier = 10;
+
+function showError(resp) {
+	alert("There is a problem with server \n" + resp)
+}
 
 function loadData(resp) {
 	var pplns = resp.pplns_window;
@@ -58,7 +62,7 @@ function loadData(resp) {
 				$('#blockId').text(pplns[i].block_id);
 			}
 			$('#sharesPplns').text(pplns[i].user_shares + '/' + pplns[i].total_shares);
-			$('#userPayout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + ') ' + cCurrency);
+			$('#userPayout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + cCurrency + ')');
 			$('#onHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
 		
 	});
@@ -74,13 +78,13 @@ function loadData(resp) {
 	$userStats.each(function() {
 		if($(this).attr('id') === 'shares') {
 			var minerShares = resp.valid_shares + resp.invalid_shares;
-			$(this).text(resp.valid_shares + ' (' + (resp.valid_shares/minerShares)*100 + '%) / ' + resp.invalid_shares + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
+			$(this).html(resp.valid_shares + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >' + resp.invalid_shares + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
 		} else if($(this).attr('id') === 'workers') {
 			$(this).text(activeWorkers + '/' + workers.length)
 		}else if($(this).attr('id') === 'balance') {
+			balance = resp.balance;
 			var widthPerc = (resp.balance / resp.payout_balance)*100;
-			console.log(widthPerc)
-			var value = '<span>' + resp.balance + '</span> \
+			var value = '<span>' + resp.balance + 'XMR <br/>('+ (resp.balance * cPrice) + ' ' + cCurrency + ')</span> \
 								<ul id="balanceBar">\
 									<li class="userShares" style="width:' + widthPerc + '%;"></li>\
 								</ul>';
@@ -89,6 +93,21 @@ function loadData(resp) {
             $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
         }
 	});
+
+	var innerHTMLTable = ''
+	workers.forEach(function(worker) {
+		innerHTMLTable += '<tr><td>' + worker.name + '</td>';
+		innerHTMLTable += '<td>' + worker.last_share + '</td>';
+		if(worker.active === true) {
+			innerHTMLTable += '<td class="active-worker">&#x2714;</td>';
+		} else if (worker.active === false) {
+			innerHTMLTable += '<td class="unactive-worker">&times;</td>';
+		}
+		innerHTMLTable += '<td>' + (numbro(worker.cur_hashrate).format('0a.00')).toUpperCase() + 'H/s</td>'
+		innerHTMLTable += '<td>' + (numbro(worker.avg_hashrate).format('0a.00')).toUpperCase() + 'H/s</td></tr>'
+	});
+
+	$('#workersSection .table-body').html(innerHTMLTable);
 	drawChart(chart);
 
 }
@@ -226,6 +245,37 @@ function drawChart(chartSet) {
 }); 
 }
 
+function filterTable(regexp) {
+	var $tableRows = $('#workersTable > tbody tr');
+	if(regexp.length !== 0) {
+		var searchregexp = new RegExp(unescape(regexp, "g"));
+		$tableRows.each(function() {
+			if(!searchregexp.test($(this).children().text())) {
+				$(this).css({'display': 'none'});
+			} else {
+				$(this).css({'display': 'table-row'});
+			}
+
+		});
+	} else {
+		$tableRows.each(function() {
+				$(this).css({'display': 'table-row'});
+		})
+	}
+
+	var rowIndex = 0;
+	$tableRows.each(function() {
+				if($(this).css('display') === 'table-row') {
+					if(rowIndex % 2 === 0) {
+						$(this).css({'background-color': '#1B5389'});
+					} else {
+						$(this).css({'background-color': 'initial'});
+					}
+					rowIndex++;
+				}
+	});
+}
+
 function callApi() {
 	$.ajax({
 		url: apiUrl,
@@ -247,7 +297,16 @@ function callApi() {
 function processCoin(resp) {
     'use strict';
     cPrice = resp['pool_coin_price'][cCurrency];
+    $("#balance span").html(balance + 'XMR <br />('+ (balance * cPrice) + ' ' + cCurrency + ')');
 	}
+
+/*
+
+
+	DOCUMENT ON READY
+
+
+*/
 $(document).ready(function () {
 
     'use strict';
@@ -282,4 +341,15 @@ $(document).ready(function () {
         success: (response) => processCoin(response)
     });
     });
+
+    $('#nameSearch').on('keyup', function(e) {
+    	e.preventDefault();
+    	if(e.which === 13 || e.keyCode === 13) {
+    		filterTable(e.currentTarget.value);
+    	} else if(e.which === 8 || e.keyCode === 8) {
+    		if(e.currentTarget.value.length === 0) {
+    			filterTable(e.currentTarget.value);
+    		}
+    	}
+    })
 });

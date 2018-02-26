@@ -136,7 +136,6 @@ function setZebra(id) {
 */
 function filterTable (id) {
 	if(searchF[id].length !== 0) {
-		//var searchregexp = new RegExp('[a-z]*' + $('#searchField' + id).val() + "[a-z]*", "gi");
 		var searchregexp = new RegExp(unescape(searchF[id]), "g");
 		$("#" + id + " > tbody tr").each(function() {
 			if(!searchregexp.test($(this).children().text())) {

@@ -1,6 +1,6 @@
 /* Hex codes for colors */
 /* fonts */
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700,700i|Source+Code+Pro");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600,700,700i|Source+Code+Pro");
 /* mixins */
 * {
   margin: 0;
@@ -408,16 +408,24 @@ footer {
 .api-fail {
   color: #900; }
 
-.menu {
-  list-style-type: none;
-  position: relative; }
-  .menu li {
-    float: left;
-    display: inline-block;
-    width: 7rem;
-    text-align: center;
-    cursor: pointer;
-    font-weight: 700; }
+.user-menu {
+  height: 2.5rem;
+  margin: 2rem 0;
+  background-color: #1B5389;
+  line-height: 2.5rem;
+  font-size: 1.5rem; }
+  .user-menu .menu {
+    list-style-type: none;
+    position: relative;
+    width: 30rem;
+    margin: 0 auto; }
+    .user-menu .menu li {
+      float: left;
+      display: inline-block;
+      width: 10rem;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 700; }
 
 .miner-id {
   font-size: 1.5rem;
@@ -435,10 +443,62 @@ footer {
   margin: 1.5rem; }
 
 #dashBoardSection {
-  display: block; }
+  display: block;
+  margin-bottom: 2rem; }
   #dashBoardSection canvas {
     width: 100%;
     height: 400px !important; }
+
+#workersSection {
+  display: none; }
+  #workersSection h2 {
+    text-align: center; }
+  #workersSection .search-info {
+    font-size: .9rem;
+    margin-bottom: .5rem; }
+  #workersSection input {
+    display: block;
+    font-size: .9rem;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: .3rem; }
+    #workersSection input:focus {
+      outline: none; }
+  #workersSection .workers-table {
+    height: 30rem;
+    overflow-y: auto; }
+  #workersSection table {
+    width: 80%;
+    margin: 0 auto; }
+    #workersSection table * {
+      transition: initial;
+      -webkit-transition: initial;
+      -ms-transition: initial;
+      -o-transition: initial; }
+    #workersSection table .header {
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-align: center; }
+      #workersSection table .header tr {
+        height: 3rem; }
+        #workersSection table .header tr th {
+          white-space: normal; }
+          #workersSection table .header tr th:nth-of-type(1) {
+            width: 25%; }
+          #workersSection table .header tr th:nth-of-type(2) {
+            width: 25%; }
+          #workersSection table .header tr th:nth-of-type(3) {
+            width: 10%; }
+          #workersSection table .header tr th:nth-of-type(4) {
+            width: 20%; }
+          #workersSection table .header tr th:nth-of-type(5) {
+            width: 20%; }
+    #workersSection table .table-body tr:nth-child(even) {
+      background-color: #1B5389; }
+    #workersSection table .table-body td {
+      text-align: center;
+      padding: .5rem 0; }
 
 #payoutSection {
   display: none; }
@@ -480,12 +540,12 @@ footer {
 
 .dashboard-pplns .note-info {
   text-align: right;
-  font-size: .9rem;
+  font-size: 1rem;
   margin-top: .5rem; }
 
 .dashboard-pplns .legend {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: .5rem;
   font-size: .8rem; }
   .dashboard-pplns .legend p {
     display: inline-block;
@@ -513,9 +573,10 @@ footer {
       padding: 0 .5rem 1rem .5rem;
       margin: 1rem 0; }
     .pool-stats .row-stats .stats .value {
-      min-height: 4rem;
+      height: 4.5rem;
       flex-wrap: wrap;
-      padding: .5rem; }
+      padding: .5rem 0;
+      font-size: .95rem; }
     .pool-stats .row-stats .stats span {
       margin: 0 auto .5rem auto;
       width: 100%; }
@@ -526,11 +587,8 @@ footer {
   margin: 0 auto;
   list-style-type: none;
   height: 25px;
-  width: 90%;
+  width: 100%;
   border: 1px solid white;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
   float: none; }
   .pool-stats #balanceBar li {
     float: left;
