@@ -509,7 +509,8 @@ footer {
   min-height: 50px;
   width: 700px;
   list-style-type: none;
-  margin: 0 auto; }
+  margin: 0 auto;
+  cursor: pointer; }
   .dashboard-pplns #pplnsWindow li {
     height: 100%;
     box-sizing: border-box; }
@@ -539,12 +540,12 @@ footer {
   margin-top: 1.2rem; }
 
 .dashboard-pplns .note-info {
-  text-align: right;
+  text-align: center;
   font-size: 1rem;
   margin-top: .5rem; }
 
 .dashboard-pplns .legend {
-  text-align: center;
+  text-align: right;
   margin-top: .5rem;
   font-size: .8rem; }
   .dashboard-pplns .legend p {
@@ -570,7 +571,7 @@ footer {
   .pool-stats .row-stats .stats {
     justify-content: space-around; }
     .pool-stats .row-stats .stats [class*='col-'] {
-      padding: 0 .5rem 1rem .5rem;
+      padding: 0 .2rem 1rem .2rem;
       margin: 1rem 0; }
     .pool-stats .row-stats .stats .value {
       height: 4.5rem;
@@ -589,7 +590,8 @@ footer {
   height: 25px;
   width: 100%;
   border: 1px solid white;
-  float: none; }
+  float: none;
+  cursor: pointer; }
   .pool-stats #balanceBar li {
     float: left;
     height: 100%; }
@@ -598,7 +600,7 @@ footer {
   .pool-stats #balanceBar .otherShares {
     width: auto; }
 
-#onHover {
+[id*='Hover'] {
   position: absolute;
   height: auto;
   width: auto;
@@ -615,7 +617,7 @@ footer {
   -webkit-transition: opacity 3s ease-in-out;
   -ms-transition: opacity 3s ease-in-out;
   -o-transition: opacity 3s ease-in-out; }
-  #onHover p {
+  [id*='Hover'] p {
     display: inline-block; }
 
 /*# sourceMappingURL=style.css.map */

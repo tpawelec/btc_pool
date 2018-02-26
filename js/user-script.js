@@ -12,6 +12,8 @@ var chartCanvas = document.getElementById("myChart").getContext('2d');
 
 var pplnsWidth;
 var balance;
+var payoutSum = 0;
+var activeWorkers = 0;
 
 /* Variable for multiplier in pplns graph */
 var pplnsMultiplier = 10;
@@ -25,8 +27,7 @@ function loadData(resp) {
 	var chart = resp.hashrate_graph;
 	var workers = resp.workers;
 	var totalShares = 0;
-	var payoutSum = 0;
-	var activeWorkers = 0;
+	
 
 	pplns.forEach(function(block){
 		totalShares += block.total_shares;
@@ -57,6 +58,7 @@ function loadData(resp) {
 			var i = e.target.parentNode.id;
 		}
 			if(pplns[i].block_id === null) {
+				$('.title:first-child').text('');
 				$('#blockId').text('Currently mined block');
 			} else {
 				$('#blockId').text(pplns[i].block_id);
@@ -71,16 +73,17 @@ function loadData(resp) {
 			$('#onHover').css({'display' : 'none', 'opacity' : 0}); 
 	});
 
+
 	$('.note-factor span').text(pplnsMultiplier);
-	$('.note-info span').text(payoutSum);
+	$('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
 
 	var $userStats = $('#dashBoardSection p');
 	$userStats.each(function() {
 		if($(this).attr('id') === 'shares') {
 			var minerShares = resp.valid_shares + resp.invalid_shares;
-			$(this).html(resp.valid_shares + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >' + resp.invalid_shares + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
+			$(this).html('Valid: ' + (numbro(resp.valid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >Invalid: ' + (numbro(resp.invalid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
 		} else if($(this).attr('id') === 'workers') {
-			$(this).text(activeWorkers + '/' + workers.length)
+			$(this).html('Active: ' + activeWorkers + '<br/ >Total: ' + workers.length)
 		}else if($(this).attr('id') === 'balance') {
 			balance = resp.balance;
 			var widthPerc = (resp.balance / resp.payout_balance)*100;
@@ -94,10 +97,22 @@ function loadData(resp) {
         }
 	});
 
+	$('body').on('mouseover', '#balanceBar', function(e) {
+		e.preventDefault();
+			$('#payBalance').text(resp.payout_balance + ' XMR');
+			$('#payFee').text(resp.payout_fee + ' XMR');
+			$('#balanceOnHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
+		
+	});
+
+	$('body').on('mouseout', '#balanceBar', function(e){ 
+			$('#balanceOnHover').css({'display' : 'none', 'opacity' : 0}); 
+	});
+
 	var innerHTMLTable = ''
 	workers.forEach(function(worker) {
 		innerHTMLTable += '<tr><td>' + worker.name + '</td>';
-		innerHTMLTable += '<td>' + worker.last_share + '</td>';
+		innerHTMLTable += '<td>' + convertTime(worker.last_share) + ' minutes ago</td>';
 		if(worker.active === true) {
 			innerHTMLTable += '<td class="active-worker">&#x2714;</td>';
 		} else if (worker.active === false) {
@@ -245,6 +260,13 @@ function drawChart(chartSet) {
 }); 
 }
 
+function convertTime(timestamp) {
+    'use strict';
+    var nowTime = Math.floor(Date.now() / 1000);
+    var minutes = Math.floor((nowTime - timestamp) / 60);
+    return minutes;
+}
+
 function filterTable(regexp) {
 	var $tableRows = $('#workersTable > tbody tr');
 	if(regexp.length !== 0) {
@@ -298,6 +320,7 @@ function processCoin(resp) {
     'use strict';
     cPrice = resp['pool_coin_price'][cCurrency];
     $("#balance span").html(balance + 'XMR <br />('+ (balance * cPrice) + ' ' + cCurrency + ')');
+    $('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
 	}
 
 /*
