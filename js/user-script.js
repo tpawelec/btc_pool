@@ -58,9 +58,10 @@ function loadData(resp) {
 			var i = e.target.parentNode.id;
 		}
 			if(pplns[i].block_id === null) {
-				$('.title:first-child').text('');
+				$('#onHover .title:first-child').css({'display' : 'none'});
 				$('#blockId').text('Currently mined block');
 			} else {
+				$('#onHover .title:first-child').css({'display' : 'inline-block'});
 				$('#blockId').text(pplns[i].block_id);
 			}
 			$('#sharesPplns').text(pplns[i].user_shares + '/' + pplns[i].total_shares);
@@ -271,8 +272,9 @@ function filterTable(regexp) {
 	var $tableRows = $('#workersTable > tbody tr');
 	if(regexp.length !== 0) {
 		var searchregexp = new RegExp(unescape(regexp, "g"));
+		console.log(searchregexp);
 		$tableRows.each(function() {
-			if(!searchregexp.test($(this).children().text())) {
+			if(!searchregexp.test($(this).children()[0].textContent)) {
 				$(this).css({'display': 'none'});
 			} else {
 				$(this).css({'display': 'table-row'});

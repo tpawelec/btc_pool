@@ -499,6 +499,10 @@ footer {
     #workersSection table .table-body td {
       text-align: center;
       padding: .5rem 0; }
+    #workersSection table .table-body .active-worker {
+      color: #090; }
+    #workersSection table .table-body .unactive-worker {
+      color: #900; }
 
 #payoutSection {
   display: none; }
