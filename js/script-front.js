@@ -268,20 +268,23 @@ $(document).ready(function () {
     $('#loginForm').click(function (e) {
         e.preventDefault();
 
-        /* PSEUDOCODE
-            call API
-            if user require password
-                display csspopup with '.password-form' displayed
-            else
-                go to userpage
-        */
-        $('.css-popup').css({
-            visibility: "visible",
-            opacity: 1
+        $.ajax({
+            url: apiUrlUser,
+            method: 'GET',
+            data: {
+                id: $("#userId").val()
+            },
+            success: function(response) {
+                if(response.auth_needed === true) {
+                    $('.css-popup').css({
+                        visibility: "visible",
+                        opacity: 1
+                    });
+                } else {
+                    window.location = "user-panel.html"
+                }
+            }
         });
-
-        
-
     });
 
     $('.css-popup .close').click(function (e) {
@@ -304,13 +307,28 @@ $(document).ready(function () {
             go to userpage
 
         */
-
-        $('.password-form').css({
-            display: 'none'
+        $.ajax({
+            url: apiUrlUser,
+            method: 'POST',
+            data: {
+                id: $("#userId").val(),
+                password: $("#userPassword").val()
+            },
+            success: function(response) {
+                if(response.auth_status === true) {
+                   // window.location = "user-panel.html";
+                   console.log(response);
+                } else {
+                    $('.password-form').css({
+                         display: 'none'
+                    });
+                    $('.wrong-password').css({
+                        display: 'block'
+                    });
+                }
+            }
         });
-        $('.wrong-password').css({
-            display: 'block'
-        });
+        
 
     });
 

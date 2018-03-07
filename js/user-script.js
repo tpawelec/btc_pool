@@ -377,4 +377,6 @@ $(document).ready(function () {
     		}
     	}
     })
+
+    setInterval(callApi, 10000);
 });
