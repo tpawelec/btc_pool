@@ -316,8 +316,8 @@ $(document).ready(function () {
             },
             success: function(response) {
                 if(response.auth_status === true) {
-                   // window.location = "user-panel.html";
-                   console.log(response);
+                    //console.log(response)
+                    window.location = "user-panel.html";
                 } else {
                     $('.password-form').css({
                          display: 'none'
