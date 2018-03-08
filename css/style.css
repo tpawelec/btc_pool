@@ -63,6 +63,8 @@ body {
       display: inline-block;
       width: 6rem;
       text-align: center; }
+    .nav-bar .menu #userLink {
+      display: none; }
   .nav-bar a {
     color: #f0edee;
     text-decoration: none;
@@ -312,7 +314,7 @@ footer {
     display: block; }
     .wrapper .password-form input {
       padding: .5rem;
-      border: 1px solid #000;
+      border: 1px solid rgba(0, 0, 0, 0.5);
       -webkit-border-radius: 10px;
       -moz-border-radius: 10px;
       border-radius: 10px;

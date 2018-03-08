@@ -280,6 +280,7 @@ $(document).ready(function () {
                         visibility: "visible",
                         opacity: 1
                     });
+                    $("#userPassword").focus();
                 } else {
                     window.location = "user-panel.html"
                 }
@@ -310,14 +311,21 @@ $(document).ready(function () {
         $.ajax({
             url: apiUrlUser,
             method: 'POST',
+            contentType: "text/plain",
             data: {
                 id: $("#userId").val(),
                 password: $("#userPassword").val()
             },
-            success: function(response) {
+             xhrFields: {
+                 withCredentials: true
+             },
+            success: function(response, status, xhr) {
                 if(response.auth_status === true) {
-                    //console.log(response)
-                    window.location = "user-panel.html";
+                    console.log(response)
+                    console.log(document.cookie)
+                    //console.log(xhr.getAllResponseHeaders())
+                    //console.log(Cookies.get())
+                    //window.location = "user-panel.html";
                 } else {
                     $('.password-form').css({
                          display: 'none'

@@ -33,4 +33,6 @@ $(document).ready(function() {
         }
 
     });
+
+    //console.log(Cookie.get())
 });
