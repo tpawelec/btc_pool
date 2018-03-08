@@ -311,7 +311,6 @@ $(document).ready(function () {
         $.ajax({
             url: apiUrlUser,
             method: 'POST',
-            contentType: "text/plain",
             data: {
                 id: $("#userId").val(),
                 password: $("#userPassword").val()
