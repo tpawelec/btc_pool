@@ -315,9 +315,6 @@ $(document).ready(function () {
                 id: $("#userId").val(),
                 password: $("#userPassword").val()
             },
-             xhrFields: {
-                 withCredentials: true
-             },
             success: function(response, status, xhr) {
                 if(response.auth_status === true) {
                     console.log(response)
