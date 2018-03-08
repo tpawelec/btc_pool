@@ -319,7 +319,7 @@ $(document).ready(function () {
                 if(response.auth_status === true) {
                     console.log(response)
                     console.log(document.cookie)
-                    //console.log(xhr.getAllResponseHeaders())
+                    console.log(xhr.getAllResponseHeaders())
                     //console.log(Cookies.get())
                     //window.location = "user-panel.html";
                 } else {
