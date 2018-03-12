@@ -267,23 +267,16 @@ $(document).ready(function () {
     /* Login form and popup display */
     $('#loginForm').click(function (e) {
         e.preventDefault();
-
+        //userIdGlobal = $("#userId").val();
+        localStorage.setItem("id", $("#userId").val())
         $.ajax({
             url: apiUrlUser,
             method: 'GET',
             data: {
-                id: $("#userId").val()
+                id: localStorage.getItem("id")
             },
             success: function(response) {
-                if(response.auth_needed === true) {
-                    $('.css-popup').css({
-                        visibility: "visible",
-                        opacity: 1
-                    });
-                    $("#userPassword").focus();
-                } else {
                     window.location = "user-panel.html"
-                }
             }
         });
     });
@@ -296,56 +289,7 @@ $(document).ready(function () {
         });
         });
 
-    /* Password prompt on css popup */
-    $('#passwordLogin').click(function (e) {
-        e.preventDefault();
-
-        /*PSEUDOCODE
-        call API
-        if password is incorrect
-            hide '.password-form' and display '.wrong-password'
-        else
-            go to userpage
-
-        */
-        $.ajax({
-            url: apiUrlUser,
-            method: 'POST',
-            data: {
-                id: $("#userId").val(),
-                password: $("#userPassword").val()
-            },
-            success: function(response, status, xhr) {
-                if(response.auth_status === true) {
-                    console.log(response)
-                    console.log(document.cookie)
-                    console.log(xhr.getAllResponseHeaders())
-                    //console.log(Cookies.get())
-                    //window.location = "user-panel.html";
-                } else {
-                    $('.password-form').css({
-                         display: 'none'
-                    });
-                    $('.wrong-password').css({
-                        display: 'block'
-                    });
-                }
-            }
-        });
-        
-
-    });
-
-    /* Password again */
-    $('#passwordAgain').click(function (e) {
-        e.preventDefault();
-        $('.password-form').css({
-            display: 'block'
-        });
-        $('.wrong-password').css({
-            display: 'none'
-        });
-    })
+    
 
     /* Check if login */
     /* PSEUDOCODE

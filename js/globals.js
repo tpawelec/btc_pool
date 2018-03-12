@@ -15,6 +15,8 @@ var chartUrl = 'http://work.monero.me:12345/api/pool-graph.php';
 var coinUrl = 'http://work.monero.me:12345/api/pool-coin.php';
 var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
 
+/* User ID typed in login input */
+var userIdGlobal;
 
 $(document).ready(function() {
 	/* DROPDOWN MENU WITH CURRENCIES */

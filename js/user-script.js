@@ -302,7 +302,7 @@ function filterTable(regexp) {
 
 function callApi() {
 	$.ajax({
-		url: apiUrl,
+		url: apiUrlUser,
 		method: 'GET',
 		data: {
 			id: userId
@@ -335,6 +335,83 @@ function processCoin(resp) {
 $(document).ready(function () {
 
     'use strict';
+    console.log(userIdGlobal)
+    $.ajax({
+            url: apiUrlUser,
+            method: 'GET',
+            data: {
+                id: localStorage.getItem("id")
+            },
+            success: function(response) {
+            	//console.log(userIdGlobal);
+                if(response.auth_needed === true) {
+                    $('.css-popup').css({
+                        visibility: "visible",
+                        opacity: 1
+                    });
+                } else {
+                	callApi();
+                	setInterval(callApi, 10000);
+                }
+            }
+        });
+
+    $('.css-popup .close').click(function (e) {
+            e.preventDefault();
+            $('.css-popup').css({
+                visibility: "hidden",
+                opacity: 0
+        });
+        });
+
+    /* Password prompt on css popup */
+    $('#passwordLogin').click(function (e) {
+        e.preventDefault();
+
+        /*PSEUDOCODE
+        call API
+        if password is incorrect
+            hide '.password-form' and display '.wrong-password'
+        else
+            go to userpage
+
+        */
+        $.ajax({
+            url: apiUrlUser,
+            method: 'POST',
+            data: {
+                id: localStorage.getItem("id"),
+                password: $("#userPassword").val()
+            },
+            success: function(response, status, xhr) {
+                if(response.auth_status === true) {
+                    console.log(xhr.getAllResponseHeaders())
+                    //window.location = "user-panel.html";
+                } else {
+                    $('.password-form').css({
+                         display: 'none'
+                    });
+                    $('.wrong-password').css({
+                        display: 'block'
+                    });
+                }
+            }
+        });
+        
+
+    });
+
+    /* Password again */
+    $('#passwordAgain').click(function (e) {
+        e.preventDefault();
+        $('.password-form').css({
+            display: 'block'
+        });
+        $('.wrong-password').css({
+            display: 'none'
+        });
+    });
+
     $('#userMenu li').click(function (e) {
 		e.preventDefault();
 
@@ -345,13 +422,13 @@ $(document).ready(function () {
 	});
 
     /* Show miner ID on Dashboard */
-    $('#minerId').text(userId);
+    $('#minerId').text(localStorage.getItem("id"));
 
     var winWidth = $('.container').width();
     pplnsWidth = Math.floor(winWidth * 0.9);
     pplnsDOM.css({'width': pplnsWidth});
 
-    callApi();
+    
 
     /*
     When clicked on currency variable and html content is updated. Then API is called.
@@ -378,5 +455,5 @@ $(document).ready(function () {
     	}
     })
 
-    setInterval(callApi, 10000);
+    
 });
