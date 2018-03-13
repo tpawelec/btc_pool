@@ -61,7 +61,7 @@ body {
     .nav-bar .menu li {
       float: left;
       display: inline-block;
-      width: 6rem;
+      width: 7rem;
       text-align: center; }
     .nav-bar .menu #userLink {
       display: none; }
@@ -128,7 +128,6 @@ body {
 .login,
 .admin-actions {
   text-align: center;
-  width: auto;
   height: 4rem;
   padding: 1.5rem;
   font-size: 1.2rem; }

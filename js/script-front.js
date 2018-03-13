@@ -291,17 +291,15 @@ $(document).ready(function () {
 
     
 
-    /* Check if login */
-    /* PSEUDOCODE
-        if user is NOT logged
-            show login form
-        else
-            hide login form
-    */
-
-    $('.login').css({
-        display: 'block'
-    });
+    if(localStorage.getItem("logged") === null) {
+        $('.login').css({
+            display: 'block'
+        });
+    } else {
+        $('.login').css({
+            display: 'none'
+        });
+    }
     callApi();
     setInterval(callApi, 10000);
 });

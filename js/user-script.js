@@ -1,5 +1,9 @@
-/* User id */
-var userId = 'a';
+/*
+	Because of I don't have access to cookie I have to set flag "if logged" in local storage.
+	I'm gonna check if flag is set to (don't) display login form on front page and "User panel" link on navbar
+	It should be check "if cookie exist"				
+*/
+
 
 /* API */
 var apiUrl = 'http://work.monero.me:12345/api/user-data.php';
@@ -305,7 +309,7 @@ function callApi() {
 		url: apiUrlUser,
 		method: 'GET',
 		data: {
-			id: userId
+			id: localStorage.getItem("id")
 		},
 		success: (response) => loadData(response),
 		error: (response) => showError(response)
@@ -335,27 +339,30 @@ function processCoin(resp) {
 $(document).ready(function () {
 
     'use strict';
-    console.log(userIdGlobal)
-    $.ajax({
-            url: apiUrlUser,
-            method: 'GET',
-            data: {
-                id: localStorage.getItem("id")
-            },
-            success: function(response) {
-            	//console.log(userIdGlobal);
-                if(response.auth_needed === true) {
-                    $('.css-popup').css({
-                        visibility: "visible",
-                        opacity: 1
-                    });
-                } else {
-                	callApi();
-                	setInterval(callApi, 10000);
-                }
-            }
-        });
-
+    if(localStorage.getItem("logged") === null) {
+	    $.ajax({
+	            url: apiUrlUser,
+	            method: 'GET',
+	            data: {
+	                id: localStorage.getItem("id")
+	            },
+	            success: function(response) {
+	                if(response.auth_needed === true) {
+	                    $('.css-popup').css({
+	                        visibility: "visible",
+	                        opacity: 1
+	                    });
+	                } else {
+	                	callApi();
+	                	setInterval(callApi, 10000);
+	                	
+	                }
+	            }
+	        });
+	} else {
+		callApi();
+        setInterval(callApi, 10000);
+	}
     $('.css-popup .close').click(function (e) {
             e.preventDefault();
             $('.css-popup').css({
@@ -385,8 +392,17 @@ $(document).ready(function () {
             },
             success: function(response, status, xhr) {
                 if(response.auth_status === true) {
-                    console.log(xhr.getAllResponseHeaders())
-                    //window.location = "user-panel.html";
+                    $('.css-popup').css({
+                        visibility: "hidden",
+                        opacity: 0
+                    });
+                    $('#userLink').css({
+           					 display: 'inline-block'
+        				});
+                    localStorage.setItem("logged", "true");
+                    
+                    callApi();
+                    setInterval(callApi, 10000);
                 } else {
                     $('.password-form').css({
                          display: 'none'

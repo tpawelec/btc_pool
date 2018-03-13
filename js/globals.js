@@ -36,5 +36,14 @@ $(document).ready(function() {
 
     });
 
-    //console.log(Cookie.get())
+
+   if(localStorage.getItem("logged") === null) {
+        $('#userLink').css({
+            display: 'none'
+        });
+    } else {
+        $('#userLink').css({
+            display: 'inline-block'
+        });
+    }
 });
