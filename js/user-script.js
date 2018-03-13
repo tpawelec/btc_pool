@@ -39,7 +39,7 @@ function loadData(resp) {
 	});
 
 	var factor = Math.floor(totalShares / pplnsWidth);
-
+	pplnsDOM.empty();
 	pplns.forEach(function(block, index) {
 		pplnsDOM.append('<li class="block" id='+ index +'></li>');
 		var currBlock = $('#pplnsWindow > .block:nth-child(' + (index + 1) +')');
@@ -400,7 +400,7 @@ $(document).ready(function () {
            					 display: 'inline-block'
         				});
                     localStorage.setItem("logged", "true");
-                    
+
                     callApi();
                     setInterval(callApi, 10000);
                 } else {
