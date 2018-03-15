@@ -490,7 +490,8 @@ footer {
     height: 400px !important; }
 
 #workersSection {
-  display: none; }
+  display: none;
+  text-align: center; }
   #workersSection h2 {
     text-align: center; }
   #workersSection .search-info {
@@ -502,7 +503,8 @@ footer {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    padding: .3rem; }
+    padding: .3rem;
+    margin: 0 auto; }
     #workersSection input:focus {
       outline: none; }
   #workersSection .workers-table {
