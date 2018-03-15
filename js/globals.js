@@ -46,4 +46,21 @@ $(document).ready(function() {
             display: 'inline-block'
         });
     }
+
+    $('#logOut').click(function(e){
+    	e.preventDefault();
+    	localStorage.removeItem("logged");
+    	localStorage.removeItem("id");
+    	window.location = "index.html";
+    })
+
+    if(localStorage.getItem("logged") === null) {
+        $('#logOut').css({
+            display: 'none'
+        });
+    } else {
+        $('#logOut').css({
+            display: 'block'
+        });
+    }
 });

@@ -17,7 +17,7 @@ var chartCanvas = document.getElementById("myChart").getContext('2d');
 var pplnsWidth;
 var balance;
 var payoutSum = 0;
-var activeWorkers = 0;
+var activeWorkers;
 
 /* Variable for multiplier in pplns graph */
 var pplnsMultiplier = 10;
@@ -31,13 +31,15 @@ function loadData(resp) {
 	var chart = resp.hashrate_graph;
 	var workers = resp.workers;
 	var totalShares = 0;
+
+	activeWorkers = 0;
 	
 
 	pplns.forEach(function(block){
 		totalShares += block.total_shares;
 		payoutSum += block.user_payout;
 	});
-
+    pplnsWidth = $("#pplnsWindow").width()
 	var factor = Math.floor(totalShares / pplnsWidth);
 	pplnsDOM.empty();
 	pplns.forEach(function(block, index) {
@@ -325,8 +327,8 @@ function callApi() {
 function processCoin(resp) {
     'use strict';
     cPrice = resp['pool_coin_price'][cCurrency];
-    $("#balance span").html(balance + 'XMR <br />('+ (balance * cPrice) + ' ' + cCurrency + ')');
-    $('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
+    $("#balance span").html(balance + 'XMR <br />('+ (balance * cPrice)  + ' ' + cCurrency + ')');
+    $('.note-info span').text(payoutSum  + ' XMR (' + (payoutSum * cPrice)  + ' ' + cCurrency + ')');
 	}
 
 /*
@@ -339,6 +341,7 @@ function processCoin(resp) {
 $(document).ready(function () {
 
     'use strict';
+
     if(localStorage.getItem("logged") === null) {
 	    $.ajax({
 	            url: apiUrlUser,
@@ -355,7 +358,14 @@ $(document).ready(function () {
 	                } else {
 	                	callApi();
 	                	setInterval(callApi, 10000);
-	                	
+	                	$('#userLink').css({
+                             display: 'inline-block'
+                    });
+                    $('#logOut').css({
+                        display: 'block'
+                    });
+	                	localStorage.setItem("logged", "true");
+                        
 	                }
 	            }
 	        });
@@ -398,9 +408,11 @@ $(document).ready(function () {
                     });
                     $('#userLink').css({
            					 display: 'inline-block'
-        				});
+        			});
+        			$('#logOut').css({
+            			display: 'block'
+        			});
                     localStorage.setItem("logged", "true");
-
                     callApi();
                     setInterval(callApi, 10000);
                 } else {
@@ -440,10 +452,10 @@ $(document).ready(function () {
     /* Show miner ID on Dashboard */
     $('#minerId').text(localStorage.getItem("id"));
 
-    var winWidth = $('.container').width();
+    /*var winWidth = $('.container').width();
     pplnsWidth = Math.floor(winWidth * 0.9);
     pplnsDOM.css({'width': pplnsWidth});
-
+    */
     
 
     /*

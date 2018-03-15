@@ -1,7 +1,7 @@
 .nav-bar
 	background-color: $nav
-	height: 4rem
-	padding: .5rem
+	height: 6rem
+	padding: 1.5rem
 	position: relative
 	img
 		float: left
@@ -19,6 +19,12 @@
 			text-align: center
 		#userLink
 			display: none
+		#logOut
+			position: absolute
+			top: -30px
+			right: 0
+			font-size: .95rem
+			display: none
 
 	a
 		color: $text
@@ -29,7 +35,7 @@
 		position: absolute
 		top: 50%
 		+transform-translate(0,-50%)
-		right: 5%
+		right: 2%
 		height: 2rem
 		.label
 			display: inline-block
@@ -59,7 +65,21 @@
 			display: block
 			z-index: 3000
 
-@media (max-width: 575px)
+@media (max-width: 991px)
+	.dropdown
+		right: 12%
+
+/*@media (max-width: 767px)
+	.nav-bar
+		height: 6rem
+		padding: 1.5rem
+		position: relative
+		.menu
+			#logOut
+				top: -30px
+				right: -2%*/
+
+@media (max-width: 680px)
 	.nav-bar
 		height: 11rem
 		padding: .5rem
@@ -69,6 +89,9 @@
 				display: block
 				padding: .5rem
 				width: 100%
+			#logOut
+				top: 0
 		.dropdown
-			top: 85%
-			right: 30%
+			top: 80%
+			right: 50%
+			+transform-translate(50%,0)

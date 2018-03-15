@@ -15,7 +15,8 @@
 /* imports */
 body {
   background-color: #0F4172;
-  color: #f0edee; }
+  color: #f0edee;
+  position: relative; }
 
 .btn {
   background-color: #366693;
@@ -46,8 +47,8 @@ body {
 
 .nav-bar {
   background-color: #032546;
-  height: 4rem;
-  padding: .5rem;
+  height: 6rem;
+  padding: 1.5rem;
   position: relative; }
   .nav-bar img {
     float: left;
@@ -65,6 +66,12 @@ body {
       text-align: center; }
     .nav-bar .menu #userLink {
       display: none; }
+    .nav-bar .menu #logOut {
+      position: absolute;
+      top: -30px;
+      right: 0;
+      font-size: .95rem;
+      display: none; }
   .nav-bar a {
     color: #f0edee;
     text-decoration: none;
@@ -78,7 +85,7 @@ body {
       transform--moz-transform: translate(0, -50%);
       transform--ms-transform: translate(0, -50%);
       transform--o-transform: translate(0, -50%);
-    right: 5%;
+    right: 2%;
     height: 2rem; }
     .nav-bar .dropdown .label {
       display: inline-block;
@@ -112,7 +119,20 @@ body {
       display: block;
       z-index: 3000; }
 
-@media (max-width: 575px) {
+@media (max-width: 991px) {
+  .dropdown {
+    right: 12%; } }
+
+/*@media (max-width: 767px)
+	.nav-bar
+		height: 6rem
+		padding: 1.5rem
+		position: relative
+		.menu
+			#logOut
+				top: -30px
+				right: -2%*/
+@media (max-width: 680px) {
   .nav-bar {
     height: 11rem;
     padding: .5rem;
@@ -121,9 +141,16 @@ body {
       display: block;
       padding: .5rem;
       width: 100%; }
+    .nav-bar .menu #logOut {
+      top: 0; }
     .nav-bar .dropdown {
-      top: 85%;
-      right: 30%; } }
+      top: 80%;
+      right: 50%;
+      transform: translate(50%, 0);
+        transform--webkit-transform: translate(50%, 0);
+        transform--moz-transform: translate(50%, 0);
+        transform--ms-transform: translate(50%, 0);
+        transform--o-transform: translate(50%, 0); } }
 
 .login,
 .admin-actions {
@@ -151,7 +178,7 @@ body {
       width: 30rem; }
 
 @media (max-width: 767px) {
-  .login input {
+  .login input:focus {
     width: 20rem; } }
 
 @media (max-width: 575px) {
@@ -163,7 +190,7 @@ body {
     .login input {
       margin-bottom: 1rem; }
       .login input:focus {
-        width: initial; } }
+        width: 20rem; } }
 
 .pool-stats .row-stats {
   padding: .5rem;
@@ -175,6 +202,8 @@ body {
   .pool-stats .row-stats .stats [class*='col-'] {
     padding: 0 2rem 1rem 2rem;
     margin: 1rem 0; }
+  .pool-stats .row-stats .stats .row {
+    margin: 0; }
   .pool-stats .row-stats .stats .title {
     background-color: #1B5389;
     height: 3rem;
@@ -266,7 +295,9 @@ footer {
   border-top: 1px solid #f0edee;
   height: 4rem;
   padding: 1rem;
-  font-size: .8rem; }
+  font-size: .8rem;
+  width: 100%;
+  bottom: 0; }
 
 @media (max-width: 787px) {
   footer {
@@ -329,6 +360,14 @@ footer {
       margin-top: 1.3rem; }
   .wrapper .wrong-id {
     display: none; }
+
+@media (max-width: 920px) {
+  .wrapper {
+    width: 50%; } }
+
+@media (max-width: 575px) {
+  .wrapper {
+    width: 95%; } }
 
 .admin-nav {
   font-family: 'Arial', sans-serif;
@@ -512,7 +551,7 @@ footer {
   padding: 0;
   height: 50px;
   min-height: 50px;
-  width: 700px;
+  width: 1050px;
   list-style-type: none;
   margin: 0 auto;
   cursor: pointer; }
@@ -583,6 +622,8 @@ footer {
       flex-wrap: wrap;
       padding: .5rem 0;
       font-size: .95rem; }
+    .pool-stats .row-stats .stats .row {
+      margin: 0; }
     .pool-stats .row-stats .stats span {
       margin: 0 auto .5rem auto;
       width: 100%; }
@@ -624,5 +665,30 @@ footer {
   -o-transition: opacity 3s ease-in-out; }
   [id*='Hover'] p {
     display: inline-block; }
+
+@media (max-width: 1199px) {
+  .dashboard-pplns #pplnsWindow {
+    width: 900px; } }
+
+@media (max-width: 991px) {
+  .dashboard-pplns #pplnsWindow {
+    width: 700px; } }
+
+@media (max-width: 767px) {
+  .dashboard-pplns #pplnsWindow {
+    width: 500px; } }
+
+@media (max-width: 575px) {
+  .user-menu {
+    height: auto;
+    margin: 2rem 0; }
+    .user-menu .menu {
+      width: 100%; }
+      .user-menu .menu li {
+        clear: both;
+        display: block;
+        width: 100%; }
+  .dashboard-pplns #pplnsWindow {
+    width: 300px; } }
 
 /*# sourceMappingURL=style.css.map */

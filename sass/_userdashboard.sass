@@ -102,7 +102,7 @@
 		padding: 0
 		height: 50px
 		min-height: 50px
-		width: 700px
+		width: 1050px
 		list-style-type: none
 		margin: 0 auto
 		cursor: pointer
@@ -172,6 +172,8 @@
 				flex-wrap: wrap
 				padding: .5rem 0
 				font-size: .95rem
+			.row
+				margin: 0
 			span
 				margin: 0 auto .5rem auto
 				width: 100%
@@ -208,3 +210,34 @@
 	+transition(opacity, 3s)
 	p
 		display: inline-block
+
+@media (max-width: 1199px)
+	.dashboard-pplns
+		#pplnsWindow
+			width: 900px
+
+@media (max-width: 991px)
+	.dashboard-pplns
+		#pplnsWindow
+			width: 700px
+
+@media (max-width: 767px)
+	.dashboard-pplns
+		#pplnsWindow
+			width: 500px
+
+@media (max-width: 575px)
+	.user-menu
+		height: auto
+		margin: 2rem 0
+		.menu
+			width: 100%
+			li
+				clear: both
+				display: block
+				width: 100%
+
+	.dashboard-pplns
+		#pplnsWindow
+			width: 300px
+	
