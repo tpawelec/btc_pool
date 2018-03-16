@@ -1,10 +1,3 @@
-/*
-	Because of I don't have access to cookie I have to set flag "if logged" in local storage.
-	I'm gonna check if flag is set to (don't) display login form on front page and "User panel" link on navbar
-	It should be check "if cookie exist"				
-*/
-
-
 /* API */
 var apiUrl = 'http://work.monero.me:12345/api/user-data.php';
 
@@ -85,7 +78,7 @@ function loadData(resp) {
 	$('.note-factor span').text(pplnsMultiplier);
 	$('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
 
-    
+
 	var $userStats = $('#dashBoardSection p');
 	$userStats.each(function() {
 		if($(this).attr('id') === 'shares') {
@@ -343,7 +336,7 @@ $(document).ready(function () {
 
     'use strict';
 
-    if(localStorage.getItem("logged") === null) {
+    if(document.cookie.indexOf('user_token') < 0) {
 	    $.ajax({
 	            url: apiUrlUser,
 	            method: 'GET',
@@ -365,8 +358,6 @@ $(document).ready(function () {
                     $('#logOut').css({
                         display: 'block'
                     });
-	                	localStorage.setItem("logged", "true");
-                        
 	                }
 	            }
 	        });
@@ -413,7 +404,6 @@ $(document).ready(function () {
         			$('#logOut').css({
             			display: 'block'
         			});
-                    localStorage.setItem("logged", "true");
                     callApi();
                     setInterval(callApi, 10000);
                 } else {

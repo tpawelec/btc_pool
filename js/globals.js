@@ -37,7 +37,7 @@ $(document).ready(function() {
     });
 
 
-   if(localStorage.getItem("logged") === null) {
+   if(document.cookie.indexOf('user_token') < 0) {
         $('#userLink').css({
             display: 'none'
         });
@@ -54,7 +54,7 @@ $(document).ready(function() {
     	window.location = "index.html";
     })
 
-    if(localStorage.getItem("logged") === null) {
+    if(document.cookie.indexOf('user_token') < 0) {
         $('#logOut').css({
             display: 'none'
         });
