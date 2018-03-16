@@ -49,7 +49,7 @@ $(document).ready(function() {
 
     $('#logOut').click(function(e){
     	e.preventDefault();
-    	localStorage.removeItem("logged");
+    	document.cookie = 'user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
     	localStorage.removeItem("id");
     	window.location = "index.html";
     })
