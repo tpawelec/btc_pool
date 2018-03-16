@@ -69,7 +69,7 @@ body {
     .nav-bar .menu #logOut {
       position: absolute;
       top: -30px;
-      right: 0;
+      right: -.5rem;
       font-size: .95rem;
       display: none; }
   .nav-bar a {
@@ -85,7 +85,7 @@ body {
       transform--moz-transform: translate(0, -50%);
       transform--ms-transform: translate(0, -50%);
       transform--o-transform: translate(0, -50%);
-    right: 2%;
+    right: 1rem;
     height: 2rem; }
     .nav-bar .dropdown .label {
       display: inline-block;
@@ -134,17 +134,23 @@ body {
 				right: -2%*/
 @media (max-width: 680px) {
   .nav-bar {
-    height: 11rem;
+    height: 11.7rem;
     padding: .5rem;
     position: relative; }
+    .nav-bar img {
+      width: 200px;
+      height: auto;
+      float: none;
+      display: block;
+      margin: 0 auto; }
     .nav-bar .menu li {
       display: block;
       padding: .5rem;
       width: 100%; }
     .nav-bar .menu #logOut {
-      top: 0; }
+      top: -4rem; }
     .nav-bar .dropdown {
-      top: 80%;
+      top: 82%;
       right: 50%;
       transform: translate(50%, 0);
         transform--webkit-transform: translate(50%, 0);
@@ -491,7 +497,7 @@ footer {
 
 #workersSection {
   display: none;
-  text-align: center; }
+  text-align: right; }
   #workersSection h2 {
     text-align: center; }
   #workersSection .search-info {
@@ -504,7 +510,7 @@ footer {
     -moz-border-radius: 10px;
     border-radius: 10px;
     padding: .3rem;
-    margin: 0 auto; }
+    margin: 0 0 0 auto; }
     #workersSection input:focus {
       outline: none; }
   #workersSection .workers-table {
@@ -691,6 +697,10 @@ footer {
         display: block;
         width: 100%; }
   .dashboard-pplns #pplnsWindow {
-    width: 300px; } }
+    width: 300px; }
+  #workersSection {
+    text-align: center; }
+    #workersSection input {
+      margin: 0 auto; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -34,11 +34,12 @@ function loadData(resp) {
 
 	activeWorkers = 0;
 	
-
+    payoutSum = 0;
 	pplns.forEach(function(block){
 		totalShares += block.total_shares;
 		payoutSum += block.user_payout;
 	});
+    payoutSum = payoutSum.toFixed(5);
     pplnsWidth = $("#pplnsWindow").width()
 	var factor = Math.floor(totalShares / pplnsWidth);
 	pplnsDOM.empty();
@@ -84,6 +85,7 @@ function loadData(resp) {
 	$('.note-factor span').text(pplnsMultiplier);
 	$('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
 
+    
 	var $userStats = $('#dashBoardSection p');
 	$userStats.each(function() {
 		if($(this).attr('id') === 'shares') {
@@ -278,7 +280,6 @@ function filterTable(regexp) {
 	var $tableRows = $('#workersTable > tbody tr');
 	if(regexp.length !== 0) {
 		var searchregexp = new RegExp(unescape(regexp, "g"));
-		console.log(searchregexp);
 		$tableRows.each(function() {
 			if(!searchregexp.test($(this).children()[0].textContent)) {
 				$(this).css({'display': 'none'});
@@ -297,9 +298,9 @@ function filterTable(regexp) {
 	$tableRows.each(function() {
 				if($(this).css('display') === 'table-row') {
 					if(rowIndex % 2 === 0) {
-						$(this).css({'background-color': '#1B5389'});
-					} else {
 						$(this).css({'background-color': 'initial'});
+					} else {
+						$(this).css({'background-color': '#1B5389'});
 					}
 					rowIndex++;
 				}
