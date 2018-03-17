@@ -305,7 +305,7 @@ function callApi() {
 		url: apiUrlUser,
 		method: 'GET',
 		data: {
-			id: localStorage.getItem("id")
+			id: getUrlVars()['id']
 		},
 		success: (response) => loadData(response),
 		error: (response) => showError(response)
@@ -393,7 +393,7 @@ $(document).ready(function () {
             url: apiUrlUser,
             method: 'POST',
             data: {
-                id: localStorage.getItem("id"),
+                id: getUrlVars()['id']
                 password: $("#userPassword").val()
             },
             success: function(response, status, xhr) {
@@ -445,7 +445,7 @@ $(document).ready(function () {
 	});
 
     /* Show miner ID on Dashboard */
-    $('#minerId').text(localStorage.getItem("id"));
+    $('#minerId').text(getUrlVars()['id']);
 
     /*var winWidth = $('.container').width();
     pplnsWidth = Math.floor(winWidth * 0.9);
