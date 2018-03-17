@@ -68,7 +68,7 @@ body {
       display: none; }
     .nav-bar .menu #logOut {
       position: absolute;
-      top: -30px;
+      top: 0;
       right: -.5rem;
       font-size: .95rem;
       display: none; }
@@ -85,7 +85,7 @@ body {
       transform--moz-transform: translate(0, -50%);
       transform--ms-transform: translate(0, -50%);
       transform--o-transform: translate(0, -50%);
-    right: 1rem;
+    right: 5rem;
     height: 2rem; }
     .nav-bar .dropdown .label {
       display: inline-block;
@@ -148,10 +148,11 @@ body {
       padding: .5rem;
       width: 100%; }
     .nav-bar .menu #logOut {
-      top: -4rem; }
+      top: 5.5rem;
+      right: 15rem; }
     .nav-bar .dropdown {
       top: 82%;
-      right: 50%;
+      right: 60%;
       transform: translate(50%, 0);
         transform--webkit-transform: translate(50%, 0);
         transform--moz-transform: translate(50%, 0);
