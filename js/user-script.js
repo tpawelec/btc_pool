@@ -393,7 +393,7 @@ $(document).ready(function () {
             url: apiUrlUser,
             method: 'POST',
             data: {
-                id: getUrlVars()['id']
+                id: getUrlVars()['id'],
                 password: $("#userPassword").val()
             },
             success: function(response, status, xhr) {
