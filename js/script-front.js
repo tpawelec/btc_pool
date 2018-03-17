@@ -40,7 +40,7 @@ function processStats(resp) {
         if(record.anon_miner) {
             innerHTMLTable += '<td class="miner-id">' + record.miner + '</td>';
         } else {
-            innerHTMLTable += '<td class="miner-id"><a href="#">' + record.miner + '</a></td>';
+            innerHTMLTable += '<td class="miner-id"><a href="user-panel.html" class="miner-link">' + record.miner + '</a></td>';
         }
         innerHTMLTable += '<td>' + record.reward + 'XMR<br>(' + (record.reward * cPrice).toFixed(2) + ' ' + cCurrency + ')</td>';
         innerHTMLTable += '<td>' + convertTime(record.time) + ' minutes ago</td></tr>';
@@ -264,6 +264,11 @@ $(document).ready(function () {
         callApi();
     });
 
+
+    
+    $("body").on('click', '.miner-link', function (e) {
+        localStorage.setItem("id", e.currentTarget.text);
+    });
     /* Login form and popup display */
     $('#loginForm').click(function (e) {
         e.preventDefault();

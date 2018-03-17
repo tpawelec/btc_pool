@@ -478,10 +478,11 @@ footer {
   text-align: center;
   margin: 2rem 0; }
   .miner-id #minerId {
+    max-width: 90%;
+    margin: 0 auto;
     font-weight: 700;
-    font-style: italic; }
-  .miner-id p {
-    display: inline-block; }
+    font-style: italic;
+    word-wrap: break-word; }
 
 .header {
   text-align: center;
