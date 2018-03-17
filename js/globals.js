@@ -44,17 +44,42 @@ $(document).ready(function() {
 
     });
 
+    /*
+        Global AJAX Setup for error
+    */
+    $.ajaxSetup({
+        error: function(jqXHR, exception) {
+            $(".css-popup").css({
+                display: "block"
+            });
+            $('.server-problem').css({
+                display: "block"
+            })
+        }
+    });
 
+    /*
+    If user is logged "User panel" and "Logout" is displayed
+    */
    if(document.cookie.indexOf('user_token') < 0) {
         $('#userLink').css({
+            display: 'none'
+        });
+        $('#logOut').css({
             display: 'none'
         });
     } else {
         $('#userLink').css({
             display: 'inline-block'
         });
+        $('#logOut').css({
+            display: 'block'
+        });
     }
 
+    /*
+        Event for "Logout"
+    */
     $('#logOut').click(function(e){
     	e.preventDefault();
     	document.cookie = 'user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
@@ -62,13 +87,4 @@ $(document).ready(function() {
     	window.location = "index.html";
     })
 
-    if(document.cookie.indexOf('user_token') < 0) {
-        $('#logOut').css({
-            display: 'none'
-        });
-    } else {
-        $('#logOut').css({
-            display: 'block'
-        });
-    }
 });

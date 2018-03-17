@@ -367,6 +367,8 @@ footer {
       margin-top: 1.3rem; }
   .wrapper .wrong-id {
     display: none; }
+  .wrapper .server-problem {
+    display: none; }
 
 @media (max-width: 920px) {
   .wrapper {

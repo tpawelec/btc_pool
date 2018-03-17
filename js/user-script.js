@@ -15,10 +15,6 @@ var activeWorkers;
 /* Variable for multiplier in pplns graph */
 var pplnsMultiplier = 10;
 
-function showError(resp) {
-	alert("There is a problem with server \n" + resp)
-}
-
 function loadData(resp) {
 	var pplns = resp.pplns_window;
 	var chart = resp.hashrate_graph;
@@ -307,8 +303,7 @@ function callApi() {
 		data: {
 			id: getUrlVars()['id']
 		},
-		success: (response) => loadData(response),
-		error: (response) => showError(response)
+		success: (response) => loadData(response)
 	});
 
 	 $.ajax({
@@ -339,6 +334,12 @@ function passwordLogin() {
                         visibility: "hidden",
                         opacity: 0
                     });
+                    $('.css-popup > .wrapper > *:not(p)').css({
+                            display: 'none'
+                        });
+                    $('.password-form').css({
+                            display: 'block'
+                        });
                     $(".css-popup").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
                             $("#userPassword").focusout();
                         });
@@ -351,8 +352,8 @@ function passwordLogin() {
                     callApi();
                     setInterval(callApi, 10000);
                 } else {
-                    $('.password-form').css({
-                         display: 'none'
+                    $('.css-popup > .wrapper > *:not(p)').css({
+                            display: 'none'
                     });
                     $('.wrong-password').css({
                         display: 'block'
@@ -383,6 +384,19 @@ $(document).ready(function () {
 	                id: getUrlVars()['id']
 	            },
 	            success: function(response) {
+
+                    if(response.error === "Username not found") {
+                        $('.css-popup').css({
+                            visibility: "visible",
+                            opacity: 1
+                        });
+                        $('.css-popup > .wrapper > *:not(p)').css({
+                            display: 'none'
+                        });
+                        $('.wrong-id').css({
+                            display: 'block'
+                        });
+                    }
 	                if(response.auth_needed === true) {
 	                    $('.css-popup').css({
 	                        visibility: "visible",
@@ -397,10 +411,10 @@ $(document).ready(function () {
 	                	setInterval(callApi, 10000);
 	                	$('#userLink').css({
                              display: 'inline-block'
-                    });
-                    $('#logOut').css({
-                        display: 'block'
-                    });
+                        });
+                        $('#logOut').css({
+                            display: 'block'
+                        });
 	                }
 	            }
 	        });
@@ -411,10 +425,14 @@ $(document).ready(function () {
 	}
     $('.css-popup .close').click(function (e) {
             e.preventDefault();
-            $('.css-popup').css({
-                visibility: "hidden",
-                opacity: 0
-        });
+            if($('.wrong-id').css('display') === 'block') {
+                window.location = "index.html"
+            } else {            
+                $('.css-popup').css({
+                    visibility: "hidden",
+                    opacity: 0
+                });
+            }
         });
 
     /* Password prompt on css popup */
@@ -432,11 +450,11 @@ $(document).ready(function () {
     /* Password again */
     $('#passwordAgain').click(function (e) {
         e.preventDefault();
+        $('.css-popup > .wrapper > *:not(p)').css({
+            display: 'none'
+        });
         $('.password-form').css({
             display: 'block'
-        });
-        $('.wrong-password').css({
-            display: 'none'
         });
     });
 

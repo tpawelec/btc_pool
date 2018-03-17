@@ -232,30 +232,6 @@ $(document).ready(function () {
 
     'use strict';
     /*
-        Global AJAX Setup for error
-    */
-    $.ajaxSetup({
-        error: function(jqXHR, exception) {
-            if (jqXHR.status === 0) {
-                alert('Not connect.\n Verify Network.');
-            } else if (jqXHR.status == 404) {
-                alert('Requested page not found. [404]');
-            } else if (jqXHR.status == 500) {
-                alert('Internal Server Error [500].');
-            } else if (exception === 'parsererror') {
-                alert('Requested JSON parse failed.');
-            } else if (exception === 'timeout') {
-                alert('Time out error.');
-            } else if (exception === 'abort') {
-                alert('Ajax request aborted.');
-            } else {
-                alert('Uncaught Error.\n' + jqXHR.responseText);
-            }
-        }
-    });
-    
-
-    /*
     When clicked on currency variable and html content is updated. Then API is called.
     */
     $('.dropdown-content p').click(function (e) {
@@ -280,7 +256,20 @@ $(document).ready(function () {
                 id: $("#userId").val()
             },
             success: function(response) {
-                    window.location = "user-panel.html?id=" + $("#userId").val()
+                    if(response.error === "Username not found") {
+                        $('.css-popup').css({
+                            visibility: "visible",
+                            opacity: 1
+                        });
+                        $('.css-popup > .wrapper > *:not(p)').css({
+                            display: 'none'
+                        });
+                        $('.wrong-id').css({
+                            display: 'block'
+                        });
+                    } else {
+                        window.location = "user-panel.html?id=" + $("#userId").val()
+                    }
             }
         });
     });
@@ -295,7 +284,7 @@ $(document).ready(function () {
 
     
 
-    if(localStorage.getItem("logged") === null) {
+    if(document.cookie.indexOf('user_token') < 0) {
         $('.login').css({
             display: 'block'
         });
