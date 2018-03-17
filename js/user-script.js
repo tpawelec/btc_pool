@@ -325,6 +325,42 @@ function processCoin(resp) {
     $('.note-info span').text(payoutSum  + ' XMR (' + (payoutSum * cPrice)  + ' ' + cCurrency + ')');
 	}
 
+function passwordLogin() {
+    $.ajax({
+            url: apiUrlUser,
+            method: 'POST',
+            data: {
+                id: getUrlVars()['id'],
+                password: $("#userPassword").val()
+            },
+            success: function(response, status, xhr) {
+                if(response.auth_status === true) {
+                    $('.css-popup').css({
+                        visibility: "hidden",
+                        opacity: 0
+                    });
+                    $(".css-popup").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
+                            $("#userPassword").focusout();
+                        });
+                    $('#userLink').css({
+                             display: 'inline-block'
+                    });
+                    $('#logOut').css({
+                        display: 'block'
+                    });
+                    callApi();
+                    setInterval(callApi, 10000);
+                } else {
+                    $('.password-form').css({
+                         display: 'none'
+                    });
+                    $('.wrong-password').css({
+                        display: 'block'
+                    });
+                }
+            }
+        });
+}
 /*
 
 
@@ -352,6 +388,10 @@ $(document).ready(function () {
 	                        visibility: "visible",
 	                        opacity: 1
 	                    });
+                        $(".css-popup").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
+                            $("#userPassword").focus();
+                        });
+                        
 	                } else {
 	                	callApi();
 	                	setInterval(callApi, 10000);
@@ -380,50 +420,15 @@ $(document).ready(function () {
     /* Password prompt on css popup */
     $('#passwordLogin').click(function (e) {
         e.preventDefault();
-
-        /*PSEUDOCODE
-        call API
-        if password is incorrect
-            hide '.password-form' and display '.wrong-password'
-        else
-            go to userpage
-
-        */
-        $.ajax({
-            url: apiUrlUser,
-            method: 'POST',
-            data: {
-                id: getUrlVars()['id'],
-                password: $("#userPassword").val()
-            },
-            success: function(response, status, xhr) {
-                if(response.auth_status === true) {
-                    $('.css-popup').css({
-                        visibility: "hidden",
-                        opacity: 0
-                    });
-                    $('#userLink').css({
-           					 display: 'inline-block'
-        			});
-        			$('#logOut').css({
-            			display: 'block'
-        			});
-                    callApi();
-                    setInterval(callApi, 10000);
-                } else {
-                    $('.password-form').css({
-                         display: 'none'
-                    });
-                    $('.wrong-password').css({
-                        display: 'block'
-                    });
-                }
-            }
-        });
-        
-
+        passwordLogin();
     });
 
+    $("#passwordLogin").keyup(function (e) {
+        if(e.which === 13 || e.keyCode === 13) {
+            e.preventDefault();
+            passwordLogin();
+        }
+    })
     /* Password again */
     $('#passwordAgain').click(function (e) {
         e.preventDefault();
