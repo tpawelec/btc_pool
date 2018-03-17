@@ -341,7 +341,7 @@ function passwordLogin() {
                             display: 'block'
                         });
                     $(".css-popup").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
-                            $("#userPassword").focusout();
+                            $('#dashBoardSection').focus();
                         });
                     $('#userLink').css({
                              display: 'inline-block'
