@@ -337,6 +337,9 @@ $(document).ready(function () {
     'use strict';
 
     if(document.cookie.indexOf('user_token') < 0) {
+        if(localStorage.getItem("id") === null ){
+            alert("No login id");
+        } else {
 	    $.ajax({
 	            url: apiUrlUser,
 	            method: 'GET',
@@ -361,6 +364,7 @@ $(document).ready(function () {
 	                }
 	            }
 	        });
+    }
 	} else {
 		callApi();
         setInterval(callApi, 10000);
