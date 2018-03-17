@@ -18,6 +18,14 @@ var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
 /* User ID typed in login input */
 var userIdGlobal;
 
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
 $(document).ready(function() {
 	/* DROPDOWN MENU WITH CURRENCIES */
     btn.click(function () {

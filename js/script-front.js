@@ -267,21 +267,20 @@ $(document).ready(function () {
 
     
     $("body").on('click', '.miner-link', function (e) {
-        localStorage.setItem("id", e.currentTarget.text);
+        e.preventDefault();
+        window.location = "user-panel.html?id=" + e.currentTarget.text;
     });
     /* Login form and popup display */
     $('#loginForm').click(function (e) {
         e.preventDefault();
-        //userIdGlobal = $("#userId").val();
-        localStorage.setItem("id", $("#userId").val())
         $.ajax({
             url: apiUrlUser,
             method: 'GET',
             data: {
-                id: localStorage.getItem("id")
+                id: $("#userId").val()
             },
             success: function(response) {
-                    window.location = "user-panel.html"
+                    window.location = "user-panel.html?id=" + $("#userId").val()
             }
         });
     });

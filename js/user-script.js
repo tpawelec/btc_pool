@@ -337,14 +337,14 @@ $(document).ready(function () {
     'use strict';
 
     if(document.cookie.indexOf('user_token') < 0) {
-        if(localStorage.getItem("id") === null ){
+        if(location.search.indexOf('id=') < 0){
             alert("No login id");
         } else {
 	    $.ajax({
 	            url: apiUrlUser,
 	            method: 'GET',
 	            data: {
-	                id: localStorage.getItem("id")
+	                id: getUrlVars()['id']
 	            },
 	            success: function(response) {
 	                if(response.auth_needed === true) {
