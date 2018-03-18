@@ -303,13 +303,13 @@ function callApi() {
 		data: {
 			id: getUrlVars()['id']
 		},
-		success: (response) => loadData(response)
+		success: function(response) {loadData(response);}
 	});
 
 	 $.ajax({
         url: coinUrl,
         method: 'GET',
-        success: (response) => processCoin(response)
+        success: function(response) {processCoin(response);}
     });
 }
 
@@ -487,7 +487,7 @@ $(document).ready(function () {
     $.ajax({
         url: coinUrl,
         method: 'GET',
-        success: (response) => processCoin(response)
+        success: function(response) {processCoin(response);}
     });
     });
 

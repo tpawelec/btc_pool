@@ -232,7 +232,7 @@ $(document).ready(function () {
 	});*/
 
 	callInputApi("b", $('#dataVal'));
-	autocompleteInerval = setInterval(_=>callInputApi("b", $('#dataVal')),10000);
+	autocompleteInerval = setInterval(function(){callInputApi("b", $('#dataVal'));},10000);
 
 	$('#dataVal').on('keyup', function (e) {
 		e.preventDefault();

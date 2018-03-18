@@ -65,7 +65,7 @@ function processCoin(resp) {
     $.ajax({
         url: poolUrl,
         method: 'GET',
-        success: (response) => processStats(response)
+        success: function(response) {processStats(response);}
     });
 }
 
@@ -214,7 +214,7 @@ function callApi() {
     $.ajax({
         url: coinUrl,
         method: 'GET',
-        success: (response) => processCoin(response)
+        success: function(response) {processCoin(response);}
     });
     /*
     Stats API is called inside processCoin callback because of need of xmr prices
@@ -223,7 +223,7 @@ function callApi() {
     $.ajax({
         url: chartUrl,
         method: 'GET',
-        success: (response) => drawChart(response)
+        success: function(response) {drawChart(response);}
     })
 }
 
