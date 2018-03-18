@@ -159,6 +159,7 @@ function loadData(resp) {
 
 function drawChart(chartSet) {
     'use strict';
+    alert("User panel v1.0")
     var datasets = [];
     var serverNames = [];
     var labels = [];
