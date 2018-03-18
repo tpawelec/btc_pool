@@ -340,10 +340,10 @@ function passwordLogin() {
                     $('.password-form').css({
                             display: 'block'
                         });
-                    $(".css-popup").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){
-                            $('#passwordLogin').blur();
-                            $('#dashBoardSection').focus();
-                        });
+                    
+                    $('#passwordLogin').blur();
+                    $('#dashBoardSection').focus();
+                    
                     $('#userLink').css({
                              display: 'inline-block'
                     });
