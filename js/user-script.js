@@ -330,7 +330,15 @@ function passwordLogin() {
             },
             success: function(response, status, xhr) {
                 if(response.auth_status === true) {
-                    $('#passwordLogin').blur();
+                    
+                    $('#passwordLogin').attr('readonly', 'readonly'); // Force keyboard to hide on input field.
+                    $('#passwordLogin').attr('disabled', 'true'); // Force keyboard to hide on textarea field.
+                    setTimeout(function() {
+                        $('#passwordLogin').blur();  //actually close the keyboard
+                        // Remove readonly attribute after keyboard is hidden.
+                        $('#passwordLogin').removeAttr('readonly');
+                        $('#passwordLogin').removeAttr('disabled');
+                    }, 100);
                     $('.css-popup').css({
                         visibility: "hidden",
                         opacity: 0
