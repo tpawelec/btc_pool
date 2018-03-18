@@ -345,6 +345,7 @@ function passwordLogin() {
                         field.focus();
                         setTimeout(function() {
                             field.setAttribute('style', 'display:none;');
+                            window.scrollTop();
                         }, 50);
                     }, 50);
                     $('#userLink').css({
