@@ -330,6 +330,7 @@ function passwordLogin() {
             },
             success: function(response, status, xhr) {
                 if(response.auth_status === true) {
+                    $('#passwordLogin').blur();
                     $('.css-popup').css({
                         visibility: "hidden",
                         opacity: 0
@@ -337,17 +338,7 @@ function passwordLogin() {
                     $('.css-popup > .wrapper > *:not(p)').css({
                             display: 'none'
                         });
-                    var field = document.createElement('input');
-                    field.setAttribute('type', 'text');
-                    document.body.appendChild(field);
 
-                    setTimeout(function() {
-                        field.focus();
-                        setTimeout(function() {
-                            field.setAttribute('style', 'display:none;');
-                            window.scrollTop();
-                        }, 50);
-                    }, 50);
                     $('#userLink').css({
                              display: 'inline-block'
                     });
