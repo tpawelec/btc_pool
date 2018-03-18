@@ -337,7 +337,7 @@ function passwordLogin() {
                     $('.css-popup > .wrapper > *:not(p)').css({
                             display: 'none'
                         });
-                    
+                    $("#dashBoardSection").focus();
                     $('#userLink').css({
                              display: 'inline-block'
                     });
