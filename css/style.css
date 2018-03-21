@@ -152,7 +152,7 @@ body {
       right: 15rem; }
     .nav-bar .dropdown {
       top: 82%;
-      right: 60%;
+      right: 40%;
       transform: translate(50%, 0);
         transform--webkit-transform: translate(50%, 0);
         transform--moz-transform: translate(50%, 0);

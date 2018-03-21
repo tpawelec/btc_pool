@@ -153,6 +153,7 @@ function loadData(resp) {
 	});
 
 	$('#workersSection .table-body').html(innerHTMLTable);
+    filterTable($('#nameSearch').val());
 	drawChart(chart);
 
 }
@@ -404,7 +405,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.2")
+    alert("User panel v1.3")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
