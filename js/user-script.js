@@ -382,7 +382,7 @@ function passwordLogin() {
                     hideKeyboard();
                     callApi();
                     setInterval(callApi, 10000);
-                    alert("User panel v1.1")
+                    
                 } else {
                     $('.css-popup > .wrapper > *:not(p)').css({
                             display: 'none'
@@ -404,7 +404,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-
+    alert("User panel v1.2")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
