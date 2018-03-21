@@ -327,6 +327,7 @@ function filterTable(regexp) {
 					rowIndex++;
 				}
 	});
+    hideKeyboard();
 }
 
 function callApi() {
