@@ -86,7 +86,8 @@ body {
       transform--ms-transform: translate(0, -50%);
       transform--o-transform: translate(0, -50%);
     right: 5rem;
-    height: 2rem; }
+    height: 2rem;
+    z-index: 3000; }
     .nav-bar .dropdown .label {
       display: inline-block;
       float: left;
@@ -116,8 +117,7 @@ body {
         .nav-bar .dropdown .dropdown-content p:last-child {
           border: none; }
     .nav-bar .dropdown .show {
-      display: block;
-      z-index: 3000; }
+      display: block; }
 
 @media (max-width: 991px) {
   .dropdown {
@@ -149,10 +149,10 @@ body {
       width: 100%; }
     .nav-bar .menu #logOut {
       top: 5.5rem;
-      right: 15rem; }
+      right: 80%; }
     .nav-bar .dropdown {
       top: 82%;
-      right: 40%;
+      right: 25%;
       transform: translate(50%, 0);
         transform--webkit-transform: translate(50%, 0);
         transform--moz-transform: translate(50%, 0);
@@ -328,7 +328,7 @@ footer {
 
 .wrapper {
   position: fixed;
-  margin: 10rem auto;
+  margin: 12rem auto;
   padding: 1.2rem;
   background: #fff;
   border-radius: 5px;
@@ -336,11 +336,15 @@ footer {
   transition: all 5s ease-in-out;
   height: auto;
   width: 30%;
-  color: #191919; }
+  color: #191919;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.5rem; }
   .wrapper .close {
     position: absolute;
     top: .4rem;
-    right: .4rem;
+    right: .8rem;
     transition: all 200ms;
     font-size: 30px;
     font-weight: bold;
@@ -348,7 +352,8 @@ footer {
     color: #333;
     cursor: pointer; }
   .wrapper .password-form {
-    display: block; }
+    display: block;
+    padding: 1.5rem; }
     .wrapper .password-form input {
       padding: .5rem;
       border: 1px solid rgba(0, 0, 0, 0.5);
@@ -360,15 +365,26 @@ footer {
     .wrapper .password-form .btn-password {
       margin-left: 1rem; }
   .wrapper .wrong-password {
-    display: none; }
+    display: none;
+    padding: 1.5rem; }
     .wrapper .wrong-password .btn-repassword {
       display: block;
       margin-left: 75%;
       margin-top: 1.3rem; }
   .wrapper .wrong-id {
-    display: none; }
+    display: none;
+    padding: 2.5rem; }
   .wrapper .server-problem {
-    display: none; }
+    display: none;
+    padding: 2.5rem; }
+  .wrapper .prompt-error {
+    color: #900;
+    font-size: 60px;
+    font-weight: 700;
+    margin: 1.5rem;
+    position: absolute;
+    top: -2%;
+    left: 5%; }
 
 @media (max-width: 920px) {
   .wrapper {
@@ -376,7 +392,12 @@ footer {
 
 @media (max-width: 575px) {
   .wrapper {
-    width: 95%; } }
+    width: 95%; }
+    .wrapper input {
+      width: 8rem; }
+    .wrapper .prompt-error {
+      top: -4%;
+      left: -4%; } }
 
 .admin-nav {
   font-family: 'Arial', sans-serif;

@@ -12,7 +12,7 @@
 
 .wrapper
     position: fixed
-    margin: 10rem auto
+    margin: 12rem auto
     padding: 1.2rem
     background: #fff
     border-radius: 5px
@@ -21,10 +21,14 @@
     height: auto
     width: 30%
     color: #191919
+    display: flex
+    justify-content: space-around
+    align-items: center
+    font-size: 1.5rem
     .close
         position: absolute;
         top: .4rem;
-        right: .4rem;
+        right: .8rem;
         transition: all 200ms;
         font-size: 30px;
         font-weight: bold;
@@ -33,6 +37,7 @@
         cursor: pointer
     .password-form
         display: block
+        padding: 1.5rem
         input
             padding: .5rem
             border: 1px solid rgba(0,0,0,0.5)
@@ -44,14 +49,25 @@
             margin-left: 1rem
     .wrong-password
         display: none
+        padding: 1.5rem
         .btn-repassword
             display: block
             margin-left: 75%
             margin-top: 1.3rem
     .wrong-id
         display: none
+        padding: 2.5rem
     .server-problem
         display: none
+        padding: 2.5rem
+    .prompt-error
+        color: #900
+        font-size: 60px
+        font-weight: 700
+        margin: 1.5rem
+        position: absolute
+        top: -2%
+        left: 5%
     
 @media (max-width: 920px)
     .wrapper
@@ -60,3 +76,8 @@
 @media (max-width: 575px)
     .wrapper
         width: 95%
+        input
+            width: 8rem
+        .prompt-error
+            top: -4%
+            left: -4%
