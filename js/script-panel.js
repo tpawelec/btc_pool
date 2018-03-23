@@ -123,7 +123,7 @@ function setZebra(id) {
 	$("#" + id + " > tbody tr").each(function() {
 				if($(this).css('display') === 'table-row') {
 					if(rowIndex % 2 === 0) {
-						$(this).css({'background-color': '#1B5389'});
+						$(this).css({'background-color': bgSec});
 					} else {
 						$(this).css({'background-color': 'initial'});
 					}

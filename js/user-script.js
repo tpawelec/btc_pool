@@ -43,8 +43,8 @@ function hideKeyboard() {
     };
     //focusing it
     field.focus();
-
   }, 50);
+
 }
 
 function loadData(resp) {
@@ -323,12 +323,12 @@ function filterTable(regexp) {
 					if(rowIndex % 2 === 0) {
 						$(this).css({'background-color': 'initial'});
 					} else {
-						$(this).css({'background-color': '#1B5389'});
+						$(this).css({'background-color': bgSec});
 					}
 					rowIndex++;
 				}
 	});
-    hideKeyboard();
+    
 }
 
 function callApi() {
@@ -405,7 +405,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.3")
+    alert("User panel v1.4")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
@@ -533,6 +533,7 @@ $(document).ready(function () {
     			filterTable(e.currentTarget.value);
     		}
     	}
+        hideKeyboard();
     })
 
     

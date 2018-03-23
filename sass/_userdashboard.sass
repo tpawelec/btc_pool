@@ -2,7 +2,7 @@
 .user-menu
 	height: 2.5rem
 	margin: 2rem 0
-	background-color: $color-primary-2
+	background-color: $background-secondary
 	line-height: 2.5rem
 	font-size: 1.5rem
 	.menu
@@ -37,9 +37,11 @@
 #dashBoardSection
 	display: block
 	margin-bottom: 2rem
-	canvas
-		width: 100%
-		height: 400px!important
+	.chart
+		height: 400px
+		margin-bottom: 5rem
+		canvas
+			width: 100%
 
 #workersSection
 	display: none
@@ -89,14 +91,14 @@
 						width: 20%
 		.table-body
 			tr:nth-child(even)
-				background-color: #1B5389
+				background-color: $background-secondary
 			td
 				text-align: center
 				padding: .5rem 0
 			.active-worker
-				color: #090
+				color: $ok
 			.unactive-worker
-				color: #900
+				color: $no-ok
 #payoutSection
 	display: none
 
@@ -113,14 +115,14 @@
 			height: 100%
 			box-sizing: border-box
 		.block
-			border: 1px solid #f0edee
+			border: 1px solid $text
 			float: left
 			position: relative
 			&:hover
 				border-color: $btn
 			&:after
 				content: ''
-				background-color: #cb2f07
+				background-color: $pplns-mined
 				width: 2px
 				height: 80px
 				position: absolute
@@ -130,7 +132,7 @@
 			&:last-child:after
 				display: none
 			.shares
-				background-color: #f0edee
+				background-color: $text
 	.note-factor
 		text-align: right
 		font-size: .7rem
@@ -156,11 +158,11 @@
 				top: .1rem
 				left: -1rem
 		.mined-blocks:before
-			background-color: #cb2f07
+			background-color: $pplns-mined
 		.user-shares:before
-			background-color: #f0edee
+			background-color: $text
 		.other-shares:before
-			border: 1px solid #f0edee
+			border: 1px solid $text
 
 .pool-stats
 	.row-stats
@@ -195,7 +197,7 @@
 			float: left
 			height: 100%
 		.userShares
-			background-color: #f0edee
+			background-color: $text
 		.otherShares
 			width: auto
 
@@ -203,9 +205,9 @@
 	position: absolute
 	height: auto
 	width: auto
-	background-color: #f0edff
+	background-color: $text
 	padding: 10px
-	color: #191919
+	color: $border
 	z-index: 2000
 	display: none
 	opacity: 0

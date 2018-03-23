@@ -148,7 +148,7 @@ function drawChart(resp) {
     options: {
         animation: false,
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         scales: {
             yAxes: [{
                 id: "y-axis-0",
@@ -231,7 +231,7 @@ function callApi() {
 $(document).ready(function () {
 
     'use strict';
-    alert("Front v1.2")
+    alert("Front v1.4")
     /*
     When clicked on currency variable and html content is updated. Then API is called.
     */

@@ -14,17 +14,18 @@
     position: fixed
     margin: 12rem auto
     padding: 1.2rem
-    background: #fff
+    background: $popup-bg
     border-radius: 5px
     position: relative
     transition: all 5s ease-in-out
     height: auto
     width: 30%
-    color: #191919
+    color: $border
     display: flex
     justify-content: space-around
     align-items: center
     font-size: 1.5rem
+    box-shadow: 0 0 10px 20px $popup-bg
     .close
         position: absolute;
         top: .4rem;
@@ -33,7 +34,7 @@
         font-size: 30px;
         font-weight: bold;
         text-decoration: none;
-        color: #333;
+        color: $popup-close;
         cursor: pointer
     .password-form
         display: block
@@ -61,7 +62,7 @@
         display: none
         padding: 2.5rem
     .prompt-error
-        color: #900
+        color: $no-ok
         font-size: 60px
         font-weight: 700
         margin: 1.5rem
