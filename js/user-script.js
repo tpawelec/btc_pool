@@ -54,7 +54,7 @@ function hideKeyboard() {
 
 function loadData(resp) {
 	
-	var workers = resp.workers;
+	
 	var totalShares = 0;
 
 	activeWorkers = 0;
@@ -68,6 +68,7 @@ function loadData(resp) {
 
         var pplns = resp.pplns_window;
         var chart = resp.hashrate_graph;
+        var workers = resp.workers;
 
         var $userStats = $('#dashBoardSection p');
         $userStats.each(function() {
