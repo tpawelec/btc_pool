@@ -1,3 +1,4 @@
+
 /* Currency Variable */
 var cCurrency = "USD";
 var cPrice = '';
@@ -76,7 +77,7 @@ $(document).ready(function() {
             display: 'inline-block'
         });
         $('#logOut').css({
-            display: 'block'
+            display: 'flex'
         });
     }
 

@@ -19,13 +19,16 @@
     position: relative
     transition: all 5s ease-in-out
     height: auto
-    width: 30%
+    width: 45%
     color: $border
     display: flex
     justify-content: space-around
     align-items: center
     font-size: 1.5rem
+    z-index: 3000
     box-shadow: 0 0 10px 20px $popup-bg
+    p
+        display: inline-block
     .close
         position: absolute;
         top: .4rem;
@@ -36,8 +39,12 @@
         text-decoration: none;
         color: $popup-close;
         cursor: pointer
+    .popup-content
+        display: flex
+        justify-content: space-around
+        align-items: center
     .password-form
-        display: block
+        display: flex
         padding: 1.5rem
         input
             padding: .5rem
@@ -66,9 +73,9 @@
         font-size: 60px
         font-weight: 700
         margin: 1.5rem
-        position: absolute
-        top: -2%
-        left: 5%
+        //position: absolute
+        //top: -2%
+        //left: 5%
     
 @media (max-width: 920px)
     .wrapper
@@ -77,6 +84,7 @@
 @media (max-width: 575px)
     .wrapper
         width: 95%
+        margin: 8rem auto
         input
             width: 8rem
         .prompt-error

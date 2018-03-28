@@ -328,13 +328,16 @@ footer {
   position: relative;
   transition: all 5s ease-in-out;
   height: auto;
-  width: 30%;
+  width: 45%;
   color: #191919;
   display: flex;
   justify-content: space-around;
   align-items: center;
   font-size: 1.5rem;
+  z-index: 3000;
   box-shadow: 0 0 10px 20px #A7B9CB; }
+  .wrapper p {
+    display: inline-block; }
   .wrapper .close {
     position: absolute;
     top: .4rem;
@@ -345,8 +348,12 @@ footer {
     text-decoration: none;
     color: #333;
     cursor: pointer; }
+  .wrapper .popup-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; }
   .wrapper .password-form {
-    display: block;
+    display: flex;
     padding: 1.5rem; }
     .wrapper .password-form input {
       padding: .5rem;
@@ -375,10 +382,7 @@ footer {
     color: #900;
     font-size: 60px;
     font-weight: 700;
-    margin: 1.5rem;
-    position: absolute;
-    top: -2%;
-    left: 5%; }
+    margin: 1.5rem; }
 
 @media (max-width: 920px) {
   .wrapper {
@@ -386,7 +390,8 @@ footer {
 
 @media (max-width: 575px) {
   .wrapper {
-    width: 95%; }
+    width: 95%;
+    margin: 8rem auto; }
     .wrapper input {
       width: 8rem; }
     .wrapper .prompt-error {

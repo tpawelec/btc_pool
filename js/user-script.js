@@ -15,6 +15,11 @@ var activeWorkers;
 /* Variable for multiplier in pplns graph */
 var pplnsMultiplier = 10;
 
+
+/* Screen flag */
+var screenFlag = 'dashboard';
+
+
 function hideKeyboard() {
   //this set timeout needed for case when hideKeyborad
   //is called inside of 'onfocus' event handler
@@ -48,113 +53,137 @@ function hideKeyboard() {
 }
 
 function loadData(resp) {
-	var pplns = resp.pplns_window;
-	var chart = resp.hashrate_graph;
+	
 	var workers = resp.workers;
 	var totalShares = 0;
 
 	activeWorkers = 0;
 	
     payoutSum = 0;
-	pplns.forEach(function(block){
-		totalShares += block.total_shares;
-		payoutSum += block.user_payout;
-	});
-    payoutSum = payoutSum.toFixed(5);
-    pplnsWidth = $("#pplnsWindow").width()
-	var factor = Math.floor(totalShares / pplnsWidth);
-	pplnsDOM.empty();
-	pplns.forEach(function(block, index) {
-		pplnsDOM.append('<li class="block" id='+ index +'></li>');
-		var currBlock = $('#pplnsWindow > .block:nth-child(' + (index + 1) +')');
 
-		currBlock.css({'width': Math.floor(block.total_shares / factor)});
-		currBlock.append('<li class="shares" style="width: ' + Math.floor((block.user_shares*pplnsMultiplier) / factor) + 'px"></li>');
+    /*
+        DASHBOARD
+    */
+    if(screenFlag === 'dashboard') {
 
-	});
+        var pplns = resp.pplns_window;
+        var chart = resp.hashrate_graph;
 
-	workers.forEach(function(worker) {
-		if(worker.active === true) {
-			activeWorkers += 1;
-		}
-	})
-	$('body').on('mouseover', '.block', function(e) {
-		e.preventDefault();
-		if(e.target === this) {
-			var i = e.target.id;
-		} else {
-			var i = e.target.parentNode.id;
-		}
-			if(pplns[i].block_id === null) {
-				$('#onHover .title:first-child').css({'display' : 'none'});
-				$('#blockId').text('Currently mined block');
-			} else {
-				$('#onHover .title:first-child').css({'display' : 'inline-block'});
-				$('#blockId').text(pplns[i].block_id);
-			}
-			$('#sharesPplns').text(pplns[i].user_shares + '/' + pplns[i].total_shares);
-			$('#userPayout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + cCurrency + ')');
-			$('#onHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
-		
-	});
-
-	$('body').on('mouseout', '.block', function(e){ 
-			$('#onHover').css({'display' : 'none', 'opacity' : 0}); 
-	});
-
-
-	$('.note-factor span').text(pplnsMultiplier);
-	$('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
-
-
-	var $userStats = $('#dashBoardSection p');
-	$userStats.each(function() {
-		if($(this).attr('id') === 'shares') {
-			var minerShares = resp.valid_shares + resp.invalid_shares;
-			$(this).html('Valid: ' + (numbro(resp.valid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >Invalid: ' + (numbro(resp.invalid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
-		} else if($(this).attr('id') === 'workers') {
-			$(this).html('Active: ' + activeWorkers + '<br/ >Total: ' + workers.length)
-		}else if($(this).attr('id') === 'balance') {
-			balance = resp.balance;
-			var widthPerc = (resp.balance / resp.payout_balance)*100;
-			var value = '<span>' + resp.balance + 'XMR <br/>('+ (resp.balance * cPrice) + ' ' + cCurrency + ')</span> \
-								<ul id="balanceBar">\
-									<li class="userShares" style="width:' + widthPerc + '%;"></li>\
-								</ul>';
-			$(this).html(value);
-		} else if($(this).attr('id') === 'cur_hashrate' || $(this).attr('id') === 'avg_hashrate') { 
+        var $userStats = $('#dashBoardSection p');
+        $userStats.each(function() {
+        if($(this).attr('id') === 'shares') {
+            var minerShares = resp.valid_shares + resp.invalid_shares;
+            $(this).html('Valid: ' + (numbro(resp.valid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >Invalid: ' + (numbro(resp.invalid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
+        } else if($(this).attr('id') === 'workers') {
+            $(this).html('Active: ' + activeWorkers + '<br/ >Total: ' + workers.length)
+        }else if($(this).attr('id') === 'balance') {
+            balance = resp.balance;
+            var widthPerc = (resp.balance / resp.payout_balance)*100;
+            var value = '<span>' + resp.balance + 'XMR <br/>('+ (resp.balance * cPrice) + ' ' + cCurrency + ')</span> \
+                                <ul id="balanceBar">\
+                                    <li class="userShares" style="width:' + widthPerc + '%;"></li>\
+                                </ul>';
+            $(this).html(value);
+        } else if($(this).attr('id') === 'cur_hashrate' || $(this).attr('id') === 'avg_hashrate') { 
             $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
         }
-	});
+    });
 
-	$('body').on('mouseover', '#balanceBar', function(e) {
-		e.preventDefault();
-			$('#payBalance').text(resp.payout_balance + ' XMR');
-			$('#payFee').text(resp.payout_fee + ' XMR');
-			$('#balanceOnHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
-		
-	});
+    $('body').on('mouseover', '#balanceBar', function(e) {
+        e.preventDefault();
+            $('#payBalance').text(resp.payout_balance + ' XMR');
+            $('#payFee').text(resp.payout_fee + ' XMR');
+            $('#balanceOnHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
+        
+    });
 
-	$('body').on('mouseout', '#balanceBar', function(e){ 
-			$('#balanceOnHover').css({'display' : 'none', 'opacity' : 0}); 
-	});
+    $('body').on('mouseout', '#balanceBar', function(e){ 
+            $('#balanceOnHover').css({'display' : 'none', 'opacity' : 0}); 
+    });
 
-	var innerHTMLTable = ''
-	workers.forEach(function(worker) {
-		innerHTMLTable += '<tr><td>' + worker.name + '</td>';
-		innerHTMLTable += '<td>' + convertTime(worker.last_share) + ' minutes ago</td>';
-		if(worker.active === true) {
-			innerHTMLTable += '<td class="active-worker">&#x2714;</td>';
-		} else if (worker.active === false) {
-			innerHTMLTable += '<td class="unactive-worker">&times;</td>';
-		}
-		innerHTMLTable += '<td>' + (numbro(worker.cur_hashrate).format('0a.00')).toUpperCase() + 'H/s</td>'
-		innerHTMLTable += '<td>' + (numbro(worker.avg_hashrate).format('0a.00')).toUpperCase() + 'H/s</td></tr>'
-	});
 
-	$('#workersSection .table-body').html(innerHTMLTable);
+    drawChart(chart);
+
+    pplns.forEach(function(block){
+        totalShares += block.total_shares;
+        payoutSum += block.user_payout;
+    });
+    payoutSum = payoutSum.toFixed(5);
+    pplnsWidth = $("#pplnsWindow").width()
+    var factor = Math.floor(totalShares / pplnsWidth);
+    pplnsDOM.empty();
+    pplns.forEach(function(block, index) {
+        pplnsDOM.append('<li class="block" id='+ index +'></li>');
+        var currBlock = $('#pplnsWindow > .block:nth-child(' + (index + 1) +')');
+
+        currBlock.css({'width': Math.floor(block.total_shares / factor)});
+        currBlock.append('<li class="shares" style="width: ' + Math.floor((block.user_shares*pplnsMultiplier) / factor) + 'px"></li>');
+
+    });
+
+    workers.forEach(function(worker) {
+        if(worker.active === true) {
+            activeWorkers += 1;
+        }
+    })
+    $('body').on('mouseover', '.block', function(e) {
+        e.preventDefault();
+        if(e.target === this) {
+            var i = e.target.id;
+        } else {
+            var i = e.target.parentNode.id;
+        }
+            if(pplns[i].block_id === null) {
+                $('#onHover .title:first-child').css({'display' : 'none'});
+                $('#blockId').text('Currently mined block');
+            } else {
+                $('#onHover .title:first-child').css({'display' : 'inline-block'});
+                $('#blockId').text(pplns[i].block_id);
+            }
+            $('#sharesPplns').text(pplns[i].user_shares + '/' + pplns[i].total_shares);
+            $('#userPayout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + cCurrency + ')');
+            $('#onHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
+        
+    });
+
+    $('body').on('mouseout', '.block', function(e){ 
+            $('#onHover').css({'display' : 'none', 'opacity' : 0}); 
+    });
+
+
+    $('.note-factor span').text(pplnsMultiplier);
+    $('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
+
+    }
+    /*
+        PAYOUTS
+    */
+    else if(screenFlag === 'payouts') {
+
+    }
+    /*
+        WORKERS
+    */
+    else if(screenFlag === 'workers') {
+
+        var innerHTMLTable = ''
+    workers.forEach(function(worker) {
+        innerHTMLTable += '<tr><td>' + worker.name + '</td>';
+        innerHTMLTable += '<td>' + convertTime(worker.last_share) + ' minutes ago</td>';
+        if(worker.active === true) {
+            innerHTMLTable += '<td class="active-worker">&#x2714;</td>';
+        } else if (worker.active === false) {
+            innerHTMLTable += '<td class="unactive-worker">&times;</td>';
+        }
+        innerHTMLTable += '<td>' + (numbro(worker.cur_hashrate).format('0a.00')).toUpperCase() + 'H/s</td>'
+        innerHTMLTable += '<td>' + (numbro(worker.avg_hashrate).format('0a.00')).toUpperCase() + 'H/s</td></tr>'
+    });
+
+    $('#workersSection .table-body').html(innerHTMLTable);
     filterTable($('#nameSearch').val());
-	drawChart(chart);
+
+    }
+
 
 }
 
@@ -336,7 +365,8 @@ function callApi() {
 		url: apiUrlUser,
 		method: 'GET',
 		data: {
-			id: getUrlVars()['id']
+			id: getUrlVars()['id'],
+            screen: screenFlag
 		},
 		success: function(response) {loadData(response);}
 	});
@@ -378,7 +408,7 @@ function passwordLogin() {
                              display: 'inline-block'
                     });
                     $('#logOut').css({
-                        display: 'block'
+                        display: 'flex'
                     });
                     hideKeyboard();
                     callApi();
@@ -389,7 +419,7 @@ function passwordLogin() {
                             display: 'none'
                     });
                     $('.wrong-password').css({
-                        display: 'block'
+                        display: 'flex'
                     });
                 }
             }
@@ -427,7 +457,7 @@ $(document).ready(function () {
                             display: 'none'
                         });
                         $('.wrong-id').css({
-                            display: 'block'
+                            display: 'flex'
                         });
                     }
 	                if(response.auth_needed === true) {
@@ -447,7 +477,7 @@ $(document).ready(function () {
                              display: 'inline-block'
                         });
                         $('#logOut').css({
-                            display: 'block'
+                            display: 'flex'
                         });
 	                }
 	            }
@@ -488,7 +518,7 @@ $(document).ready(function () {
             display: 'none'
         });
         $('.password-form').css({
-            display: 'block'
+            display: 'flex'
         });
     });
 
@@ -497,8 +527,11 @@ $(document).ready(function () {
 
 		var sectionId = e.currentTarget.id + "Section";
 		
+        screenFlag = sectionId.toLowerCase();
+
 		$('body > div:not(:first-child)').css({'display': 'none'});
 		$('#'+sectionId).css({'display': 'block'});
+        callApi();
 	});
 
     /* Show miner ID on Dashboard */

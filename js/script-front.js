@@ -266,7 +266,7 @@ $(document).ready(function () {
                             display: 'none'
                         });
                         $('.wrong-id').css({
-                            display: 'block'
+                            display: 'flex'
                         });
                     } else {
                         window.location = "user-panel.html?id=" + $("#userId").val()
