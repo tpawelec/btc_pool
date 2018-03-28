@@ -429,7 +429,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.5b")
+    alert("User panel v1.5c")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
@@ -521,7 +521,7 @@ $(document).ready(function () {
 
 		var sectionId = e.currentTarget.id + "Section";
 		
-        screenFlag = sectionId.toLowerCase();
+        screenFlag = e.currentTarget.id.toLowerCase();
 
 		$('body > div:not(:first-child)').css({'display': 'none'});
 		$('#'+sectionId).css({'display': 'block'});
