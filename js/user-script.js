@@ -54,12 +54,6 @@ function hideKeyboard() {
 
 function loadData(resp) {
 	
-	
-	var totalShares = 0;
-
-	activeWorkers = 0;
-	
-    payoutSum = 0;
 
     /*
         DASHBOARD
@@ -68,15 +62,18 @@ function loadData(resp) {
 
         var pplns = resp.pplns_window;
         var chart = resp.hashrate_graph;
-        var workers = resp.workers;
+        
+        var totalShares = 0;
+        payoutSum = 0;
 
+        
         var $userStats = $('#dashBoardSection p');
         $userStats.each(function() {
         if($(this).attr('id') === 'shares') {
             var minerShares = resp.valid_shares + resp.invalid_shares;
             $(this).html('Valid: ' + (numbro(resp.valid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >Invalid: ' + (numbro(resp.invalid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
         } else if($(this).attr('id') === 'workers') {
-            $(this).html('Active: ' + activeWorkers + '<br/ >Total: ' + workers.length)
+            $(this).html('Active: ' + resp.worker_count_active + '<br/ >Total: ' + resp.worker_count)
         }else if($(this).attr('id') === 'balance') {
             balance = resp.balance;
             var widthPerc = (resp.balance / resp.payout_balance)*100;
@@ -122,11 +119,7 @@ function loadData(resp) {
 
     });
 
-    workers.forEach(function(worker) {
-        if(worker.active === true) {
-            activeWorkers += 1;
-        }
-    })
+    
     $('body').on('mouseover', '.block', function(e) {
         e.preventDefault();
         if(e.target === this) {
@@ -436,7 +429,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.5a")
+    alert("User panel v1.5b")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
