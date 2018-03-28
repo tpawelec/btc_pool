@@ -161,7 +161,13 @@ function loadData(resp) {
     else if(screenFlag === 'workers') {
 
         var innerHTMLTable = ''
-    workers.forEach(function(worker) {
+        var workers = resp.workers;
+            workers.forEach(function(worker) {
+                if(worker.active === true) {
+                    activeWorkers += 1;
+                }
+            })
+        workers.forEach(function(worker) {
         innerHTMLTable += '<tr><td>' + worker.name + '</td>';
         innerHTMLTable += '<td>' + convertTime(worker.last_share) + ' minutes ago</td>';
         if(worker.active === true) {
@@ -429,7 +435,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.5c")
+    alert("User panel v1.5d")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
