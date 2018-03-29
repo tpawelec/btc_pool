@@ -179,7 +179,7 @@ function loadData(resp) {
             }
         });
 
-    $('#payoutssSection .table-body').html(innerHTMLTable);
+    $('#payoutsSection .table-body').html(innerHTMLTable);
 
     }
     /*
@@ -462,7 +462,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.5e")
+    alert("User panel v1.5f")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
