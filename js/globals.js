@@ -19,6 +19,8 @@ var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
 /* User ID typed in login input */
 var userIdGlobal;
 
+/* User payouts link */
+var userPayoutUrl = 'https://xmrchain.net/tx/';
 
 /* Zebra for tables */
 var bgSec = '#1B5389'

@@ -154,6 +154,33 @@ function loadData(resp) {
     */
     else if(screenFlag === 'payouts') {
 
+        var innerHTMLTable = ''
+        var payouts = resp.payouts;
+        payouts.forEach(function(worker) {
+            var now = moment(new Date());
+            var stamp = moment.unix(payouts.date);
+            var duration = moment.duration(now.diff(stamp));
+            var mnts = duration.asMinutes();
+            if(mnts > 1440) {
+                innerHTMLTable += '<tr><td>' + stamp.format("DD.MM.YYYY HH:mm:ss Z") + '</td>';
+            } else {
+                if(mnts < 60) {
+                    innerHTMLTable += '<tr><td>' + mnts + ' ago</td>'
+                } else {
+                    innerHTMLTable += '<tr><td>' + Math.floor(mnts/60) + 'hrs and ' + Math.round(((Math.floor(mnts/60)) % 1) * 60) + 'min ago</td>';
+                }
+            }
+            
+            innerHTMLTable += '<td>' + payouts.amount + ' XMR (' + payouts.amount * cPrice + ' ' + cCurrency + ')</td>';
+            if(payouts.txid === null) {
+                innerHTMLTable += '<td>&nbsp;</td>';
+            } else {
+                innerHTMLTable += '<td><a href="' + userPayoutUrl + payouts.txid + '" target="_blank">' + payouts.txid + '</td>';
+            }
+        });
+
+    $('#payoutssSection .table-body').html(innerHTMLTable);
+
     }
     /*
         WORKERS
@@ -435,7 +462,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.5d")
+    alert("User panel v1.5e")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
