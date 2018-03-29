@@ -477,6 +477,31 @@ footer {
 .api-fail {
   color: #900; }
 
+h2 {
+  text-align: center; }
+
+.users-table {
+  width: 80%;
+  margin: 0 auto; }
+  .users-table * {
+    transition: initial;
+    -webkit-transition: initial;
+    -ms-transition: initial;
+    -o-transition: initial; }
+  .users-table .header {
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center; }
+    .users-table .header tr {
+      height: 3rem; }
+      .users-table .header tr th {
+        white-space: normal; }
+  .users-table .table-body tr:nth-child(even) {
+    background-color: #1B5389; }
+  .users-table .table-body td {
+    text-align: center;
+    padding: .5rem 0; }
+
 .user-menu {
   height: 2.5rem;
   margin: 2rem 0;
@@ -524,8 +549,6 @@ footer {
 #workersSection {
   display: none;
   text-align: right; }
-  #workersSection h2 {
-    text-align: center; }
   #workersSection .search-info {
     font-size: .9rem;
     margin-bottom: .5rem; }
@@ -542,44 +565,42 @@ footer {
   #workersSection .workers-table {
     height: 30rem;
     overflow-y: auto; }
-  #workersSection table {
-    width: 80%;
-    margin: 0 auto; }
-    #workersSection table * {
-      transition: initial;
-      -webkit-transition: initial;
-      -ms-transition: initial;
-      -o-transition: initial; }
-    #workersSection table .header {
-      font-weight: 600;
-      font-size: 1.1rem;
-      text-align: center; }
-      #workersSection table .header tr {
-        height: 3rem; }
-        #workersSection table .header tr th {
-          white-space: normal; }
-          #workersSection table .header tr th:nth-of-type(1) {
-            width: 25%; }
-          #workersSection table .header tr th:nth-of-type(2) {
-            width: 25%; }
-          #workersSection table .header tr th:nth-of-type(3) {
-            width: 10%; }
-          #workersSection table .header tr th:nth-of-type(4) {
-            width: 20%; }
-          #workersSection table .header tr th:nth-of-type(5) {
-            width: 20%; }
-    #workersSection table .table-body tr:nth-child(even) {
-      background-color: #1B5389; }
-    #workersSection table .table-body td {
-      text-align: center;
-      padding: .5rem 0; }
-    #workersSection table .table-body .active-worker {
+    #workersSection .workers-table .table-body .active-worker {
       color: #090; }
-    #workersSection table .table-body .unactive-worker {
+    #workersSection .workers-table .table-body .unactive-worker {
       color: #900; }
+  #workersSection table .header tr th:nth-of-type(1) {
+    width: 25%; }
+  #workersSection table .header tr th:nth-of-type(2) {
+    width: 25%; }
+  #workersSection table .header tr th:nth-of-type(3) {
+    width: 10%; }
+  #workersSection table .header tr th:nth-of-type(4) {
+    width: 20%; }
+  #workersSection table .header tr th:nth-of-type(5) {
+    width: 20%; }
 
-#payoutSection {
+#payoutsSection {
   display: none; }
+  #payoutsSection a {
+    font-family: "Source+Code+Pro", monospace;
+    color: #f0edee;
+    text-decoration: none; }
+  #payoutsSection .payouts-table {
+    height: 30rem;
+    overflow-y: auto; }
+    #payoutsSection .payouts-table table {
+      table-layout: fixed; }
+      #payoutsSection .payouts-table table .header tr th:nth-of-type(1) {
+        width: 25%; }
+      #payoutsSection .payouts-table table .header tr th:nth-of-type(2) {
+        width: 20%; }
+      #payoutsSection .payouts-table table .header tr th:nth-of-type(3) {
+        width: 15%; }
+      #payoutsSection .payouts-table table .header tr th:nth-of-type(4) {
+        width: 40%; }
+      #payoutsSection .payouts-table table .table-body td {
+        word-wrap: break-word; }
 
 .dashboard-pplns #pplnsWindow {
   padding: 0;

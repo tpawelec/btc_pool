@@ -165,18 +165,18 @@ function loadData(resp) {
                 innerHTMLTable += '<tr><td>' + stamp.format("DD.MM.YYYY HH:mm:ss Z") + '</td>';
             } else {
                 if(mnts < 60) {
-                    innerHTMLTable += '<tr><td>' + mnts + ' ago</td>'
+                    innerHTMLTable += '<tr><td>' + Math.floor(mnts) + ' ago</td>'
                 } else {
                     innerHTMLTable += '<tr><td>' + Math.floor(mnts/60) + 'hrs and ' + Math.round(((Math.floor(mnts/60)) % 1) * 60) + 'min ago</td>';
                 }
             }
             
-            innerHTMLTable += '<td>' + po.amount + ' XMR (' + po.amount * cPrice + ' ' + cCurrency + ')</td>';
+            innerHTMLTable += '<td>' + po.amount + ' XMR </br> (' + po.amount * cPrice + ' ' + cCurrency + ')</td>';
             innerHTMLTable += '<td>' + po.status + '</td>';
             if(po.txid === null) {
-                innerHTMLTable += '<td>&nbsp;</td>';
+                innerHTMLTable += '<td>&nbsp;</td></tr>';
             } else {
-                innerHTMLTable += '<td><a href="' + userPayoutUrl + po.txid + '" target="_blank">' + po.txid + '</td>';
+                innerHTMLTable += '<td><a href="' + userPayoutUrl + po.txid + '" target="_blank">' + po.txid + '</td></tr>';
             }
         });
 
@@ -463,7 +463,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.5g")
+    alert("User panel v1.6")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");

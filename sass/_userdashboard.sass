@@ -1,3 +1,29 @@
+h2
+		text-align: center
+
+.users-table
+		width: 80%
+		margin: 0 auto
+		*
+			transition: initial
+			-webkit-transition: initial
+			-ms-transition: initial
+			-o-transition: initial
+		.header
+			font-weight: 600
+			font-size: 1.1rem
+			text-align: center
+			tr
+				height: 3rem
+				th
+					white-space: normal
+		.table-body
+			tr:nth-child(even)
+				background-color: $background-secondary
+			td
+				text-align: center
+				padding: .5rem 0
+
 
 .user-menu
 	height: 2.5rem
@@ -46,8 +72,6 @@
 #workersSection
 	display: none
 	text-align: right
-	h2
-		text-align: center
 
 	.search-info
 		font-size: .9rem
@@ -63,22 +87,15 @@
 	.workers-table
 		height: 30rem
 		overflow-y: auto
+		.table-body
+			.active-worker
+				color: $ok
+			.unactive-worker
+				color: $no-ok
 	table
-		width: 80%
-		margin: 0 auto
-		*
-			transition: initial
-			-webkit-transition: initial
-			-ms-transition: initial
-			-o-transition: initial
 		.header
-			font-weight: 600
-			font-size: 1.1rem
-			text-align: center
 			tr
-				height: 3rem
 				th
-					white-space: normal
 					&:nth-of-type(1)
 						width: 25%
 					&:nth-of-type(2)
@@ -89,18 +106,33 @@
 						width: 20%
 					&:nth-of-type(5)
 						width: 20%
-		.table-body
-			tr:nth-child(even)
-				background-color: $background-secondary
-			td
-				text-align: center
-				padding: .5rem 0
-			.active-worker
-				color: $ok
-			.unactive-worker
-				color: $no-ok
-#payoutSection
+		
+#payoutsSection
 	display: none
+	a
+		font-family: $fnt_miner
+		color: $text
+		text-decoration: none
+	.payouts-table
+		height: 30rem
+		overflow-y: auto
+		table
+			table-layout: fixed
+			.header
+				tr
+					th
+						&:nth-of-type(1)
+							width: 25%
+						&:nth-of-type(2)
+							width: 20%
+						&:nth-of-type(3)
+							width: 15%
+						&:nth-of-type(4)
+							width: 40%
+			.table-body
+				td
+					word-wrap: break-word
+
 
 .dashboard-pplns
 	#pplnsWindow
