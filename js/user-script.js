@@ -156,9 +156,9 @@ function loadData(resp) {
 
         var innerHTMLTable = ''
         var payouts = resp.payouts;
-        payouts.forEach(function(worker) {
+        payouts.forEach(function(po) {
             var now = moment(new Date());
-            var stamp = moment.unix(payouts.date);
+            var stamp = moment.unix(po.date);
             var duration = moment.duration(now.diff(stamp));
             var mnts = duration.asMinutes();
             if(mnts > 1440) {
@@ -171,11 +171,12 @@ function loadData(resp) {
                 }
             }
             
-            innerHTMLTable += '<td>' + payouts.amount + ' XMR (' + payouts.amount * cPrice + ' ' + cCurrency + ')</td>';
-            if(payouts.txid === null) {
+            innerHTMLTable += '<td>' + po.amount + ' XMR (' + po.amount * cPrice + ' ' + cCurrency + ')</td>';
+            innerHTMLTable += '<td>' + po.status + '</td>';
+            if(po.txid === null) {
                 innerHTMLTable += '<td>&nbsp;</td>';
             } else {
-                innerHTMLTable += '<td><a href="' + userPayoutUrl + payouts.txid + '" target="_blank">' + payouts.txid + '</td>';
+                innerHTMLTable += '<td><a href="' + userPayoutUrl + po.txid + '" target="_blank">' + po.txid + '</td>';
             }
         });
 
@@ -462,7 +463,7 @@ function passwordLogin() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v1.5f")
+    alert("User panel v1.5g")
     if(document.cookie.indexOf('user_token') < 0) {
         if(location.search.indexOf('id=') < 0){
             alert("No login id");
