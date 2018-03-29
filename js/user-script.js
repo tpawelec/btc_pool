@@ -487,7 +487,7 @@ $(document).ready(function () {
                         $('.wrong-id').css({
                             display: 'flex'
                         });
-                    }
+                    } else {
 	                if(response.auth_needed === true) {
 	                    $('.css-popup').css({
 	                        visibility: "visible",
@@ -508,6 +508,7 @@ $(document).ready(function () {
                             display: 'flex'
                         });
 	                }
+                }
 	            }
 	        });
     }
