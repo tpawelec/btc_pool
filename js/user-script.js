@@ -518,7 +518,7 @@ $(document).ready(function () {
 	}
     $('.css-popup .close').click(function (e) {
             e.preventDefault();
-            if($('.wrong-id').css('display') === 'block') {
+            if($('.wrong-id').css('display') === 'flex') {
                 window.location = "index.html"
             } else {            
                 $('.css-popup').css({
