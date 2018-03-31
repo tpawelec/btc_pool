@@ -1,4 +1,4 @@
-
+//
 /* Currency Variable */
 var cCurrency = "USD";
 var cPrice = '';
