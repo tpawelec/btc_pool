@@ -501,9 +501,8 @@ function apiLogin() {
 
     */
     $(document).ready(function () {
-        /////
         'use strict';
-        alert("User panel v1.8")
+        alert("User panel v1.8a")
 
         if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
             if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
@@ -529,7 +528,7 @@ function apiLogin() {
         if($('.wrong-id').css('display') === 'flex') {
             window.location = "index.html"
         } else if($('.password-form').css('display') === 'flex') {
-            if(getUserCookieVal('user_token') != null) {
+            if(getUserCookieVal('user_token') === null) {
                 window.location = "index.html"
             } else {
                 $('.css-popup').css({
