@@ -231,7 +231,6 @@ function callApi() {
 $(document).ready(function () {
 
     'use strict';
-    alert("Front v1.4")
     /*
     When clicked on currency variable and html content is updated. Then API is called.
     */
