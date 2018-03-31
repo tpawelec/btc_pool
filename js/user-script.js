@@ -501,7 +501,7 @@ function apiLogin() {
 
     */
     $(document).ready(function () {
-
+        /////
         'use strict';
         alert("User panel v1.8")
 
