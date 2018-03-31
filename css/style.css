@@ -87,7 +87,7 @@ body {
       transform--o-transform: translate(0, -50%);
     right: 5rem;
     height: 2rem;
-    z-index: 3000; }
+    z-index: 2000; }
     .nav-bar .dropdown .label {
       display: inline-block;
       float: left;
@@ -316,6 +316,7 @@ footer {
   right: 0;
   background: rgba(0, 0, 0, 0.7);
   transition: opacity 500ms;
+  z-index: 3000;
   visibility: hidden;
   opacity: 0; }
 
@@ -334,7 +335,7 @@ footer {
   justify-content: space-around;
   align-items: center;
   font-size: 1.5rem;
-  z-index: 5000;
+  z-index: 4000;
   box-shadow: 0 0 10px 20px #A7B9CB; }
   .wrapper p {
     display: inline-block; }

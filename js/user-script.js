@@ -526,12 +526,12 @@ function apiLogin() {
       $('.css-popup .close').click(function (e) {
         e.preventDefault();
         if($('.wrong-id').css('display') === 'flex') {
-            window.location = "index.html"
+            window.location.href = "index.html"
         } else if($('.password-form').css('display') === 'flex') {
             if(getUserCookieVal('user_token') === null) {
-                window.location = "index.html"
+                window.location.href = "index.html"
             } else {
-                window.location = "user-panel.html?id=" + getUserCookieVal('user_token');
+                window.location.href = "user-panel.html?id=" + getUserCookieVal('user_token');
             }
         } else {            
             $('.css-popup').css({

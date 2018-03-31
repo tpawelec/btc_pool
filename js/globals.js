@@ -1,4 +1,4 @@
-//
+
 /* Currency Variable */
 var cCurrency = "USD";
 var cPrice = '';
@@ -115,7 +115,7 @@ $(document).ready(function() {
     	e.preventDefault();
     	document.cookie = 'user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
     	localStorage.removeItem("id");
-    	window.location = "index.html";
+    	window.location.href = "index.html";
     })
 
 });

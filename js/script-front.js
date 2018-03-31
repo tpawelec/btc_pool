@@ -245,7 +245,7 @@ $(document).ready(function () {
     
     $("body").on('click', '.miner-link', function (e) {
         e.preventDefault();
-        window.location = "user-panel.html?id=" + e.currentTarget.text;
+        window.location.href = "user-panel.html?id=" + e.currentTarget.text;
     });
     /* Login form and popup display */
     $('#loginForm').click(function (e) {
@@ -269,7 +269,7 @@ $(document).ready(function () {
                             display: 'flex'
                         });
                     } else {
-                        window.location = "user-panel.html?id=" + $("#userId").val()
+                        window.location.href = "user-panel.html?id=" + $("#userId").val()
                     }
             }
         });
