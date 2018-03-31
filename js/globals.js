@@ -24,6 +24,10 @@ var userPayoutUrl = 'https://xmrchain.net/tx/';
 
 /* Zebra for tables */
 var bgSec = '#1B5389'
+
+/* Cookie value without ID */
+var cookieVal = 'mock_token_value_';
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {

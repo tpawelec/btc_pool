@@ -19,254 +19,266 @@ var pplnsMultiplier = 10;
 /* Screen flag */
 var screenFlag = 'dashboard';
 
-
+/* Hiding keyboard on mobile devices */
 function hideKeyboard() {
-  //this set timeout needed for case when hideKeyborad
-  //is called inside of 'onfocus' event handler
   setTimeout(function() {
 
     //creating temp field
     var field = document.createElement('input');
     field.setAttribute('type', 'text');
-    //hiding temp field from peoples eyes
-    //-webkit-user-modify is nessesary for Android 4.x
     field.setAttribute('style', 'position:absolute; top: 0px; opacity: 0; -webkit-user-modify: read-write-plaintext-only; left:0px;');
     document.body.appendChild(field);
 
-    //adding onfocus event handler for out temp field
     field.onfocus = function(){
-      //this timeout of 200ms is nessasary for Android 2.3.x
       setTimeout(function() {
 
         field.setAttribute('style', 'display:none;');
         setTimeout(function() {
           document.body.removeChild(field);
           document.body.focus();
-        }, 14);
+      }, 14);
 
-      }, 200);
-    };
-    //focusing it
-    field.focus();
-  }, 50);
+    }, 200);
+  };
+  field.focus();
+}, 50);
 
 }
+
+/* Gets user ID from cookie */
+function getUserCookieVal(name) {
+    var getCookieValues = function(cookie) {
+        var cookieArray = cookie.split('=');
+        return cookieArray[1].trim();
+    };
+
+    var getCookieNames = function(cookie) {
+        var cookieArray = cookie.split('=');
+        return cookieArray[0].trim();
+    };
+
+    var cookies = document.cookie.split(';');
+    var cookieValue = cookies.map(getCookieValues)[cookies.map(getCookieNames).indexOf(name)];
+
+    return (cookieValue === undefined) ? null : cookieValue.split(cookieVal)[1];
+}
+
 
 function loadData(resp) {
 	
 
     /*
         DASHBOARD
-    */
-    if(screenFlag === 'dashboard') {
+        */
+        if(screenFlag === 'dashboard') {
 
-        var pplns = resp.pplns_window;
-        var chart = resp.hashrate_graph;
-        
-        var totalShares = 0;
-        payoutSum = 0;
+            var pplns = resp.pplns_window;
+            var chart = resp.hashrate_graph;
 
-        
-        var $userStats = $('#dashBoardSection p');
-        $userStats.each(function() {
-        if($(this).attr('id') === 'shares') {
-            var minerShares = resp.valid_shares + resp.invalid_shares;
-            $(this).html('Valid: ' + (numbro(resp.valid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >Invalid: ' + (numbro(resp.invalid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
-        } else if($(this).attr('id') === 'workers') {
-            $(this).html('Active: ' + resp.worker_count_active + '<br/ >Total: ' + resp.worker_count)
-        }else if($(this).attr('id') === 'balance') {
-            balance = resp.balance;
-            var widthPerc = (resp.balance / resp.payout_balance)*100;
-            var value = '<span>' + resp.balance + 'XMR <br/>('+ (resp.balance * cPrice) + ' ' + cCurrency + ')</span> \
-                                <ul id="balanceBar">\
-                                    <li class="userShares" style="width:' + widthPerc + '%;"></li>\
-                                </ul>';
-            $(this).html(value);
-        } else if($(this).attr('id') === 'cur_hashrate' || $(this).attr('id') === 'avg_hashrate') { 
-            $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
+            var totalShares = 0;
+            payoutSum = 0;
+
+
+            var $userStats = $('#dashBoardSection p');
+            $userStats.each(function() {
+                if($(this).attr('id') === 'shares') {
+                    var minerShares = resp.valid_shares + resp.invalid_shares;
+                    $(this).html('Valid: ' + (numbro(resp.valid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >Invalid: ' + (numbro(resp.invalid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
+                } else if($(this).attr('id') === 'workers') {
+                    $(this).html('Active: ' + resp.worker_count_active + '<br/ >Total: ' + resp.worker_count)
+                }else if($(this).attr('id') === 'balance') {
+                    balance = resp.balance;
+                    var widthPerc = (resp.balance / resp.payout_balance)*100;
+                    var value = '<span>' + resp.balance + 'XMR <br/>('+ (resp.balance * cPrice) + ' ' + cCurrency + ')</span> \
+                    <ul id="balanceBar">\
+                    <li class="userShares" style="width:' + widthPerc + '%;"></li>\
+                    </ul>';
+                    $(this).html(value);
+                } else if($(this).attr('id') === 'cur_hashrate' || $(this).attr('id') === 'avg_hashrate') { 
+                    $(this).text((numbro(resp[$(this).attr('id')]).format('0a.00')).toUpperCase() + 'H/s');
+                }
+            });
+
+            $('body').on('mouseover', '#balanceBar', function(e) {
+                e.preventDefault();
+                $('#payBalance').text(resp.payout_balance + ' XMR');
+                $('#payFee').text(resp.payout_fee + ' XMR');
+                $('#balanceOnHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
+
+            });
+
+            $('body').on('mouseout', '#balanceBar', function(e){ 
+                $('#balanceOnHover').css({'display' : 'none', 'opacity' : 0}); 
+            });
+
+
+            drawChart(chart);
+
+            pplns.forEach(function(block){
+                totalShares += block.total_shares;
+                payoutSum += block.user_payout;
+            });
+            payoutSum = payoutSum.toFixed(5);
+            pplnsWidth = $("#pplnsWindow").width()
+            var factor = Math.floor(totalShares / pplnsWidth);
+            pplnsDOM.empty();
+            pplns.forEach(function(block, index) {
+                pplnsDOM.append('<li class="block" id='+ index +'></li>');
+                var currBlock = $('#pplnsWindow > .block:nth-child(' + (index + 1) +')');
+
+                currBlock.css({'width': Math.floor(block.total_shares / factor)});
+                currBlock.append('<li class="shares" style="width: ' + Math.floor((block.user_shares*pplnsMultiplier) / factor) + 'px"></li>');
+
+            });
+
+
+            $('body').on('mouseover', '.block', function(e) {
+                e.preventDefault();
+                if(e.target === this) {
+                    var i = e.target.id;
+                } else {
+                    var i = e.target.parentNode.id;
+                }
+                if(pplns[i].block_id === null) {
+                    $('#onHover .title:first-child').css({'display' : 'none'});
+                    $('#blockId').text('Currently mined block');
+                } else {
+                    $('#onHover .title:first-child').css({'display' : 'inline-block'});
+                    $('#blockId').text(pplns[i].block_id);
+                }
+                $('#sharesPplns').text(pplns[i].user_shares + '/' + pplns[i].total_shares);
+                $('#userPayout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + cCurrency + ')');
+                $('#onHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
+
+            });
+
+            $('body').on('mouseout', '.block', function(e){ 
+                $('#onHover').css({'display' : 'none', 'opacity' : 0}); 
+            });
+
+
+            $('.note-factor span').text(pplnsMultiplier);
+            $('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
+
         }
-    });
-
-    $('body').on('mouseover', '#balanceBar', function(e) {
-        e.preventDefault();
-            $('#payBalance').text(resp.payout_balance + ' XMR');
-            $('#payFee').text(resp.payout_fee + ' XMR');
-            $('#balanceOnHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
-        
-    });
-
-    $('body').on('mouseout', '#balanceBar', function(e){ 
-            $('#balanceOnHover').css({'display' : 'none', 'opacity' : 0}); 
-    });
-
-
-    drawChart(chart);
-
-    pplns.forEach(function(block){
-        totalShares += block.total_shares;
-        payoutSum += block.user_payout;
-    });
-    payoutSum = payoutSum.toFixed(5);
-    pplnsWidth = $("#pplnsWindow").width()
-    var factor = Math.floor(totalShares / pplnsWidth);
-    pplnsDOM.empty();
-    pplns.forEach(function(block, index) {
-        pplnsDOM.append('<li class="block" id='+ index +'></li>');
-        var currBlock = $('#pplnsWindow > .block:nth-child(' + (index + 1) +')');
-
-        currBlock.css({'width': Math.floor(block.total_shares / factor)});
-        currBlock.append('<li class="shares" style="width: ' + Math.floor((block.user_shares*pplnsMultiplier) / factor) + 'px"></li>');
-
-    });
-
-    
-    $('body').on('mouseover', '.block', function(e) {
-        e.preventDefault();
-        if(e.target === this) {
-            var i = e.target.id;
-        } else {
-            var i = e.target.parentNode.id;
-        }
-            if(pplns[i].block_id === null) {
-                $('#onHover .title:first-child').css({'display' : 'none'});
-                $('#blockId').text('Currently mined block');
-            } else {
-                $('#onHover .title:first-child').css({'display' : 'inline-block'});
-                $('#blockId').text(pplns[i].block_id);
-            }
-            $('#sharesPplns').text(pplns[i].user_shares + '/' + pplns[i].total_shares);
-            $('#userPayout').text(pplns[i].user_payout + ' (' + (pplns[i].user_payout * cPrice).toFixed(3) + cCurrency + ')');
-            $('#onHover').css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
-        
-    });
-
-    $('body').on('mouseout', '.block', function(e){ 
-            $('#onHover').css({'display' : 'none', 'opacity' : 0}); 
-    });
-
-
-    $('.note-factor span').text(pplnsMultiplier);
-    $('.note-info span').text(payoutSum + ' XMR (' + (payoutSum * cPrice) + ' ' + cCurrency + ')');
-
-    }
     /*
         PAYOUTS
-    */
-    else if(screenFlag === 'payouts') {
+        */
+        else if(screenFlag === 'payouts') {
 
-        var innerHTMLTable = ''
-        var payouts = resp.payouts;
-        payouts.forEach(function(po) {
-            var now = moment(new Date());
-            var stamp = moment.unix(po.date);
-            var duration = moment.duration(now.diff(stamp));
-            var mnts = duration.asMinutes();
-            if(mnts > 1440) {
-                innerHTMLTable += '<tr><td>' + stamp.format("DD.MM.YYYY HH:mm:ss Z") + '</td>';
-            } else {
-                if(mnts < 60) {
-                    innerHTMLTable += '<tr><td>' + Math.floor(mnts) + ' ago</td>'
+            var innerHTMLTable = ''
+            var payouts = resp.payouts;
+            payouts.forEach(function(po) {
+                var now = moment(new Date());
+                var stamp = moment.unix(po.date);
+                var duration = moment.duration(now.diff(stamp));
+                var mnts = duration.asMinutes();
+                if(mnts > 1440) {
+                    innerHTMLTable += '<tr><td>' + stamp.format("DD.MM.YYYY HH:mm:ss Z") + '</td>';
                 } else {
-                    innerHTMLTable += '<tr><td>' + Math.floor(mnts/60) + 'hrs and ' + Math.round(((Math.floor(mnts/60)) % 1) * 60) + 'min ago</td>';
+                    if(mnts < 60) {
+                        innerHTMLTable += '<tr><td>' + Math.floor(mnts) + ' ago</td>'
+                    } else {
+                        innerHTMLTable += '<tr><td>' + Math.floor(mnts/60) + 'hrs and ' + Math.round(((Math.floor(mnts/60)) % 1) * 60) + 'min ago</td>';
+                    }
                 }
-            }
-            
-            innerHTMLTable += '<td>' + po.amount + ' XMR </br> (' + po.amount * cPrice + ' ' + cCurrency + ')</td>';
-            innerHTMLTable += '<td>' + po.status + '</td>';
-            if(po.txid === null) {
-                innerHTMLTable += '<td>&nbsp;</td></tr>';
-            } else {
-                innerHTMLTable += '<td><a href="' + userPayoutUrl + po.txid + '" target="_blank">' + po.txid + '</td></tr>';
-            }
-        });
 
-    $('#payoutsSection .table-body').html(innerHTMLTable);
+                innerHTMLTable += '<td>' + po.amount + ' XMR </br> (' + po.amount * cPrice + ' ' + cCurrency + ')</td>';
+                innerHTMLTable += '<td>' + po.status + '</td>';
+                if(po.txid === null) {
+                    innerHTMLTable += '<td>&nbsp;</td></tr>';
+                } else {
+                    innerHTMLTable += '<td><a href="' + userPayoutUrl + po.txid + '" target="_blank">' + po.txid + '</td></tr>';
+                }
+            });
 
-    }
+            $('#payoutsSection .table-body').html(innerHTMLTable);
+
+        }
     /*
         WORKERS
-    */
-    else if(screenFlag === 'workers') {
+        */
+        else if(screenFlag === 'workers') {
 
-        var innerHTMLTable = ''
-        var workers = resp.workers;
+            var innerHTMLTable = ''
+            var workers = resp.workers;
             workers.forEach(function(worker) {
                 if(worker.active === true) {
                     activeWorkers += 1;
                 }
             })
-        workers.forEach(function(worker) {
-        innerHTMLTable += '<tr><td>' + worker.name + '</td>';
-        innerHTMLTable += '<td>' + convertTime(worker.last_share) + ' minutes ago</td>';
-        if(worker.active === true) {
-            innerHTMLTable += '<td class="active-worker">&#x2714;</td>';
-        } else if (worker.active === false) {
-            innerHTMLTable += '<td class="unactive-worker">&times;</td>';
-        }
-        innerHTMLTable += '<td>' + (numbro(worker.cur_hashrate).format('0a.00')).toUpperCase() + 'H/s</td>'
-        innerHTMLTable += '<td>' + (numbro(worker.avg_hashrate).format('0a.00')).toUpperCase() + 'H/s</td></tr>'
-    });
+            workers.forEach(function(worker) {
+                innerHTMLTable += '<tr><td>' + worker.name + '</td>';
+                innerHTMLTable += '<td>' + convertTime(worker.last_share) + ' minutes ago</td>';
+                if(worker.active === true) {
+                    innerHTMLTable += '<td class="active-worker">&#x2714;</td>';
+                } else if (worker.active === false) {
+                    innerHTMLTable += '<td class="unactive-worker">&times;</td>';
+                }
+                innerHTMLTable += '<td>' + (numbro(worker.cur_hashrate).format('0a.00')).toUpperCase() + 'H/s</td>'
+                innerHTMLTable += '<td>' + (numbro(worker.avg_hashrate).format('0a.00')).toUpperCase() + 'H/s</td></tr>'
+            });
 
-    $('#workersSection .table-body').html(innerHTMLTable);
-    filterTable($('#nameSearch').val());
+            $('#workersSection .table-body').html(innerHTMLTable);
+            filterTable($('#nameSearch').val());
+
+        }
+
 
     }
 
+    function drawChart(chartSet) {
+        'use strict';
 
-}
+        var datasets = [];
+        var serverNames = [];
+        var labels = [];
+        var i = 0;
 
-function drawChart(chartSet) {
-    'use strict';
-
-    var datasets = [];
-    var serverNames = [];
-    var labels = [];
-    var i = 0;
-
-    for(var serverName in chartSet) {
-        serverNames.push(serverName);
-        datasets[i] = [];
-        for(var number in chartSet[serverName]) {
-            datasets[i].push(chartSet[serverName][number][1]);
-            if (i === 0) {
-            labels.push(moment(chartSet[serverName][number][0] * 1000).format("DD.MM.YYYY HH:mm:ss Z"));
+        for(var serverName in chartSet) {
+            serverNames.push(serverName);
+            datasets[i] = [];
+            for(var number in chartSet[serverName]) {
+                datasets[i].push(chartSet[serverName][number][1]);
+                if (i === 0) {
+                    labels.push(moment(chartSet[serverName][number][0] * 1000).format("DD.MM.YYYY HH:mm:ss Z"));
+                }
+            }
+            i++;
         }
-        }
-        i++;
-    }
-    var GraphArraySet = [];
-    var chartColors = ['#ff0000', '#00ff00', '#2992dd', '#ffd400', '#ff00ff', 
-                        '#00ffff', '#000000', '#008620', '#001a9f', '#0096ff', 
-                        '#dccf00', '#8d0088', '#890101', '#beb4b4', '#686868', 
-                        '#97EAD2', '#69dcfc', '#9BC1BC', '#E6EBE0', '#E1AA7D',
-                        '#B97375'];
-    for(var i = 0; i < serverNames.length; i++) {
-    	GraphArraySet[i] = {
-    		label: serverNames[i],
-            fill: true,
-            data: datasets[i],
-            borderColor: chartColors[i],
-            backgroundColor: chartColors[i],
-            borderWidth: 1,
-            pointBackgroundColor: chartColors[i],
-            pointRadius: 1,
-            showLine: true,
-            fill: false
-    	}
-    }
-    labels.reverse();
-    Chart.defaults.global.defaultFontColor = "#f0edee";
-    
-    Chart.defaults.LineWithLine = Chart.defaults.line;
-    Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+        var GraphArraySet = [];
+        var chartColors = ['#ff0000', '#00ff00', '#2992dd', '#ffd400', '#ff00ff', 
+        '#00ffff', '#000000', '#008620', '#001a9f', '#0096ff', 
+        '#dccf00', '#8d0088', '#890101', '#beb4b4', '#686868', 
+        '#97EAD2', '#69dcfc', '#9BC1BC', '#E6EBE0', '#E1AA7D',
+        '#B97375'];
+        for(var i = 0; i < serverNames.length; i++) {
+           GraphArraySet[i] = {
+              label: serverNames[i],
+              fill: true,
+              data: datasets[i],
+              borderColor: chartColors[i],
+              backgroundColor: chartColors[i],
+              borderWidth: 1,
+              pointBackgroundColor: chartColors[i],
+              pointRadius: 1,
+              showLine: true,
+              fill: false
+          }
+      }
+      labels.reverse();
+      Chart.defaults.global.defaultFontColor = "#f0edee";
+
+      Chart.defaults.LineWithLine = Chart.defaults.line;
+      Chart.controllers.LineWithLine = Chart.controllers.line.extend({
         draw: function(ease) {
-      Chart.controllers.line.prototype.draw.call(this, ease);
-      if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
-         var activePoint = this.chart.tooltip._active[0],
-             ctx = this.chart.ctx,
-             x = activePoint.tooltipPosition().x,
-             topY = this.chart.scales['y-axis-0'].top,
-             bottomY = this.chart.scales['y-axis-0'].bottom;
+          Chart.controllers.line.prototype.draw.call(this, ease);
+          if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+           var activePoint = this.chart.tooltip._active[0],
+           ctx = this.chart.ctx,
+           x = activePoint.tooltipPosition().x,
+           topY = this.chart.scales['y-axis-0'].top,
+           bottomY = this.chart.scales['y-axis-0'].bottom;
 
          // draw line
          ctx.save();
@@ -277,17 +289,17 @@ function drawChart(chartSet) {
          ctx.strokeStyle = '#07C';
          ctx.stroke();
          ctx.restore();
-      }
-   }
+     }
+ }
 }); 
-    
-    var myChart = new Chart(chartCanvas, {
-    type: 'LineWithLine',
-    data: {
-    	labels: labels,
-    	datasets: GraphArraySet
-    },
-    options: {
+
+      var myChart = new Chart(chartCanvas, {
+        type: 'LineWithLine',
+        data: {
+           labels: labels,
+           datasets: GraphArraySet
+       },
+       options: {
         animation: false,
         responsive: true,
         maintainAspectRatio: false,
@@ -338,7 +350,7 @@ function drawChart(chartSet) {
             callbacks: {
                 label: function(tooltipItem, data) {
                     return data.datasets[tooltipItem.datasetIndex].label + ": " + numbro(tooltipItem.yLabel).format('3a');
-                    }
+                }
             } 
         },
         legend: {
@@ -347,9 +359,9 @@ function drawChart(chartSet) {
         }
     }
 }); 
-}
+  }
 
-function convertTime(timestamp) {
+  function convertTime(timestamp) {
     'use strict';
     var nowTime = Math.floor(Date.now() / 1000);
     var minutes = Math.floor((nowTime - timestamp) / 60);
@@ -370,22 +382,22 @@ function filterTable(regexp) {
 		});
 	} else {
 		$tableRows.each(function() {
-				$(this).css({'display': 'table-row'});
-		})
+            $(this).css({'display': 'table-row'});
+        })
 	}
 
 	var rowIndex = 0;
 	$tableRows.each(function() {
-				if($(this).css('display') === 'table-row') {
-					if(rowIndex % 2 === 0) {
-						$(this).css({'background-color': 'initial'});
-					} else {
-						$(this).css({'background-color': bgSec});
-					}
-					rowIndex++;
-				}
-	});
-    
+        if($(this).css('display') === 'table-row') {
+           if(rowIndex % 2 === 0) {
+              $(this).css({'background-color': 'initial'});
+          } else {
+              $(this).css({'background-color': bgSec});
+          }
+          rowIndex++;
+      }
+  });
+
 }
 
 function callApi() {
@@ -395,15 +407,15 @@ function callApi() {
 		data: {
 			id: getUrlVars()['id'],
             screen: screenFlag
-		},
-		success: function(response) {loadData(response);}
-	});
-
-	 $.ajax({
-        url: coinUrl,
-        method: 'GET',
-        success: function(response) {processCoin(response);}
+        },
+        success: function(response) {loadData(response);}
     });
+
+  $.ajax({
+    url: coinUrl,
+    method: 'GET',
+    success: function(response) {processCoin(response);}
+});
 }
 
 function processCoin(resp) {
@@ -411,70 +423,57 @@ function processCoin(resp) {
     cPrice = resp['pool_coin_price'][cCurrency];
     $("#balance span").html(balance + 'XMR <br />('+ (balance * cPrice)  + ' ' + cCurrency + ')');
     $('.note-info span').text(payoutSum  + ' XMR (' + (payoutSum * cPrice)  + ' ' + cCurrency + ')');
-	}
+}
 
 function passwordLogin() {
     $.ajax({
-            url: apiUrlUser,
-            method: 'POST',
-            data: {
-                id: getUrlVars()['id'],
-                password: $("#userPassword").val()
-            },
-            success: function(response, status, xhr) {
-                if(response.auth_status === true) {
-                    $('.css-popup > .wrapper > *:not(p)').css({
-                            display: 'none'
-                        });
-                    $('.css-popup').css({
-                        visibility: "hidden",
-                        opacity: 0
-                    });
-                    
+        url: apiUrlUser,
+        method: 'POST',
+        data: {
+            id: getUrlVars()['id'],
+            password: $("#userPassword").val()
+        },
+        success: function(response, status, xhr) {
+            if(response.auth_status === true) {
+                $('.css-popup > .wrapper > *:not(p)').css({
+                    display: 'none'
+                });
+                $('.css-popup').css({
+                    visibility: "hidden",
+                    opacity: 0
+                });
 
-                    $('#userLink').css({
-                             display: 'inline-block'
-                    });
-                    $('#logOut').css({
-                        display: 'flex'
-                    });
-                    hideKeyboard();
-                    callApi();
-                    setInterval(callApi, 10000);
-                    
-                } else {
-                    $('.css-popup > .wrapper > *:not(p)').css({
-                            display: 'none'
-                    });
-                    $('.wrong-password').css({
-                        display: 'flex'
-                    });
-                }
+
+                $('#userLink').css({
+                   display: 'inline-block'
+               });
+                $('#logOut').css({
+                    display: 'flex'
+                });
+                hideKeyboard();
+                callApi();
+                setInterval(callApi, 10000);
+
+            } else {
+                $('.css-popup > .wrapper > *:not(p)').css({
+                    display: 'none'
+                });
+                $('.wrong-password').css({
+                    display: 'flex'
+                });
             }
-        });
+        }
+    });
 }
-/*
 
-
-	DOCUMENT ON READY
-
-
-*/
-$(document).ready(function () {
-
-    'use strict';
-    alert("User panel v1.6")
-    if(document.cookie.indexOf('user_token') < 0) {
-        if(location.search.indexOf('id=') < 0){
-            alert("No login id");
-        } else {
-	    $.ajax({
-	            url: apiUrlUser,
-	            method: 'GET',
-	            data: {
-	                id: getUrlVars()['id']
-	            },
-	            success: function(response) {
+function apiLogin() {
+    $.ajax({
+                   url: apiUrlUser,
+                   method: 'GET',
+                   data: {
+                       id: getUrlVars()['id']
+                   },
+                   success: function(response) {
 
                     if(response.error === "Username not found") {
                         $('.css-popup').css({
@@ -488,60 +487,96 @@ $(document).ready(function () {
                             display: 'flex'
                         });
                     } else {
-	                if(response.auth_needed === true) {
-	                    $('.css-popup').css({
-	                        visibility: "visible",
-	                        opacity: 1
-	                    });
+                       if(response.auth_needed === true) {
+                           $('.css-popup').css({
+                               visibility: "visible",
+                               opacity: 1
+                           });
 
-                        $(".css-popup").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
+                           $(".css-popup").bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
                             $("#userPassword").focus();
                         });
-                        
-	                } else {
-	                	callApi();
-	                	setInterval(callApi, 10000);
-	                	$('#userLink').css({
-                             display: 'inline-block'
-                        });
-                        $('#logOut').css({
+
+                       } else {
+                          callApi();
+                          setInterval(callApi, 10000);
+                          $('#userLink').css({
+                           display: 'inline-block'
+                       });
+                          $('#logOut').css({
                             display: 'flex'
                         });
-	                }
-                }
-	            }
-	        });
-    }
-	} else {
-		callApi();
-        setInterval(callApi, 10000);
-	}
-    $('.css-popup .close').click(function (e) {
-            e.preventDefault();
-            if($('.wrong-id').css('display') === 'flex') {
+                      }
+                  }
+              }
+          });
+}
+/*
+
+
+	DOCUMENT ON READY
+
+
+    */
+    $(document).ready(function () {
+
+        'use strict';
+        alert("User panel v1.7")
+
+        if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
+            if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
+                alert("No login id");
+            } else {
+                apiLogin()
+           }
+       } else {
+        if(getUserCookieVal('user_token') === getUrlVars()['id']) {
+            callApi();
+            setInterval(callApi, 10000);
+        } else {
+            apiLogin();
+        }
+      }
+
+
+
+
+
+      $('.css-popup .close').click(function (e) {
+        e.preventDefault();
+        if($('.wrong-id').css('display') === 'flex') {
+            window.location = "index.html"
+        } else if($('.password-form').css('display') === 'flex') {
+            if(getUserCookieVal('user_token') != null) {
                 window.location = "index.html"
-            } else {            
+            } else {
                 $('.css-popup').css({
-                    visibility: "hidden",
-                    opacity: 0
+                visibility: "hidden",
+                opacity: 0
                 });
             }
-        });
+        } else {            
+            $('.css-popup').css({
+                visibility: "hidden",
+                opacity: 0
+            });
+        }
+    });
 
-    /* Password prompt on css popup */
-    $('#passwordLogin').click(function (e) {
+      /* Password prompt on css popup */
+      $('#passwordLogin').click(function (e) {
         e.preventDefault();
         passwordLogin();
     });
 
-    $("#passwordLogin").keyup(function (e) {
+      $("#passwordLogin").keyup(function (e) {
         if(e.which === 13 || e.keyCode === 13) {
             e.preventDefault();
             passwordLogin();
         }
     })
-    /* Password again */
-    $('#passwordAgain').click(function (e) {
+      /* Password again */
+      $('#passwordAgain').click(function (e) {
         e.preventDefault();
         $('.css-popup > .wrapper > *:not(p)').css({
             display: 'none'
@@ -551,25 +586,21 @@ $(document).ready(function () {
         });
     });
 
-    $('#userMenu li').click(function (e) {
-		e.preventDefault();
+      $('#userMenu li').click(function (e) {
+          e.preventDefault();
 
-		var sectionId = e.currentTarget.id + "Section";
-		
-        screenFlag = e.currentTarget.id.toLowerCase();
+          var sectionId = e.currentTarget.id + "Section";
 
-		$('body > div:not(:first-child)').css({'display': 'none'});
-		$('#'+sectionId).css({'display': 'block'});
-        callApi();
-	});
+          screenFlag = e.currentTarget.id.toLowerCase();
 
-    /* Show miner ID on Dashboard */
-    $('#minerId').text(getUrlVars()['id']);
+          $('body > div:not(:first-child)').css({'display': 'none'});
+          $('#'+sectionId).css({'display': 'block'});
+          callApi();
+      });
 
-    /*var winWidth = $('.container').width();
-    pplnsWidth = Math.floor(winWidth * 0.9);
-    pplnsDOM.css({'width': pplnsWidth});
-    */
+      /* Show miner ID on Dashboard */
+      $('#minerId').text(getUrlVars()['id']);
+
     
 
     /*
@@ -579,11 +610,11 @@ $(document).ready(function () {
         cCurrency = e.currentTarget.id;
         btn.text(cCurrency);
         /* COIN */
-    $.ajax({
-        url: coinUrl,
-        method: 'GET',
-        success: function(response) {processCoin(response);}
-    });
+        $.ajax({
+            url: coinUrl,
+            method: 'GET',
+            success: function(response) {processCoin(response);}
+        });
     });
 
     $('#nameSearch').on('keyup', function(e) {
