@@ -334,7 +334,7 @@ footer {
   justify-content: space-around;
   align-items: center;
   font-size: 1.5rem;
-  z-index: 3000;
+  z-index: 5000;
   box-shadow: 0 0 10px 20px #A7B9CB; }
   .wrapper p {
     display: inline-block; }
@@ -396,7 +396,7 @@ footer {
 @media (max-width: 575px) {
   .wrapper {
     width: 95%;
-    margin: 8rem auto; }
+    margin: 2rem auto; }
     .wrapper input {
       width: 8rem; }
     .wrapper .prompt-error {
