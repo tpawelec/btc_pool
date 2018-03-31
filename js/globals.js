@@ -21,6 +21,7 @@ var userIdGlobal;
 
 /* User payouts link */
 var userPayoutUrl = 'https://xmrchain.net/tx/';
+var userPayoutUrlSuffix = '/1';
 
 /* Zebra for tables */
 var bgSec = '#1B5389'

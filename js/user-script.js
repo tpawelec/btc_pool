@@ -170,7 +170,7 @@ function loadData(resp) {
                 if(po.txid === null) {
                     innerHTMLTable += '<td>&nbsp;</td></tr>';
                 } else {
-                    innerHTMLTable += '<td><a href="' + userPayoutUrl + po.txid + '" target="_blank">' + po.txid + '</td></tr>';
+                    innerHTMLTable += '<td><a href="' + userPayoutUrl + po.txid + userPayoutUrlSuffix + '" target="_blank">' + po.txid + '</td></tr>';
                 }
             });
 
