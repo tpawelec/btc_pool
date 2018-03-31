@@ -36,6 +36,24 @@ function getUrlVars() {
     return vars;
 }
 
+/* Gets user ID from cookie */
+function getUserCookieVal(name) {
+    var getCookieValues = function(cookie) {
+        var cookieArray = cookie.split('=');
+        return cookieArray[1].trim();
+    };
+
+    var getCookieNames = function(cookie) {
+        var cookieArray = cookie.split('=');
+        return cookieArray[0].trim();
+    };
+
+    var cookies = document.cookie.split(';');
+    var cookieValue = cookies.map(getCookieValues)[cookies.map(getCookieNames).indexOf(name)];
+
+    return (cookieValue === undefined) ? null : cookieValue.split(cookieVal)[1];
+}
+
 $(document).ready(function() {
 	/* DROPDOWN MENU WITH CURRENCIES */
     btn.click(function () {
@@ -85,6 +103,8 @@ $(document).ready(function() {
         $('#logOut').css({
             display: 'flex'
         });
+
+    $('#userLink').attr('href', 'user-panel.html?id=' + getUserCookieVal('user_token'));
     }
 
     /*

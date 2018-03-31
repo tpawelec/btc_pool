@@ -45,24 +45,6 @@ function hideKeyboard() {
 
 }
 
-/* Gets user ID from cookie */
-function getUserCookieVal(name) {
-    var getCookieValues = function(cookie) {
-        var cookieArray = cookie.split('=');
-        return cookieArray[1].trim();
-    };
-
-    var getCookieNames = function(cookie) {
-        var cookieArray = cookie.split('=');
-        return cookieArray[0].trim();
-    };
-
-    var cookies = document.cookie.split(';');
-    var cookieValue = cookies.map(getCookieValues)[cookies.map(getCookieNames).indexOf(name)];
-
-    return (cookieValue === undefined) ? null : cookieValue.split(cookieVal)[1];
-}
-
 
 function loadData(resp) {
 	
@@ -521,7 +503,7 @@ function apiLogin() {
     $(document).ready(function () {
 
         'use strict';
-        alert("User panel v1.7")
+        alert("User panel v1.8")
 
         if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
             if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
