@@ -170,7 +170,7 @@ function loadData(resp) {
                 if(po.txid === null) {
                     innerHTMLTable += '<td>&nbsp;</td></tr>';
                 } else {
-                    innerHTMLTable += '<td><a href="' + userPayoutUrl + po.txid + userPayoutUrlSuffix + '" target="_blank">' + po.txid + '</td></tr>';
+                    innerHTMLTable += '<td><a href="' + userPayoutUrl.replace('#', po.txid) + '" target="_blank">' + po.txid + '</td></tr>';
                 }
             });
 
@@ -481,6 +481,7 @@ function apiLogin() {
 
                        } else {
                           callApi();
+                          localStorage.setItem("userId", getUrlVars()['id']);
                           setInterval(callApi, 10000);
                           $('#userLink').css({
                            display: 'inline-block'
@@ -488,6 +489,7 @@ function apiLogin() {
                           $('#logOut').css({
                             display: 'flex'
                         });
+
                       }
                   }
               }
@@ -511,8 +513,9 @@ function apiLogin() {
                 apiLogin()
            }
        } else {
-        if(getUserCookieVal('user_token') === getUrlVars()['id']) {
+        if(localStorage.userId === getUrlVars()['id']) {
             callApi();
+            localStorage.setItem("userId", getUrlVars()['id']);
             setInterval(callApi, 10000);
         } else {
             apiLogin();
@@ -531,7 +534,7 @@ function apiLogin() {
             if(getUserCookieVal('user_token') === null) {
                 window.location.href = "index.html"
             } else {
-                window.location.href = "user-panel.html?id=" + getUserCookieVal('user_token');
+                window.location.href = "user-panel.html?id=" + localStorage.userId;
             }
         } else {            
             $('.css-popup').css({

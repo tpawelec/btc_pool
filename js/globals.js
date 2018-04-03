@@ -20,8 +20,7 @@ var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
 var userIdGlobal;
 
 /* User payouts link */
-var userPayoutUrl = 'https://xmrchain.net/tx/';
-var userPayoutUrlSuffix = '/1';
+var userPayoutUrl = 'https://xmrchain.net/tx/#/1';
 
 /* Zebra for tables */
 var bgSec = '#1B5389'
@@ -105,7 +104,7 @@ $(document).ready(function() {
             display: 'flex'
         });
 
-    $('#userLink').attr('href', 'user-panel.html?id=' + getUserCookieVal('user_token'));
+    $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userId);
     }
 
     /*
@@ -114,7 +113,7 @@ $(document).ready(function() {
     $('#logOut').click(function(e){
     	e.preventDefault();
     	document.cookie = 'user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    	localStorage.removeItem("id");
+    	localStorage.removeItem("userId");
     	window.location.href = "index.html";
     })
 
