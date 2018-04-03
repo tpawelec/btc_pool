@@ -36,6 +36,10 @@ function getUrlVars() {
     return vars;
 }
 
+function updateNavUrl(){
+    $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userId);
+}
+
 /* Gets user ID from cookie */
 function getUserCookieVal(name) {
     var getCookieValues = function(cookie) {
@@ -104,7 +108,7 @@ $(document).ready(function() {
             display: 'flex'
         });
 
-    $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userId);
+        updateNavUrl();
     }
 
     /*

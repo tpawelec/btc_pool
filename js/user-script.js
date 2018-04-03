@@ -434,6 +434,8 @@ function passwordLogin() {
                 });
                 hideKeyboard();
                 callApi();
+                localStorage.setItem("userId", getUrlVars()['id']);
+                updateNavUrl();
                 setInterval(callApi, 10000);
 
             } else {
@@ -482,6 +484,7 @@ function apiLogin() {
                        } else {
                           callApi();
                           localStorage.setItem("userId", getUrlVars()['id']);
+                          updateNavUrl();
                           setInterval(callApi, 10000);
                           $('#userLink').css({
                            display: 'inline-block'
@@ -504,7 +507,7 @@ function apiLogin() {
     */
     $(document).ready(function () {
         'use strict';
-        alert("User panel v1.8c")
+        alert("User panel v1.8d")
 
         if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
             if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
