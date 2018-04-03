@@ -507,7 +507,7 @@ function apiLogin() {
     */
     $(document).ready(function () {
         'use strict';
-        alert("User panel v1.8d")
+        alert("User panel v1.9")
 
         if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
             if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
@@ -521,6 +521,7 @@ function apiLogin() {
             localStorage.setItem("userId", getUrlVars()['id']);
             setInterval(callApi, 10000);
         } else {
+            document.cookie = 'user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
             apiLogin();
         }
       }
@@ -613,5 +614,28 @@ function apiLogin() {
         hideKeyboard();
     })
 
-    
+    /* 
+    On hover on PPLNS legend
+    */
+    $('.legend p').on('mouseover', function(e) {
+        e.preventDefault();
+        if($(this).index() === 0) {
+            $("#pplnsLegendHover p").text("Red line indicates when a block was mined");
+            console.log($(this).index())
+        } else if($(this).index() === 1) {
+            $("#pplnsLegendHover p").text("White area is your contribution to that block");
+            console.log($(this).index())
+        } else if($(this).index() === 2) {
+            $("#pplnsLegendHover p").text("Blue area indicates other contributions");
+            console.log($(this).index())
+        }
+
+        $("#pplnsLegendHover").css({'display' : 'block',  'opacity' : 1, 'top' : e.pageY, 'left' : e.pageX});
+    });
+
+    $('.legend p').on('mouseout', function(e) {
+        e.preventDefault();
+
+        $("#pplnsLegendHover").css({'display' : 'none', 'opacity' : 0});
+    })
 });
