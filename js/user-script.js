@@ -507,7 +507,7 @@ function apiLogin() {
     */
     $(document).ready(function () {
         'use strict';
-        alert("User panel v1.9")
+        alert("User panel v1.9a")
 
         if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
             if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
@@ -606,12 +606,13 @@ function apiLogin() {
     	e.preventDefault();
     	if(e.which === 13 || e.keyCode === 13) {
     		filterTable(e.currentTarget.value);
+            hideKeyboard();
     	} else if(e.which === 8 || e.keyCode === 8) {
     		if(e.currentTarget.value.length === 0) {
     			filterTable(e.currentTarget.value);
     		}
     	}
-        hideKeyboard();
+        
     })
 
     /* 
