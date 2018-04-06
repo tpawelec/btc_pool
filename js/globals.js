@@ -93,7 +93,7 @@ $(document).ready(function() {
     /*
     If user is logged "User panel" and "Logout" is displayed
     */
-   if(document.cookie.indexOf('user_token') < 0) {
+   /*if(document.cookie.indexOf('user_token') < 0) {
         $('#userLink').css({
             display: 'none'
         });
@@ -109,8 +109,25 @@ $(document).ready(function() {
         });
 
         updateNavUrl();
-    }
+    }*/
 
+    if(localStorage.logged === "true") {
+        $('#userLink').css({
+            display: 'inline-block'
+        });
+        $('#logOut').css({
+            display: 'flex'
+        });
+
+        updateNavUrl();
+    } else {
+        $('#userLink').css({
+            display: 'none'
+        });
+        $('#logOut').css({
+            display: 'none'
+        });
+    }
     /*
         Event for "Logout"
     */
@@ -118,6 +135,7 @@ $(document).ready(function() {
     	e.preventDefault();
     	document.cookie = 'user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
     	localStorage.removeItem("userId");
+        localStorage.removeItem("logged");
     	window.location.href = "index.html";
     })
 

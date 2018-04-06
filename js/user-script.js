@@ -435,6 +435,7 @@ function passwordLogin() {
                 hideKeyboard();
                 callApi();
                 localStorage.setItem("userId", getUrlVars()['id']);
+                localStorage.setItem("logged", "true");
                 updateNavUrl();
                 setInterval(callApi, 10000);
 
@@ -484,6 +485,7 @@ function apiLogin() {
                        } else {
                           callApi();
                           localStorage.setItem("userId", getUrlVars()['id']);
+                          localStorage.setItem("logged", "false");
                           updateNavUrl();
                           setInterval(callApi, 10000);
                           $('#userLink').css({
@@ -507,7 +509,7 @@ function apiLogin() {
     */
     $(document).ready(function () {
         'use strict';
-        alert("User panel v1.9b")
+        alert("User panel v2.0")
 
         if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
             if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
