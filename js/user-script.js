@@ -434,8 +434,7 @@ function passwordLogin() {
                 });
                 hideKeyboard();
                 callApi();
-                localStorage.setItem("userId", getUrlVars()['id']);
-                localStorage.setItem("logged", "true");
+                localStorage.setItem("userIdLogged", getUrlVars()['id']);
                 updateNavUrl();
                 setInterval(callApi, 10000);
 
@@ -484,8 +483,7 @@ function apiLogin() {
 
                        } else {
                           callApi();
-                          localStorage.setItem("userId", getUrlVars()['id']);
-                          localStorage.setItem("logged", "false");
+                          localStorage.setItem("userIdNotLogged", getUrlVars()['id']);
                           updateNavUrl();
                           setInterval(callApi, 10000);
                           $('#userLink').css({
@@ -509,7 +507,7 @@ function apiLogin() {
     */
     $(document).ready(function () {
         'use strict';
-        alert("User panel v2.0")
+        alert("User panel v2.0b")
 
         if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
             if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
@@ -518,9 +516,8 @@ function apiLogin() {
                 apiLogin()
            }
        } else {
-        if(localStorage.userId === getUrlVars()['id']) {
+        if(localStorage.userIdLogged === getUrlVars()['id']) {
             callApi();
-            localStorage.setItem("userId", getUrlVars()['id']);
             setInterval(callApi, 10000);
         } else {
             apiLogin();
@@ -536,10 +533,12 @@ function apiLogin() {
         if($('.wrong-id').css('display') === 'flex') {
             window.location.href = "index.html"
         } else if($('.password-form').css('display') === 'flex') {
-            if(getUserCookieVal('user_token') === null) {
+            if(localStorage.userIdLogged === null || localStorage.userIdNotLogged === null) {
                 window.location.href = "index.html"
-            } else {
-                window.location.href = "user-panel.html?id=" + localStorage.userId;
+            } else if(localStorage.userIdNotLogged === null || localStorage.userIdLogged != null) {
+                window.location.href = "user-panel.html?id=" + localStorage.userIdLogged
+            } else if(localStorage.userIdLogged === null || localStorage.userIdNotLogged != null) {
+                window.location.href = "user-panel.html?id=" + localStorage.userIdNotLogged
             }
         } else {            
             $('.css-popup').css({

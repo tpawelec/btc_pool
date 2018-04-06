@@ -16,8 +16,6 @@ var chartUrl = 'http://work.monero.me:12345/api/pool-graph.php';
 var coinUrl = 'http://work.monero.me:12345/api/pool-coin.php';
 var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
 
-/* User ID typed in login input */
-var userIdGlobal;
 
 /* User payouts link */
 var userPayoutUrl = 'https://xmrchain.net/tx/#/1';
@@ -37,7 +35,11 @@ function getUrlVars() {
 }
 
 function updateNavUrl(){
-    $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userId);
+    if(localStorage.userIdNotLogged === null && localStorage.userIdLogged != null) {
+        $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
+    } else if(localStorage.userIdLogged === null && localStorage.userIdNotLogged != null) {
+        $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdNotLogged);
+    }
 }
 
 /* Gets user ID from cookie */
@@ -111,7 +113,7 @@ $(document).ready(function() {
         updateNavUrl();
     }*/
 
-    if(localStorage.logged === "true") {
+    if(localStorage.userIdNotLogged != null || localStorage.userIdLogged != null) {
         $('#userLink').css({
             display: 'inline-block'
         });
@@ -134,8 +136,8 @@ $(document).ready(function() {
     $('#logOut').click(function(e){
     	e.preventDefault();
     	document.cookie = 'user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-    	localStorage.removeItem("userId");
-        localStorage.removeItem("logged");
+    	localStorage.removeItem("userIdLogged");
+        localStorage.removeItem("userIdNotLogged");
     	window.location.href = "index.html";
     })
 
