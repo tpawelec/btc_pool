@@ -507,7 +507,7 @@ function apiLogin() {
     */
     $(document).ready(function () {
         'use strict';
-        alert("User panel v1.9a")
+        alert("User panel v1.9b")
 
         if(document.cookie.indexOf('user_token') < 0) { // check if user is logged (if cookie exist)
             if(location.search.indexOf('id=') < 0){ // check if url is correct (if id is in url)
@@ -521,7 +521,6 @@ function apiLogin() {
             localStorage.setItem("userId", getUrlVars()['id']);
             setInterval(callApi, 10000);
         } else {
-            document.cookie = 'user_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
             apiLogin();
         }
       }
