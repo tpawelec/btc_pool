@@ -39,6 +39,8 @@ function updateNavUrl(){
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
     } else if(localStorage.userIdLogged === null && localStorage.userIdNotLogged != null) {
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdNotLogged);
+    } else if(localStorage.userIdLogged != null && localStorage.userIdNotLogged != null) {
+        $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
     }
 }
 
