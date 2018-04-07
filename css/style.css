@@ -125,7 +125,7 @@ body {
 
 @media (max-width: 680px) {
   .nav-bar {
-    height: 11.7rem;
+    height: 12.7rem;
     padding: .5rem;
     position: relative; }
     .nav-bar img {
@@ -293,11 +293,16 @@ footer {
   background-color: #032546;
   text-align: center;
   border-top: 1px solid #f0edee;
-  height: 4rem;
+  height: auto;
   padding: 1rem;
   font-size: .8rem;
   width: 100%;
   bottom: 0; }
+  footer .credits {
+    margin: 1rem; }
+    footer .credits a {
+      color: #f0edee;
+      text-decoration: none; }
 
 @media (max-width: 787px) {
   footer {
@@ -758,5 +763,24 @@ h2 {
     text-align: center; }
     #workersSection input {
       margin: 0 auto; } }
+
+.faq li {
+  padding: 1rem;
+  list-style-type: none;
+  margin: 1.5rem 0 1.5rem 0; }
+  .faq li.q {
+    background-color: #1B5389;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-bottom: 1px #ddd solid;
+    cursor: pointer; }
+    .faq li.q:before {
+      content: attr(data-icon);
+      min-height: 2rem;
+      min-width: 2rem; }
+  .faq li.a {
+    background-color: #0F4172;
+    color: #f0edee;
+    height: auto; }
 
 /*# sourceMappingURL=style.css.map */

@@ -26,6 +26,8 @@ var bgSec = '#1B5389'
 /* Cookie value without ID */
 var cookieVal = 'mock_token_value_';
 
+var x = window.matchMedia("(max-width: 680px)")
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -36,13 +38,10 @@ function getUrlVars() {
 
 function updateNavUrl(){
     if(localStorage.userIdNotLogged == null && localStorage.userIdLogged != null) {
-        console.log("not loggednull, logged something")
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
     } else if(localStorage.userIdLogged == null && localStorage.userIdNotLogged != null) {
-        console.log("not logged something, logged null")
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdNotLogged);
     } else if(localStorage.userIdLogged != null && localStorage.userIdNotLogged != null) {
-        console.log("not logged something, logged something")
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
     }
 }
@@ -65,6 +64,26 @@ function getUserCookieVal(name) {
     return (cookieValue === undefined) ? null : cookieValue.split(cookieVal)[1];
 }
 
+function changeNavHeight(x) {
+    if (localStorage.userIdNotLogged != null || localStorage.userIdLogged != null) {
+        if (x.matches) { // If media query matches
+            console.log("media")
+            $(".nav-bar").css({
+                'height' : '14.7rem'
+            });
+            $("#logOut").css({
+                'top' : '7.7rem'
+            })
+        } else {
+            $(".nav-bar").css({
+                'height' : '12.7rem'
+            });
+            $("#logOut").css({
+                'top' : '5.5rem'
+            })
+        }
+    }
+}
 $(document).ready(function() {
 	/* DROPDOWN MENU WITH CURRENCIES */
     btn.click(function () {
@@ -97,26 +116,6 @@ $(document).ready(function() {
         }
     });
 
-    /*
-    If user is logged "User panel" and "Logout" is displayed
-    */
-   /*if(document.cookie.indexOf('user_token') < 0) {
-        $('#userLink').css({
-            display: 'none'
-        });
-        $('#logOut').css({
-            display: 'none'
-        });
-    } else {
-        $('#userLink').css({
-            display: 'inline-block'
-        });
-        $('#logOut').css({
-            display: 'flex'
-        });
-
-        updateNavUrl();
-    }*/
 
     if(localStorage.userIdNotLogged != null || localStorage.userIdLogged != null) {
         $('#userLink').css({
@@ -135,6 +134,13 @@ $(document).ready(function() {
             display: 'none'
         });
     }
+
+    /*
+        Change height of navigation on mobiles if logged
+    */
+    
+    changeNavHeight(x);
+    x.addListener(changeNavHeight);
     /*
         Event for "Logout"
     */

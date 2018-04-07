@@ -436,6 +436,7 @@ function passwordLogin() {
                 callApi();
                 localStorage.setItem("userIdLogged", getUrlVars()['id']);
                 updateNavUrl();
+                changeNavHeight(x);
                 setInterval(callApi, 10000);
 
             } else {
@@ -485,6 +486,7 @@ function apiLogin() {
                           callApi();
                           localStorage.setItem("userIdNotLogged", getUrlVars()['id']);
                           updateNavUrl();
+                          changeNavHeight(x);
                           setInterval(callApi, 10000);
                           $('#userLink').css({
                            display: 'inline-block'

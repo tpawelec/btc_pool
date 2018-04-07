@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Description" content="Pool statistic for mining Monero">
+	<meta name="keywords" content="bitcoin, cryptocurrency, monero, xmr, minig, stats">
+	<meta name="google" content="notranslate">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/grid.min.css">
+	<link rel="stylesheet" href="css/style.min.css">
+	<title>Monero Mining</title>
+</head>
+<body>
+	<!-- MENU -->
+	<div class="nav-bar">
+		<img src="http://via.placeholder.com/200x50" alt="Lorem ipsum">
+		<ul class="menu">
+			<li><a href="index.html">Home</a></li>
+			<li><a href="user-panel.html" id="userLink">User Panel</a></li>
+			<li><a href="faq.html">FAQ</a></li>
+			<li><a href="index.html" id="logOut">Logout</a></li>
+		</ul>
+
+		<div class="dropdown">
+			<p class="label">Currency:</p>
+			<button id="currencySelect" class="btn nav-btn">USD</button>
+			<div class="dropdown-content">
+				<p id="USD">USD</p>
+				<p id="EUR">EUR</p>
+				<p id="GBP">GBP</p>
+				<p id="BTC">BTC</p>
+			</div>
+		</div>
+	</div>
+	
+	<section class="faq-section">
+		<div class="container">
+			<ul class="faq">
+				<li class="q" data-icon="&#x25B6">
+	    			Question 1
+	  			</li>
+	  			<li class="a">Answer 1</li>
+	  
+	 			<li class="q" data-icon="&#x25B6">
+	    			Question 2
+	  			</li>
+	  			<li class="a">Answer 2</li>
+
+	  			<li class="q" data-icon="&#x25B6">
+	    			Question 3
+	  			</li>
+	  			<li class="a">Answer 3</li>
+
+			</ul>
+		</div>
+	</section>
+
+	<!-- CSS POPUP -->
+	<div class="css-popup" id="cssPopup">
+		<div class="wrapper">
+			<p class="close">&times;</p>
+		<div class="server-problem popup-content"><p class="prompt-error">&times;</p><p>Oops! There is a problem with connection to the server.</p></div>
+	</div>
+	</div>
+	<footer><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil qui repellendus, facilis temporibus magnam </p>
+		<p>perspiciatis suscipit sit dicta et quia incidunt iusto est soluta consequuntur culpa voluptate cupiditate eos maxime.</p>
+		<p class="credits">&copy; Copyright 2018, <a href="https://tpawelec.github.io" target="_blank">Tomasz Pawelec</a></p></footer>
+	<!-- JAVASCRIPT 
+	jQuery (from CDN)
+	chart.js (local)
+	moment.js (local)
+	numbro.js (from CDN)
+	cookie.js (from CDN)
+	own script.js (local)
+	-->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="js/chart.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/numbro/2.0.0/numbro.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+	<script src="js/globals.js"></script>
+	<script src="js/faq-script.js"></script>
+</body>
+</html>
