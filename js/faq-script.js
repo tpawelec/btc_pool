@@ -1,14 +1,20 @@
 $(document).ready(function() {
-    var duration = 5000;
+    var duration = 500;
     $('.a').hide();
 
     $('.q').on('click', function() {
         var answerLi = $(this).next();
-        if($(this).attr('data-icon') === "\u25B6") {
-            $(this).attr('data-icon', "\u25BC");
+        if($(this).attr('data-action') === "hide") {
+            $(this).attr('data-action','show');
+            $('.arrow', this).css({
+                'transform' : 'rotate(90deg)'
+            })
             answerLi.slideDown(duration);
         } else {
-            $(this).attr('data-icon', "\u25B6");
+            $(this).attr('data-action','hide');
+            $('.arrow', this).css({
+                'transform' : 'rotate(0deg)'
+            })
             answerLi.slideUp(duration);
         }
     });

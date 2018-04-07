@@ -2,18 +2,23 @@
 	li
 		padding: 1rem
 		list-style-type: none
-		margin: 1.5rem 0 1.5rem 0
+		margin-bottom: 1.5rem 
+		transition: initial
+		-webkit-transition: initial
+		-ms-transition: initial
+		-o-transition: initial
 		&.q
 			background-color: $background-secondary
 			font-weight: 600
 			font-size: 1.1rem
 			border-bottom: 1px #ddd solid
 			cursor: pointer
-			&:before
-				content: attr(data-icon)
-				min-height: 2rem
-				min-width: 2rem
+			.arrow
+				display: inline-block
+				padding: .3rem
 		&.a
 			background-color: $background
 			color: $text
 			height: auto
+		&:first-of-type
+			margin-top: 1.5rem

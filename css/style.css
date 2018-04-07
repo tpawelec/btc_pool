@@ -767,20 +767,25 @@ h2 {
 .faq li {
   padding: 1rem;
   list-style-type: none;
-  margin: 1.5rem 0 1.5rem 0; }
+  margin-bottom: 1.5rem;
+  transition: initial;
+  -webkit-transition: initial;
+  -ms-transition: initial;
+  -o-transition: initial; }
   .faq li.q {
     background-color: #1B5389;
     font-weight: 600;
     font-size: 1.1rem;
     border-bottom: 1px #ddd solid;
     cursor: pointer; }
-    .faq li.q:before {
-      content: attr(data-icon);
-      min-height: 2rem;
-      min-width: 2rem; }
+    .faq li.q .arrow {
+      display: inline-block;
+      padding: .3rem; }
   .faq li.a {
     background-color: #0F4172;
     color: #f0edee;
     height: auto; }
+  .faq li:first-of-type {
+    margin-top: 1.5rem; }
 
 /*# sourceMappingURL=style.css.map */
