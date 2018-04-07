@@ -67,15 +67,16 @@ function getUserCookieVal(name) {
 function changeNavHeight(x) {
     if (localStorage.userIdNotLogged != null || localStorage.userIdLogged != null) {
         if (x.matches) { // If media query matches
-            console.log("media")
             $(".nav-bar").css({
                 'height' : '14.7rem'
             });
             $("#logOut").css({
                 'top' : '7.7rem'
             })
-        } else {
-            $(".nav-bar").css({
+        } 
+    } else {
+        if(x.matches) {
+             $(".nav-bar").css({
                 'height' : '12.7rem'
             });
             $("#logOut").css({
