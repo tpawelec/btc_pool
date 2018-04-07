@@ -35,11 +35,14 @@ function getUrlVars() {
 }
 
 function updateNavUrl(){
-    if(localStorage.userIdNotLogged === null && localStorage.userIdLogged != null) {
+    if(localStorage.userIdNotLogged == null && localStorage.userIdLogged != null) {
+        console.log("not loggednull, logged something")
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
-    } else if(localStorage.userIdLogged === null && localStorage.userIdNotLogged != null) {
+    } else if(localStorage.userIdLogged == null && localStorage.userIdNotLogged != null) {
+        console.log("not logged something, logged null")
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdNotLogged);
     } else if(localStorage.userIdLogged != null && localStorage.userIdNotLogged != null) {
+        console.log("not logged something, logged something")
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
     }
 }
