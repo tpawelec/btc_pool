@@ -138,7 +138,27 @@ $(document).ready(function() {
                 url: 'tiny-image.gif'
             }, 
             active: 'image'}
-}
+    }
+
+    Offline.on('up', function () {
+                $('.css-popup').css({
+                visibility: "hidden",
+                opacity: 0
+            });
+            });
+
+            Offline.on('down', function () {
+                 $('.css-popup').css({
+                visibility: "visible",
+                opacity: 1
+            });
+            $('.css-popup > .wrapper > *:not(p)').css({
+                display: 'none'
+            });
+            $('.online-problem').css({
+                display: 'flex'
+            });
+            });
     /*
     When clicked anywhere else dropdown menu is closed
     */
