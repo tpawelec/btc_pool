@@ -129,7 +129,7 @@ $(document).ready(function() {
         interceptRequests: true,
         reconnect: {
             initialDelay: 3,
-            delay: (1.5 * last delay, capped at 1 hour)
+            delay: 1.5
         },
         requests: true,
         game: false,
