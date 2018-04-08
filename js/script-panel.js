@@ -211,8 +211,8 @@ $(document).ready(function () {
 	});
 
 	gatherLogs();
-
-	setInterval(refreshLogs, 10000);
+	adminInterval[0] = function) {refreshLogs()}
+	adminInterval[1] = setInterval(adminInterval[0], 10000);
 
 	/* Search Function */
 

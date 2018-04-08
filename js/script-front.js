@@ -294,5 +294,7 @@ $(document).ready(function () {
         });
     }
     callApi();
-    setInterval(callApi, 10000);
+    frontInterval[0] = function() {callApi()}
+    frontInterval[1] = setInterval(frontInterval[0], 10000);
+    
 });

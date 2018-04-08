@@ -437,8 +437,8 @@ function passwordLogin() {
                 localStorage.setItem("userIdLogged", getUrlVars()['id']);
                 updateNavUrl();
                 changeNavHeight(x);
-                setInterval(callApi, 10000);
-
+                userInterval[0] = function() {callApi()}
+                userInterval[1] = setInterval(userInterval[0], 10000);
             } else {
                 $('.css-popup > .wrapper > *:not(p)').css({
                     display: 'none'
@@ -487,7 +487,8 @@ function apiLogin() {
                           localStorage.setItem("userIdNotLogged", getUrlVars()['id']);
                           updateNavUrl();
                           changeNavHeight(x);
-                          setInterval(callApi, 10000);
+                          userInterval[0] = function() {callApi()}
+                          userInterval[1] = setInterval(userInterval[0], 10000);
                           $('#userLink').css({
                            display: 'inline-block'
                        });
@@ -520,7 +521,8 @@ function apiLogin() {
        } else {
         if(localStorage.userIdLogged === getUrlVars()['id']) {
             callApi();
-            setInterval(callApi, 10000);
+            userInterval[0] = function() {callApi()}
+            userInterval[1] = setInterval(userInterval[0], 10000);
         } else {
             apiLogin();
         }

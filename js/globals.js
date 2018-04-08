@@ -23,8 +23,11 @@ var userPayoutUrl = 'https://xmrchain.net/tx/#/1';
 /* Zebra for tables */
 var bgSec = '#1B5389'
 
-/* Cookie value without ID */
-var cookieVal = 'mock_token_value_';
+/* Intervals for apicalls */
+var frontInterval = [null, null],
+    adminInterval = [null, null],
+    userInterval = [null, null];
+
 
 var x = window.matchMedia("(max-width: 680px)")
 
@@ -88,34 +91,35 @@ function changeNavHeight(x) {
 $(document).ready(function() {
 
     /*
-        Configure Offline.js
+        Check if user is online
     */
-    Offline.options = {
-        checkOnLoad: false, // to check the connection status immediatly on page load.
-        interceptRequests: true, // to monitor AJAX requests to check connection.
-        reconnect: { // to automatically retest periodically when the connection is down (set to false to disable).
-            initialDelay: 3, // delay time in seconds to wait before rechecking.
-            delay: 10 // wait time in seconds between retries.
-        },
-        checks: {
-            image: {
-                url: 'https://www.google.pl/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
-            }, 
-            active: 'image'
-        },
-        requests: true // to store and attempt to remake requests which failed while the connection was down.
-    };
-
-
-    var run = function(){
-        if (Offline.state === 'up')
-        Offline.check();
+    var checkStatus = function() {
+        if (navigator.onLine) {
+            $('.css-popup').css({
+                visibility: "hidden",
+                opacity: 0
+            });
+        } else {
+            $('.css-popup').css({
+                visibility: "visible",
+                opacity: 1
+            });
+            $('.css-popup > .wrapper > *:not(p)').css({
+                display: 'none'
+            });
+            $('.online-problem').css({
+                display: 'flex'
+            });
         }
-        setInterval(run, 5000);   
-	/* DROPDOWN MENU WITH CURRENCIES */
-    btn.click(function () {
-        $('.dropdown-content').toggleClass('show');
-    });
+    }
+    checkStatus();
+
+    window.addEventListener("online", function() {
+        checkStatus();
+    })
+    window.addEventListener("offline", function() {
+        checkStatus();
+    })
 
     /*
     When clicked anywhere else dropdown menu is closed
