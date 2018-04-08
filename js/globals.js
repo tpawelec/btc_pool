@@ -135,19 +135,21 @@ $(document).ready(function() {
         game: false,
         checks: {
             image: {
-                url: 'tiny-image.gif'
+                url: 'http://http://work.monero.me:12345/tiny-image.gif'
             }, 
             active: 'image'}
     }
 
     Offline.on('up', function () {
+        console.log("up")
                 $('.css-popup').css({
                 visibility: "hidden",
                 opacity: 0
             });
             });
-
+    setInterval(function() {Offline.check()}, 1000);
             Offline.on('down', function () {
+                 console.log("down")
                  $('.css-popup').css({
                 visibility: "visible",
                 opacity: 1
