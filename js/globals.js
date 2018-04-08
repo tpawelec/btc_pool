@@ -92,7 +92,7 @@ $(document).ready(function() {
 
     /*
         Check if user is online
-    */
+    *
     var checkStatus = function() {
         if (navigator.onLine) {
             $('.css-popup').css({
@@ -114,13 +114,31 @@ $(document).ready(function() {
     }
     checkStatus();
 
-    window.addEventListener("online", function() {
+    window.addEventListener("ononline", function() {
+        console.log("online")
         checkStatus();
     })
-    window.addEventListener("offline", function() {
+    window.addEventListener("onoffline", function() {
+        console.log("offline")
         checkStatus();
     })
+    */
 
+    Offline.options = {
+        checkOnLoad: true,
+        interceptRequests: true,
+        reconnect: {
+            initialDelay: 3,
+            delay: (1.5 * last delay, capped at 1 hour)
+        },
+        requests: true,
+        game: false,
+        checks: {
+            image: {
+                url: 'tiny-image.gif'
+            }, 
+            active: 'image'}
+}
     /*
     When clicked anywhere else dropdown menu is closed
     */
