@@ -98,9 +98,10 @@ $(document).ready(function() {
             delay: 10 // wait time in seconds between retries.
         },
         checks: {
-            xhr: {
-                url: poolUrl
-            }
+            image: {
+                url: 'https://www.google.pl/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'
+            }, 
+            active: 'image'
         },
         requests: true // to store and attempt to remake requests which failed while the connection was down.
     };
