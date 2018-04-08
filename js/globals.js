@@ -86,6 +86,20 @@ function changeNavHeight(x) {
     }
 }
 $(document).ready(function() {
+
+    /*
+        Configure Offline.js
+    */
+    Offline.options = {
+        checkOnLoad: false, // to check the connection status immediatly on page load.
+        interceptRequests: true, // to monitor AJAX requests to check connection.
+        reconnect: { // to automatically retest periodically when the connection is down (set to false to disable).
+            initialDelay: 3, // delay time in seconds to wait before rechecking.
+            delay: 10 // wait time in seconds between retries.
+        },
+        requests: false // to store and attempt to remake requests which failed while the connection was down.
+    };
+
 	/* DROPDOWN MENU WITH CURRENCIES */
     btn.click(function () {
         $('.dropdown-content').toggleClass('show');
