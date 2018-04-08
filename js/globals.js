@@ -135,7 +135,7 @@ $(document).ready(function() {
         game: false,
         checks: {
             image: {
-                url: 'http://work.monero.me:12345/tiny-image.gif'
+                url: 'tiny-image.gif'
             }, 
             active: 'image'}
     }
