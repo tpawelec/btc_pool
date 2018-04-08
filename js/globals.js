@@ -140,15 +140,15 @@ $(document).ready(function() {
             active: 'image'}
     }
 
-    Offline.on('up', function () {
+    Offline.on('confirmed-up', function () {
         console.log("confirmed-up")
                 $('.css-popup').css({
                 visibility: "hidden",
                 opacity: 0
             });
             });
-            Offline.on('confirmed-down', function () {
-                 console.log("down")
+    Offline.on('confirmed-down', function () {
+                 console.log("confirmed-down")
                  $('.css-popup').css({
                 visibility: "visible",
                 opacity: 1
@@ -160,8 +160,12 @@ $(document).ready(function() {
                 display: 'flex'
             });
             });
+    
+        
+    setInterval(function() {
+        Offline.check();
 
-        setInterval(function() {Offline.check()}, 1000);
+    }, 1000);
     /*
     When clicked anywhere else dropdown menu is closed
     */
