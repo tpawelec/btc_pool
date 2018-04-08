@@ -106,6 +106,12 @@ $(document).ready(function() {
         requests: true // to store and attempt to remake requests which failed while the connection was down.
     };
 
+
+    var run = function(){
+        if (Offline.state === 'up')
+        Offline.check();
+        }
+        setInterval(run, 5000);   
 	/* DROPDOWN MENU WITH CURRENCIES */
     btn.click(function () {
         $('.dropdown-content').toggleClass('show');
