@@ -97,6 +97,11 @@ $(document).ready(function() {
             initialDelay: 3, // delay time in seconds to wait before rechecking.
             delay: 10 // wait time in seconds between retries.
         },
+        checks: {
+            xhr: {
+                url: poolUrl
+            }
+        },
         requests: true // to store and attempt to remake requests which failed while the connection was down.
     };
 
