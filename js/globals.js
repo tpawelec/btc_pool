@@ -135,20 +135,19 @@ $(document).ready(function() {
         game: false,
         checks: {
             image: {
-                url: 'http://http://work.monero.me:12345/tiny-image.gif'
+                url: 'http://work.monero.me:12345/tiny-image.gif'
             }, 
             active: 'image'}
     }
 
     Offline.on('up', function () {
-        console.log("up")
+        console.log("confirmed-up")
                 $('.css-popup').css({
                 visibility: "hidden",
                 opacity: 0
             });
             });
-    setInterval(function() {Offline.check()}, 1000);
-            Offline.on('down', function () {
+            Offline.on('confirmed-down', function () {
                  console.log("down")
                  $('.css-popup').css({
                 visibility: "visible",
@@ -161,6 +160,8 @@ $(document).ready(function() {
                 display: 'flex'
             });
             });
+
+        setInterval(function() {Offline.check()}, 1000);
     /*
     When clicked anywhere else dropdown menu is closed
     */
