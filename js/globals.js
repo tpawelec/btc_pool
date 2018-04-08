@@ -97,7 +97,7 @@ $(document).ready(function() {
             initialDelay: 3, // delay time in seconds to wait before rechecking.
             delay: 10 // wait time in seconds between retries.
         },
-        requests: false // to store and attempt to remake requests which failed while the connection was down.
+        requests: true // to store and attempt to remake requests which failed while the connection was down.
     };
 
 	/* DROPDOWN MENU WITH CURRENCIES */
