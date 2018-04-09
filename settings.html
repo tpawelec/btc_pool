@@ -34,36 +34,93 @@
 		</div>
 	</div>
 	
-	<section class="faq-section">
+	<section class="setting-form">
 		<div class="container">
-			<ul class="faq">
-				<li class="q" data-action="hide">
-	    			<p class="arrow">&#x25B6</p>Question 1
-	  			</li>
-	  			<li class="a">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-	  				<span class="more" data-more="hide">Show more &#x2192</span>
-	  				<p class="faq-more">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-	  			</li>
-	  
-	 			<li class="q" data-action="hide">
-	    			<p class="arrow">&#x25B6</p>Question 2
-	  			</li>
-	  			<li class="a">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-	  				<span class="more" data-more="hide">Show more &#x2192</span>
-	  				<p class="faq-more">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-	  			</li>
+		<form name="settinsForm" action="#" onsubmit="return validateForm()" method="post">
+			<div class="row">
+				<div class="col-6">
+					<label for="currPassword">Password: </label>
+				</div>
+				<div class="col-6">
+					<input type="password" name="curr-password" id="currPassword">
+				</div>
+			</div>
 
-	  			<li class="q" data-action="hide">
-	    			<p class="arrow">&#x25B6</p>Question 3
-	  			</li>
-	  			<li class="a">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-	  				<span class="more" data-more="hide">Show more &#x2192</span>
-	  				<p class="faq-more">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-	  			</li>
+			<div class="row">
+				<div class="col-6">
+					<label for="newPassword">New password: </label>
+				</div>
+				<div class="col-6">
+					<input type="password" name="new-password" id="newPassword">
+				</div>
+			</div>
 
-			</ul>
+			<div class="row">
+				<div class="col-6">
+					<label for="newPasswordConfirm">Password: </label>
+				</div>
+				<div class="col-6">
+					<input type="password" name="curr-password-confirm" id="currPasswordConfirm">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<label for="diffSetting">Constant difficulty setting: </label>
+				</div>
+				<div class="col-6">
+					<input type="text" name="diff-setting" id="diffSetting">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<label for="mail">E-mail: </label>
+				</div>
+				<div class="col-6">
+					<input type="text" name="email" id="email">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-6">
+					<label for="passwordProtected">Password-protected profile</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="passwordProtected" id="passwordProtected">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<label for="anonymous">Anonymize me in leaderboard</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="anonymous" id="anonymous">
+				</div>
+			</div>
+
+			
+			<div class="row">
+				<div class="col-6">
+					<label for="notification">Email me when rig goes online/offline</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="notification" id="notification">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6"></div>
+				<div class="col-6">
+					<input type="submit" value="Submit" class="btn">
+				</div>
+			</div>
+			</form>
+		</div>
 		</div>
 	</section>
+	
 
 	<!-- CSS POPUP -->
 	<div class="css-popup" id="cssPopup">
@@ -89,6 +146,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/numbro/2.0.0/numbro.min.js"></script>
 	<script src="js/offline.min.js"></script>
 	<script src="js/globals.js"></script>
-	<script src="js/faq-script.js"></script>
+	<script src="js/settings-script.js"></script>
 </body>
 </html>

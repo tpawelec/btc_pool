@@ -389,6 +389,9 @@ footer {
   .wrapper .server-problem {
     display: none;
     padding: 2.5rem; }
+  .wrapper .online-problem {
+    display: none;
+    padding: 2.5rem; }
   .wrapper .prompt-error {
     color: #900;
     font-size: 60px;
@@ -764,14 +767,16 @@ h2 {
     #workersSection input {
       margin: 0 auto; } }
 
-.faq li {
-  padding: 1rem;
-  list-style-type: none;
-  margin-bottom: 1.5rem;
+.faq * {
   transition: initial;
   -webkit-transition: initial;
   -ms-transition: initial;
   -o-transition: initial; }
+
+.faq li {
+  padding: 1rem;
+  list-style-type: none;
+  margin-bottom: 1.5rem; }
   .faq li.q {
     background-color: #1B5389;
     font-weight: 600;
@@ -787,5 +792,39 @@ h2 {
     height: auto; }
   .faq li:first-of-type {
     margin-top: 1.5rem; }
+
+.faq .more {
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 600; }
+
+.faq .faq-more {
+  margin-top: 1rem; }
+
+.setting-form {
+  text-align: center;
+  margin: 2rem auto; }
+  .setting-form label {
+    margin: .5rem;
+    padding: .2rem;
+    float: right; }
+  .setting-form input {
+    padding: .5rem;
+    margin: .5rem;
+    border: none;
+    float: left;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    width: 10rem; }
+    .setting-form input:focus {
+      outline: none; }
+  .setting-form [type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    margin-left: 0;
+    vertical-align: bottom;
+    position: relative;
+    top: .3rem; }
 
 /*# sourceMappingURL=style.css.map */

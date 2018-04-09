@@ -231,6 +231,7 @@ function callApi() {
 $(document).ready(function () {
 
     'use strict';
+    alert("User panel v2.1")
     /*
     When clicked on currency variable and html content is updated. Then API is called.
     */
@@ -294,7 +295,7 @@ $(document).ready(function () {
         });
     }
     callApi();
-    frontInterval[0] = function() {callApi()}
-    frontInterval[1] = setInterval(frontInterval[0], 10000);
+    apiInterval[0] = function() {callApi()}
+    apiInterval[1] = setInterval(apiInterval[0], 10000);
     
 });

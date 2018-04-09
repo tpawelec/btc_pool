@@ -1,3 +1,4 @@
+
 /*
 TODO
 Search engine!!
@@ -211,8 +212,8 @@ $(document).ready(function () {
 	});
 
 	gatherLogs();
-	adminInterval[0] = function) {refreshLogs()}
-	adminInterval[1] = setInterval(adminInterval[0], 10000);
+	apiInterval[0] = function) {refreshLogs()}
+	apiInterval[1] = setInterval(apiInterval[0], 10000);
 
 	/* Search Function */
 

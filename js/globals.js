@@ -24,9 +24,7 @@ var userPayoutUrl = 'https://xmrchain.net/tx/#/1';
 var bgSec = '#1B5389'
 
 /* Intervals for apicalls */
-var frontInterval = [null, null],
-    adminInterval = [null, null],
-    userInterval = [null, null];
+var apiInterval = [null, null];
 
 
 var x = window.matchMedia("(max-width: 680px)")
@@ -42,10 +40,13 @@ function getUrlVars() {
 function updateNavUrl(){
     if(localStorage.userIdNotLogged == null && localStorage.userIdLogged != null) {
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
+        $('#settingsLink').attr('href', 'settings.html?id=' + localStorage.userIdLogged);
     } else if(localStorage.userIdLogged == null && localStorage.userIdNotLogged != null) {
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdNotLogged);
+        $('#settingsLink').attr('href', 'settings.html?id=' + localStorage.userIdNotLogged);
     } else if(localStorage.userIdLogged != null && localStorage.userIdNotLogged != null) {
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
+        $('#settingsLink').attr('href', 'settings.html?id=' + localStorage.userIdNotLogged);
     }
 }
 
@@ -71,7 +72,7 @@ function changeNavHeight(x) {
     if (localStorage.userIdNotLogged != null || localStorage.userIdLogged != null) {
         if (x.matches) { // If media query matches
             $(".nav-bar").css({
-                'height' : '14.7rem'
+                'height' : '16.5rem'
             });
             $("#logOut").css({
                 'top' : '7.7rem'
@@ -92,64 +93,32 @@ $(document).ready(function() {
 
     /*
         Check if user is online
-    *
-    var checkStatus = function() {
-        if (navigator.onLine) {
-            $('.css-popup').css({
-                visibility: "hidden",
-                opacity: 0
-            });
-        } else {
-            $('.css-popup').css({
-                visibility: "visible",
-                opacity: 1
-            });
-            $('.css-popup > .wrapper > *:not(p)').css({
-                display: 'none'
-            });
-            $('.online-problem').css({
-                display: 'flex'
-            });
-        }
-    }
-    checkStatus();
-
-    window.addEventListener("ononline", function() {
-        console.log("online")
-        checkStatus();
-    })
-    window.addEventListener("onoffline", function() {
-        console.log("offline")
-        checkStatus();
-    })
     */
 
     Offline.options = {
         checkOnLoad: true,
         interceptRequests: true,
-        reconnect: {
-            initialDelay: 3,
-            delay: 1.5
-        },
-        requests: true,
-        game: false,
+        request: true,
         checks: {
-            image: {
-                url: 'tiny-image.gif'
-            }, 
-            active: 'image'}
+            xhr: {
+                url: coinUrl
+            }
+        },
+        active: true
     }
 
-    Offline.on('confirmed-up', function () {
-        console.log("confirmed-up")
-                $('.css-popup').css({
+    Offline.on('up', function () {
+            $('.css-popup').css({
                 visibility: "hidden",
                 opacity: 0
             });
+            $('.css-popup > .close').css({
+                'display' : 'inline-block'
             });
-    Offline.on('confirmed-down', function () {
-                 console.log("confirmed-down")
-                 $('.css-popup').css({
+            apiInterval[1] = setInterval(apiInterval[0], 10000);
+            });
+    Offline.on('down', function () {
+            $('.css-popup').css({
                 visibility: "visible",
                 opacity: 1
             });
@@ -159,13 +128,18 @@ $(document).ready(function() {
             $('.online-problem').css({
                 display: 'flex'
             });
+            $('.css-popup > .close').css({
+                'display' : 'none'
+            });
+            clearInterval(apiInterval[1]);
             });
     
         
     setInterval(function() {
         Offline.check();
+    }, 4000);
 
-    }, 1000);
+
     /*
     When clicked anywhere else dropdown menu is closed
     */
@@ -197,6 +171,9 @@ $(document).ready(function() {
         $('#userLink').css({
             display: 'inline-block'
         });
+        $('#settingsLink').css({
+            display: 'inline-block'
+        });
         $('#logOut').css({
             display: 'flex'
         });
@@ -204,6 +181,9 @@ $(document).ready(function() {
         updateNavUrl();
     } else {
         $('#userLink').css({
+            display: 'none'
+        });
+        $('#settingsLink').css({
             display: 'none'
         });
         $('#logOut').css({
