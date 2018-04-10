@@ -62,7 +62,8 @@ body {
     .nav-bar .menu li {
       float: left;
       display: inline-block;
-      width: 7rem;
+      width: auto;
+      margin: 0 10px;
       text-align: center; }
     .nav-bar .menu #userLink {
       display: none; }
@@ -123,7 +124,7 @@ body {
   .dropdown {
     right: 12%; } }
 
-@media (max-width: 680px) {
+@media (max-width: 820px) {
   .nav-bar {
     height: 12.7rem;
     padding: .5rem;
@@ -794,6 +795,7 @@ h2 {
     margin-top: 1.5rem; }
 
 .faq .more {
+  display: block;
   cursor: pointer;
   text-decoration: underline;
   font-weight: 600; }
@@ -816,7 +818,7 @@ h2 {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    width: 10rem; }
+    width: 15rem; }
     .setting-form input:focus {
       outline: none; }
   .setting-form [type="checkbox"] {
@@ -826,5 +828,39 @@ h2 {
     vertical-align: bottom;
     position: relative;
     top: .3rem; }
+  .setting-form .diff-password {
+    position: relative;
+    z-index: 100;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #f0edee;
+    margin-left: 17rem;
+    height: auto;
+    color: #191919;
+    padding: 10px;
+    font-size: .8rem; }
+    .setting-form .diff-password:before, .setting-form .diff-password:after {
+      position: absolute;
+      content: '';
+      width: 45px;
+      height: 1rem;
+      background: #f0edee;
+      left: 21.8em;
+      z-index: -1; }
+    .setting-form .diff-password:before {
+      left: -5%;
+      transform: skew(-50deg, 0); }
+    .setting-form .diff-password:after {
+      left: -5%;
+      transform: skew(50deg, 0); }
+
+@media (max-width: 575.98px) {
+  label {
+    float: initial !important; }
+  input:not([type="checkbox"]) {
+    float: initial !important; }
+  [type="checkbox"] {
+    top: -0.5rem !important; } }
 
 /*# sourceMappingURL=style.css.map */

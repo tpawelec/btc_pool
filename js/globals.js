@@ -27,7 +27,7 @@ var bgSec = '#1B5389'
 var apiInterval = [null, null];
 
 
-var x = window.matchMedia("(max-width: 680px)")
+var x = window.matchMedia("(max-width: 820px)")
 
 function getUrlVars() {
     var vars = {};
@@ -75,9 +75,16 @@ function changeNavHeight(x) {
                 'height' : '16.5rem'
             });
             $("#logOut").css({
-                'top' : '7.7rem'
-            })
-        } 
+                'top' : '9.5rem'
+            });
+        } else {
+            $(".nav-bar").css({
+                'height' : '6rem'
+            });
+            $("#logOut").css({
+                'top' : '0'
+            });
+        }
     } else {
         if(x.matches) {
              $(".nav-bar").css({
@@ -86,6 +93,13 @@ function changeNavHeight(x) {
             $("#logOut").css({
                 'top' : '5.5rem'
             })
+        } else {
+            $(".nav-bar").css({
+                'height' : '6rem'
+            });
+            $("#logOut").css({
+                'top' : '0'
+            });
         }
     }
 }

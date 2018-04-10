@@ -21,13 +21,15 @@ $(document).ready(function() {
     });
 
     $('.more').on('click', function() {
-        var answerMore = $(this).next();
+        var answerMore = $(this).prev();
         if($(this).attr('data-more') === "hide") {
             $(this).attr('data-more','show');
             answerMore.slideDown(duration);
+            $(this).html("Hide &#x2190")
         } else {
             $(this).attr('data-more','hide');
             answerMore.slideUp(duration);
+            $(this).html("Show more &#x2192")
         }
     })
 });
