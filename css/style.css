@@ -393,11 +393,26 @@ footer {
   .wrapper .online-problem {
     display: none;
     padding: 2.5rem; }
+  .wrapper .server-response {
+    display: none;
+    padding: 1.5rem; }
   .wrapper .prompt-error {
     color: #900;
     font-size: 60px;
     font-weight: 700;
     margin: 1.5rem; }
+
+.prompt-sign {
+  display: inline-block;
+  margin: 20px;
+  font-size: 45px;
+  font-weight: 700; }
+
+.api-success {
+  color: #090; }
+
+.api-fail {
+  color: #900; }
 
 @media (max-width: 920px) {
   .wrapper {
@@ -479,18 +494,6 @@ footer {
       vertical-align: middle; }
       #actionSection .wrapper .prompt .message {
         display: inline-block; }
-
-.prompt-sign {
-  display: inline-block;
-  margin: 20px;
-  font-size: 45px;
-  font-weight: 700; }
-
-.api-success {
-  color: #090; }
-
-.api-fail {
-  color: #900; }
 
 h2 {
   text-align: center; }
@@ -810,7 +813,7 @@ h2 {
     margin: .5rem;
     padding: .2rem;
     float: right; }
-  .setting-form input {
+  .setting-form input, .setting-form button {
     padding: .5rem;
     margin: .5rem;
     border: none;
@@ -819,7 +822,7 @@ h2 {
     -moz-border-radius: 10px;
     border-radius: 10px;
     width: 15rem; }
-    .setting-form input:focus {
+    .setting-form input:focus, .setting-form button:focus {
       outline: none; }
   .setting-form [type="checkbox"] {
     width: 15px;

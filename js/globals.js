@@ -11,14 +11,15 @@ var btn = $('#currencySelect');
 var apiUrlUser = 'http://work.monero.me:12345/api/user-data.php';
 
 /* API frontpage */
-
 var chartUrl = 'http://work.monero.me:12345/api/pool-graph.php';
 var coinUrl = 'http://work.monero.me:12345/api/pool-coin.php';
 var poolUrl = 'http://work.monero.me:12345/api/pool-front.php';
 
-
 /* User payouts link */
 var userPayoutUrl = 'https://xmrchain.net/tx/#/1';
+
+/* API user settings */
+var settingsUrl = 'http://work.monero.me:12345/api/user-settings.php';
 
 /* Zebra for tables */
 var bgSec = '#1B5389'

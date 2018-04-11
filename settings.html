@@ -72,7 +72,7 @@
 
 			<div class="row">
 				<div class="col-sm-6 col-12">
-					<label for="diffSetting">Constant difficulty setting: </label>
+					<label for="diffSetting">Difficulty setting: </label>
 				</div>
 				<div class="col-sm-6 col-12">
 					<input type="text" name="diff-setting" id="diffSetting">
@@ -90,10 +90,28 @@
 			
 			<div class="row">
 				<div class="col-6">
+					<label for="notification">Enable constant difficulty</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="enableConstDiff" id="enableConstDiff">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
 					<label for="passwordProtected">Password-protected profile</label>
 				</div>
 				<div class="col-6">
 					<input type="checkbox" name="passwordProtected" id="passwordProtected">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<label for="notification">Authenticate miners</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="authMiners" id="authMiners">
 				</div>
 			</div>
 
@@ -119,7 +137,7 @@
 			<div class="row">
 				<div class="col-6"></div>
 				<div class="col-6">
-					<input type="submit" value="Submit" class="btn">
+					<button class="btn" id="saveButton">Save</button>
 				</div>
 			</div>
 			</form>
@@ -134,6 +152,7 @@
 			<p class="close">&times;</p>
 		<div class="server-problem popup-content"><p class="prompt-error">&times;</p><p>Oops! There is a problem with connection to the server.</p></div>
 		<div class="online-problem popup-content"><p>Oops! You are offline!</p></div>
+		<div class="server-response popup-content"></div>
 	</div>
 	</div>
 	<footer><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil qui repellendus, facilis temporibus magnam </p>
