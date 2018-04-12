@@ -1,8 +1,5 @@
 
-/*
-TODO
-Search engine!!
-*/
+
 /* API Urls */
 
 var logApiBase = "http://work.monero.me:12345/api/admin-log.php"; //?auth=a&name=";

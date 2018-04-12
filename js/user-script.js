@@ -45,6 +45,24 @@ function hideKeyboard() {
 
 }
 
+function showResponse(resp) {
+    var $respPopup = $('.server-response');
+    $('.css-popup').css({
+        visibility: "visible",
+        opacity: 1
+    });
+    $('.css-popup > .wrapper > *:not(p)').css({
+            display: 'none'
+        });
+    $respPopup.css({
+            display: 'flex'
+        })
+    if(resp.error) {
+        $respPopup.html('<p class="prompt-sign api-fail">&times;</p><p class="message">' + resp.msg + '</p>');
+    } else {
+        $respPopup.html('<p class="prompt-sign api-success">&#x2714;</p><p class="message">' + resp.msg + '</p>');
+    }
+}
 
 function loadData(resp) {
 	
@@ -66,7 +84,7 @@ function loadData(resp) {
                 if($(this).attr('id') === 'shares') {
                     var minerShares = resp.valid_shares + resp.invalid_shares;
                     $(this).html('Valid: ' + (numbro(resp.valid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.valid_shares/minerShares)*100 + '%) <br/ >Invalid: ' + (numbro(resp.invalid_shares).format('0a.00')).toUpperCase() + ' (' + (resp.invalid_shares/minerShares)*100 + '%)');
-                } else if($(this).attr('id') === 'workers') {
+                } else if($(this).attr('id') === 'workersDashboard') {
                     $(this).html('Active: ' + resp.worker_count_active + '<br/ >Total: ' + resp.worker_count)
                 }else if($(this).attr('id') === 'balance') {
                     balance = resp.balance;
@@ -343,7 +361,7 @@ function loadData(resp) {
 }); 
   }
 
-  function convertTime(timestamp) {
+function convertTime(timestamp) {
     'use strict';
     var nowTime = Math.floor(Date.now() / 1000);
     var minutes = Math.floor((nowTime - timestamp) / 60);
@@ -528,9 +546,6 @@ function apiLogin() {
       }
 
 
-
-//
-
       $('.css-popup .close').click(function (e) {
         e.preventDefault();
         if($('.wrong-id').css('display') === 'flex') {
@@ -583,13 +598,34 @@ function apiLogin() {
 
           $('body > div:not(:first-child)').css({'display': 'none'});
           $('#'+sectionId).css({'display': 'block'});
-          callApi();
+          if(screenFlag != 'settings') {
+            callApi();
+            apiInterval[1] = setInterval(apiInterval[0], 10000);
+            } else {
+                clearInterval(apiInterval[1]);
+                $.ajax({
+                    url: settingsUrl,
+                    method: 'GET',
+                    data: {
+                        id: getUrlVars()['id']
+                    },
+                    success: function(resp) {
+                        $('#diffSetting').val(resp.difficulty);
+                        $('#payoutLvl').val(resp.payout_level);
+                        $('#email').val(resp.email);
+                        $('#enableConstDiff').prop("checked", _ => resp.const_diff);
+                        $('#passwordProtected').prop("checked", _ => resp.protect_profile);
+                        $('#authMiners').prop("checked", _ => resp.protect_miners);
+                        $('#anonymous').prop("checked", _ => resp.anonymize);
+                        $('#notification').prop("checked", _ => resp.email_me);
+                        
+                    }
+                });
+            }
       });
 
       /* Show miner ID on Dashboard */
       $('#minerId').text(getUrlVars()['id']);
-
-    
 
     /*
     When clicked on currency variable and html content is updated. Then API is called.
@@ -642,4 +678,64 @@ function apiLogin() {
 
         $("#pplnsLegendHover").css({'display' : 'none', 'opacity' : 0});
     })
+
+    /*
+        Settings section
+    */
+    var $tooltip = $('.col-tooltip');
+    var duration = 500;
+    $tooltip.hide();
+    $('#newPasswordConfirm').focusout(function() {
+        if($(this).val() != $('#newPassword').val()) {
+            $tooltip.slideDown(duration);
+            $('#newPassword').focus()
+        }
+    });
+
+    $('#newPasswordConfirm').on('keyup', function() {
+            $tooltip.slideUp(duration);
+        }
+    );
+
+    
+    $('#saveButton').click(function(e) {
+        e.preventDefault();
+        if($('#newPassword').val().length > 0) {
+            $.ajax({
+            url: settingsUrl,
+            method: 'POST',
+            data: {
+                id: getUrlVars()['id'],
+                password: $('#currPassword').val(),
+                new_password: $('#newPassword').val(),
+                difficulty: $('#diffSetting').val(),
+                payout_level: $('#payoutLvl').val(),
+                email: $('#email').val(),
+                const_diff: $('#enableConstDiff').prop("checked"),
+                protect_profile: $('#passwordProtected').prop("checked"),
+                protect_miners: $('#authMiners').prop("checked"),
+                anonymize: $('#anonymous').prop("checked"),
+                email_me: $('#notification').prop("checked")
+            },
+            success: (resp) => showResponse(resp)
+        });
+        } else {
+            $.ajax({
+            url: settingsUrl,
+            method: 'POST',
+            data: {
+                id: getUrlVars()['id'],
+                password: $('#currPassword').val(),
+                difficulty: $('#diffSetting').val(),
+                email: $('#email').val(),
+                const_diff: $('#enableConstDiff').prop("checked"),
+                protect_profile: $('#passwordProtected').prop("checked"),
+                protect_miners: $('#authMiners').prop("checked"),
+                anonymize: $('#anonymous').prop("checked"),
+                email_me: $('#notification').prop("checked")
+            },
+            success: (resp) => showResponse(resp)
+        });
+        }
+    });
 });

@@ -28,7 +28,7 @@ var bgSec = '#1B5389'
 var apiInterval = [null, null];
 
 
-var x = window.matchMedia("(max-width: 820px)")
+var x = window.matchMedia("(max-width: 680px)")
 
 function getUrlVars() {
     var vars = {};
@@ -41,13 +41,10 @@ function getUrlVars() {
 function updateNavUrl(){
     if(localStorage.userIdNotLogged == null && localStorage.userIdLogged != null) {
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
-        $('#settingsLink').attr('href', 'settings.html?id=' + localStorage.userIdLogged);
     } else if(localStorage.userIdLogged == null && localStorage.userIdNotLogged != null) {
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdNotLogged);
-        $('#settingsLink').attr('href', 'settings.html?id=' + localStorage.userIdNotLogged);
     } else if(localStorage.userIdLogged != null && localStorage.userIdNotLogged != null) {
         $('#userLink').attr('href', 'user-panel.html?id=' + localStorage.userIdLogged);
-        $('#settingsLink').attr('href', 'settings.html?id=' + localStorage.userIdNotLogged);
     }
 }
 
@@ -73,10 +70,10 @@ function changeNavHeight(x) {
     if (localStorage.userIdNotLogged != null || localStorage.userIdLogged != null) {
         if (x.matches) { // If media query matches
             $(".nav-bar").css({
-                'height' : '16.5rem'
+                'height' : '14.5rem'
             });
             $("#logOut").css({
-                'top' : '9.5rem'
+                'top' : '7.7rem'
             });
         } else {
             $(".nav-bar").css({
@@ -186,9 +183,6 @@ $(document).ready(function() {
         $('#userLink').css({
             display: 'inline-block'
         });
-        $('#settingsLink').css({
-            display: 'inline-block'
-        });
         $('#logOut').css({
             display: 'flex'
         });
@@ -196,9 +190,6 @@ $(document).ready(function() {
         updateNavUrl();
     } else {
         $('#userLink').css({
-            display: 'none'
-        });
-        $('#settingsLink').css({
             display: 'none'
         });
         $('#logOut').css({

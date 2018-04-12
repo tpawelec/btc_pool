@@ -11,7 +11,7 @@ function showResponse(resp) {
         	display: 'flex'
         })
 	if(resp.error) {
-		$respPopup.html('<p class="prompt-sign api-fail">&#x2714;</p><p class="message">' + resp.msg + '</p>');
+		$respPopup.html('<p class="prompt-sign api-fail">&times;</p><p class="message">' + resp.msg + '</p>');
 	} else {
 		$respPopup.html('<p class="prompt-sign api-success">&#x2714;</p><p class="message">' + resp.msg + '</p>');
 	}
@@ -42,6 +42,7 @@ $(document).ready(function() {
 		},
 		success: function(resp) {
 			$('#diffSetting').val(resp.difficulty);
+			$('#payoutLvl').val(resp.payout_level);
 			$('#email').val(resp.email);
 			$('#enableConstDiff').prop("checked", _ => resp.const_diff);
 			$('#passwordProtected').prop("checked", _ => resp.protect_profile);
@@ -51,7 +52,6 @@ $(document).ready(function() {
 			
 		}
 	});
-	// {"difficulty":0,"email":"","const_diff":false,"protect_profile":false,"protect_miners":false,"anonymize":false,"email_me":false}
 	$('#saveButton').click(function(e) {
 		e.preventDefault();
 		if($('#newPassword').val().length > 0) {
@@ -63,6 +63,7 @@ $(document).ready(function() {
 				password: $('#currPassword').val(),
 				new_password: $('#newPassword').val(),
 				difficulty: $('#diffSetting').val(),
+				payout_level: $('#payoutLvl').val(),
 				email: $('#email').val(),
 				const_diff: $('#enableConstDiff').prop("checked"),
 				protect_profile: $('#passwordProtected').prop("checked"),

@@ -17,7 +17,6 @@
 		<ul class="menu">
 			<li><a href="index.html">Home</a></li>
 			<li><a href="user-panel.html" id="userLink">User Panel</a></li>
-			<li><a href="settings.html" id="settingsLink">Settings</a></li>
 			<li><a href="faq.html">FAQ</a></li>
 			<li><a href="index.html" id="logOut">Logout</a></li>
 		</ul>
@@ -41,6 +40,7 @@
 			<li id="dashBoard">Dashboard</li>
 			<li id="payouts">Payout</li>
 			<li id="workers">Workers</li>
+			<li id="settings">Settings</li>
 		</ul>
 		</div>
 				</div>
@@ -72,7 +72,7 @@
 						</div>
 						<div class="col-md-2 col-sm-4 col-6">
 							<h4 class="title">worker count</h4>
-							<p class="value" id="workers">00000</p>
+							<p class="value" id="workersDashboard">00000</p>
 						</div>
 						<div class="col-md-2 col-sm-4 col-6">
 							<h4 class="title">shares</h4>
@@ -146,8 +146,8 @@
 			</div>
 			<div class="row">
 				<div class="col-12">
-					<label for="nameRegexp" class="search-info">Type and press ENTER</label>
-				<input type="text" id="nameSearch" name="nameRegexp">
+					<label for="nameSearch" class="search-info">Type and press ENTER</label>
+				<input type="text" id="nameSearch" name="nameSearch">
 				</div>
 			</div>
 			<div class="row">
@@ -176,6 +176,127 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="settingsSection">
+		<div class="container setting-form">
+		<form name="settinsForm" action="#" onsubmit="return validateForm()" method="post">
+			<div class="row">
+				<div class="col-sm-6 col-12">
+					<label for="currPassword">Password: </label>
+				</div>
+				<div class="col-sm-6 col-12">
+					<input type="password" name="curr-password" id="currPassword">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6 col-12">
+					<label for="newPassword">New password: </label>
+				</div>
+				<div class="col-sm-6 col-12">
+					<input type="password" name="new-password" id="newPassword">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6 col-12">
+					<label for="newPasswordConfirm">Confirm password: </label>
+				</div>
+				<div class="col-sm-6 col-12">
+					<input type="password" name="new-password-confirm" id="newPasswordConfirm">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6 col-12"></div>
+				<div class="col-sm-6 col-12 col-tooltip">
+					<p class="diff-password">Passwords have to be the same.</p>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6 col-12">
+					<label for="diffSetting">Difficulty setting: </label>
+				</div>
+				<div class="col-sm-6 col-12">
+					<input type="text" name="diffSetting" id="diffSetting">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6 col-12">
+					<label for="payoutLvl">Payout level: </label>
+				</div>
+				<div class="col-sm-6 col-12">
+					<input type="text" name="payoutLvl" id="payoutLvl">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-6 col-12">
+					<label for="email">E-mail: </label>
+				</div>
+				<div class="col-sm-6 col-12">
+					<input type="text" name="email" id="email">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-6">
+					<label for="notification">Enable constant difficulty</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="enableConstDiff" id="enableConstDiff">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<label for="passwordProtected">Password-protected profile</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="passwordProtected" id="passwordProtected">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<label for="notification">Authenticate miners</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="authMiners" id="authMiners">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6">
+					<label for="anonymous">Anonymize me in leaderboard</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="anonymous" id="anonymous">
+				</div>
+			</div>
+
+			
+			<div class="row">
+				<div class="col-6">
+					<label for="notification">Email me when rig goes online/offline</label>
+				</div>
+				<div class="col-6">
+					<input type="checkbox" name="notification" id="notification">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-6"></div>
+				<div class="col-6">
+					<button class="btn" id="saveButton">Save</button>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+
 	<div id="onHover">
 		<p class="title">Block ID: </p>
 		<p id="blockId"></p><br>
@@ -214,6 +335,7 @@
 		<div class="wrong-id popup-content"><p class="prompt-error">&times;</p><p>There is no such id</p></div>
 		<div class="server-problem popup-content"><p class="prompt-error">&times;</p><p>Oops! There is a problem with connection to the server.</p></div>
 		<div class="online-problem popup-content"><p>Oops! You are offline!</p></div>
+		<div class="server-response popup-content"></div>
 	</div>
 	</div>
 	<footer><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil qui repellendus, facilis temporibus magnam </p>

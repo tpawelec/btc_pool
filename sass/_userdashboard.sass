@@ -234,6 +234,40 @@ h2
 			background-color: $text
 		.otherShares
 			width: auto
+			
+#settingsSection
+	display: none
+	.setting-form
+		text-align: center
+		margin: 2rem auto
+		label
+			margin: .5rem
+			padding: .2rem
+			float: right
+		input,button
+			padding: .5rem
+			margin: .5rem
+			border: none
+			float: left
+			+border-rad(10px)
+			width: 15rem
+			&:focus
+				outline: none
+		[type="checkbox"]
+			width: 15px
+			height: 15px
+			margin-left: 0
+			vertical-align: bottom
+			position: relative
+			top: .3rem
+		.col-tooltip
+			display: block
+			transition: initial
+			-webkit-transition: initial
+			-ms-transition: initial
+			-o-transition: initial
+			.diff-password
+				text-align: left
 
 [id*='Hover']
 	position: absolute
@@ -285,4 +319,12 @@ h2
 		text-align: center
 		input
 			margin: 0 auto
+
+	#settingsSection
+		label
+			float: initial!important
+		input:not([type="checkbox"])
+			float: initial!important
+		[type="checkbox"]
+			top: -.5rem!important
 	
