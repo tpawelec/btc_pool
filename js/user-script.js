@@ -46,14 +46,17 @@ function hideKeyboard() {
 }
 
 function showResponse(resp) {
+    console.log("resp")
     var $respPopup = $('.server-response');
     $('.css-popup').css({
         visibility: "visible",
-        opacity: 1
+        opacity: 1,
+        display: "block"
+
     });
     $('.css-popup > .wrapper > *:not(p)').css({
             display: 'none'
-        });
+    });
     $respPopup.css({
             display: 'flex'
         })
