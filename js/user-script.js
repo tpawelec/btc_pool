@@ -553,7 +553,7 @@ function apiLogin() {
         e.preventDefault();
         if($('.wrong-id').css('display') === 'flex') {
             window.location.href = "index.html"
-        } else if($('.password-form').css('display') === 'flex') || else if($('.wrong-password').css('display') === 'flex') {
+        } else if($('.password-form').css('display') === 'flex' || $('.wrong-password').css('display') === 'flex') {
             if(localStorage.userIdLogged === null || localStorage.userIdNotLogged === null) {
                 window.location.href = "index.html"
             } else if(localStorage.userIdNotLogged === null || localStorage.userIdLogged != null) {
