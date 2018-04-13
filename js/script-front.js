@@ -231,7 +231,6 @@ function callApi() {
 $(document).ready(function () {
 
     'use strict';
-    alert("User panel v2.2")
     /*
     When clicked on currency variable and html content is updated. Then API is called.
     */
