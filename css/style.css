@@ -813,6 +813,9 @@ h2 {
       padding-right: 0; }
       #settingsSection .checkbox-row .checkbox-label label {
         margin-right: 0; }
+    #settingsSection .checkbox-row input {
+      width: 20px !important;
+      height: 20px !important; }
   #settingsSection .save-btn {
     float: initial !important;
     width: 10rem !important;
