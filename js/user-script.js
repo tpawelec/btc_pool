@@ -554,7 +554,7 @@ function apiLogin() {
         if($('.wrong-id').css('display') === 'flex') {
             window.location.href = "index.html"
         } else if($('.password-form').css('display') === 'flex' || $('.wrong-password').css('display') === 'flex') {
-            if(localStorage.userIdLogged === null || localStorage.userIdNotLogged === null) {
+            if(localStorage.userIdLogged == null || localStorage.userIdNotLogged == null) {
                 window.location.href = "index.html"
             } else if(localStorage.userIdNotLogged === null || localStorage.userIdLogged != null) {
                 window.location.href = "user-panel.html?id=" + localStorage.userIdLogged
