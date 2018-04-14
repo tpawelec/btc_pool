@@ -1,4 +1,4 @@
 # btc_pool
 Monero minning service
 
-All copyrights for all source code has been transfered to work.monero.me admin
+All copyrights for all my intelectual property has been transfered to work.monero.me admin
