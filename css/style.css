@@ -124,7 +124,7 @@ body {
   .dropdown {
     right: 12%; } }
 
-@media (max-width: 680px) {
+@media (max-width: 840px) {
   .nav-bar {
     height: 12.7rem;
     padding: .5rem;

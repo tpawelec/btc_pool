@@ -30,7 +30,7 @@ var bgSec = "#1B5389";
 var apiInterval = [null, null];
 
 
-var x = window.matchMedia("(max-width: 680px)");
+var x = window.matchMedia("(max-width: 840px)");
 
 function getUrlVars() {
     "use strict";
@@ -56,10 +56,10 @@ function changeNavHeight (x) {
     if (localStorage.userIdNotLogged != null || localStorage.userIdLogged != null) {
         if (x.matches) { // If media query matches
             $(".nav-bar").css({
-                height: "14.5rem"
+                height: "19.5rem"
             });
             $("#logOut").css({
-                top: "7.7rem"
+                top: "11.7rem"
             });
         } else {
             $(".nav-bar").css({
@@ -72,10 +72,10 @@ function changeNavHeight (x) {
     } else {
         if(x.matches) {
              $(".nav-bar").css({
-                height: "12.7rem"
+                height: "16.5rem"
             });
             $("#logOut").css({
-                top: "5.5rem"
+                top: "7.5rem"
             });
         } else{
             $(".nav-bar").css({
@@ -138,6 +138,9 @@ $(document).ready(function () {
     }, 4000);
 
 
+    btn.on("click", function() {
+        $(".dropdown-content").toggleClass("show");
+    });
     /*
     When clicked anywhere else dropdown menu is closed
     */

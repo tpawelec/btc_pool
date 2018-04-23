@@ -1,0 +1,401 @@
+<html>
+
+<!--
+
+/*
+ JavaScript BigInteger library version 0.9
+ http://silentmatt.com/biginteger/
+
+ Copyright (c) 2009 Matthew Crumley <email@matthewcrumley.com>
+ Copyright (c) 2010,2011 by John Tobey <John.Tobey@gmail.com>
+ Licensed under the MIT license.
+
+ Support for arbitrary internal representation base was added by
+ Vitaly Magerya.
+ */
+
+// Copyright (c) 2014-2015, MyMonero.com
+// 
+// All rights reserved.
+// 
+// Redistribution and use in source and binary forms, with or without modification, are
+// permitted provided that the following conditions are met:
+// 
+// 1. Redistributions of source code must retain the above copyright notice, this list of
+//    conditions and the following disclaimer.
+// 
+// 2. Redistributions in binary form must reproduce the above copyright notice, this list
+//    of conditions and the following disclaimer in the documentation and/or other
+//    materials provided with the distribution.
+// 
+// 3. Neither the name of the copyright holder nor the names of its contributors may be
+//    used to endorse or promote products derived from this software without specific
+//    prior written permission.
+// 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+// EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+// THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+// PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+// STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+// THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Original Author: Lucas Jones
+
+        /*!
+ * Waves v0.6.0
+ * http://fian.my.id/Waves
+ *
+ * Copyright 2014 Alfiana E. Sibuea and other contributors
+ * Released under the MIT license
+ * https://github.com/fians/Waves/blob/master/LICENSE
+ */
+
+        /*
+    @license
+    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
+    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+    Code distributed by Google as part of the polymer project is also
+    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+
+//---------------------------------------------------------------------
+// QRCode for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+// http://www.opensource.org/licenses/mit-license.php
+//
+// The word "QR Code" is registered trademark of
+// DENSO WAVE INCORPORATED
+// http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+
+/*
+ * js-sha3 v0.5.1
+ * https://github.com/emn178/js-sha3
+ *
+ * Copyright 2015, emn178@gmail.com
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+/* Wallet generator modifications: Copyright 2015 moneromooo */
+
+-->
+
+<head>
+  <title>Monero offline wallet generator</title>
+  <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style_wallet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<style>
+.nav-bar {
+  background-color: #032546;
+  height: 6rem;
+  padding: 1.5rem;
+  position: relative; }
+  .nav-bar img {
+    float: left;
+    height: 3rem;
+    width: auto;
+    margin-right: .5rem; }
+  .nav-bar .menu {
+    list-style-type: none;
+    position: relative;
+    margin-top: .9rem; }
+    .nav-bar .menu li {
+      float: left;
+      display: inline-block;
+      width: auto;
+      margin: 0 10px;
+      text-align: center; }
+    .nav-bar .menu #userLink {
+      display: none; }
+    .nav-bar .menu #logOut {
+      position: absolute;
+      top: 0;
+      right: -.5rem;
+      font-size: .95rem;
+      display: none; }
+  .nav-bar a {
+    color: #f0edee;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 300; }
+  .nav-bar .dropdown {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+      transform--webkit-transform: translate(0, -50%);
+      transform--moz-transform: translate(0, -50%);
+      transform--ms-transform: translate(0, -50%);
+      transform--o-transform: translate(0, -50%);
+    right: 5rem;
+    height: 2rem;
+    z-index: 2000; }
+    .nav-bar .dropdown .label {
+      display: inline-block;
+      float: left;
+      margin: .5rem 1rem 0 0; }
+    .nav-bar .dropdown .nav-btn {
+      display: inline-block;
+      width: 5rem;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      text-transform: uppercase; }
+    .nav-bar .dropdown .dropdown-content {
+      background-color: #1B5389;
+      width: 5rem;
+      text-align: center;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      position: absolute;
+      right: 0;
+      display: none; }
+      .nav-bar .dropdown .dropdown-content p {
+        line-height: 1.5rem;
+        border-bottom: 1px solid rgba(54, 102, 147, 0.8);
+        cursor: pointer; }
+        .nav-bar .dropdown .dropdown-content p:last-child {
+          border: none; }
+    .nav-bar .dropdown .show {
+      display: block; }
+
+@media (max-width: 991px) {
+  .dropdown {
+    right: 12%; } }
+
+@media (max-width: 840px) {
+  .nav-bar {
+    height: 12.7rem;
+    padding: .5rem;
+    position: relative; }
+    .nav-bar img {
+      width: 200px;
+      height: auto;
+      float: none;
+      display: block;
+      margin: 0 auto; }
+    .nav-bar .menu li {
+      display: block;
+      padding: .5rem;
+      width: 100%; }
+    .nav-bar .menu #logOut {
+      top: 5.5rem;
+      right: 80%; }
+    .nav-bar .dropdown {
+      top: 82%;
+      right: 25%;
+      transform: translate(50%, 0);
+        transform--webkit-transform: translate(50%, 0);
+        transform--moz-transform: translate(50%, 0);
+        transform--ms-transform: translate(50%, 0);
+        transform--o-transform: translate(50%, 0); } }
+</style>
+<div class="nav-bar">
+        <img src="http://via.placeholder.com/200x50" alt="Lorem ipsum">
+        <ul class="menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="user-panel.html" id="userLink">User Panel</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="xmr_wallet.html">Wallet generator</a></li>
+            <li><a href="index.html" id="logOut">Logout</a></li>
+        </ul>
+
+        <div class="dropdown">
+            <p class="label">Currency:</p>
+            <button id="currencySelect" class="nav-btn" style="background-color: #366693!important;
+  border: none;
+  padding: .5rem;
+  color: #f0edee;
+  -webkit-border-radius: 2px!important;
+  -moz-border-radius: 2px!important;
+  border-radius: 2px!important;">USD</button>
+            <div class="dropdown-content">
+                <p id="USD">USD</p>
+                <p id="EUR">EUR</p>
+                <p id="GBP">GBP</p>
+                <p id="BTC">BTC</p>
+            </div>
+        </div>
+    </div>
+<div class="row">&nbsp;</div>
+<div class="row center-align">
+    <div class="col s12">
+        <h4 style="color: #f0edee;">Offline wallet generator</h4>
+    </div>
+</div>
+
+
+    <div class="row">
+        <div class="col s12">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <p>
+                This page generates a new Monero wallet. It is self contained and
+                does all the necessary calculations locally, so is suitable for generating a new wallet on a machine
+                that is not connected to the network, and may even never be. This way, you can create
+                a Monero wallet without risking the keys. This file is GPG signed, see <a href="#gpg-instructions">GPG instructions</a>.
+                You can check for up to date versions of this page
+                <a href="https://github.com/moneromooo-monero/monero-wallet-generator/blob/master/monero-wallet-generator.html">here</a>.
+            </p>
+        </div>
+    </div>
+    <div class="row valign-wrapper">
+        <div class="col s4 right-align ">
+                <input class="btn blue lighten-1" type="button" onclick="js:genwallet(null);"
+                       value="Generate wallet" id="gen_with_custom_entropy_button" action=""/>
+                <p>Custom entropy for deterministic wallet (leave empty to use the browser's PRNG)</p>
+                <input type="text" value="" id="user_entropy_widget" oninput="js:checkEntropy();" />
+                <div style="color: red; display: none" id="user_entropy_warning_widget">WARNING: entropy is way too low for the wallet to be secure: aim for 256 bits (about a hundred dice throws)</div>
+        </div>
+        <div class="col s1 offset-s1"><h4>or</h4></div>
+        <div class="col s5 offset-s1">
+            <form>
+                <input class="btn blue darken-1" type="button" onclick="js:genwallet_prefix();" value="Generate wallet with prefix" action="" id="gen_prefix_widget"/>
+                <p>(very slow for more than a few characters)</p>
+                <input type="text" value="4" id="prefix_widget" oninput="js:check_prefix_validity()"; />
+            </form>
+        </div>
+    </div>
+    <div class="row center-align">
+        <div class="col s12">
+            <form>
+                <input class="waves-effect waves-light btn light-blue accent-4" type="button" onclick="js:genwallet('english');" value="English" action=""/ id=lang_en>
+                <input class="waves-effect waves-light btn light-blue accent-4" type="button" onclick="js:genwallet('spanish');" value="Spanish" action=""/ id=lang_es>
+                <!-- portuguese word list has a few prefix collisions
+                      <input type="button" onclick="js:genwallet('portuguese');" value="Portuguese" action=""/ id=lang_pt>
+                -->
+                <input class="waves-effect waves-light btn light-blue accent-4" type="button" onclick="js:genwallet('japanese');" value="Japanese" action=""/ id=lang_jp>
+                <br>
+                <font size="-1">(restoring non English language seeds needs a recent simplewallet)</font>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="card light-blue lighten-5">
+                <div class="card-content light-blue-text text-lighten-5">
+                    <span class="card-title light-blue-text text-lighten-5">
+                      Public address
+                      <input type="button" class="waves-effect waves-light btn light-blue accent-4" onclick="js:toggle_qr();" value="Show QR code" action=""
+                         style="line-height: 25px; height: 25px; font-size: 60%; padding: 0px 1.5rem;"/ id="show_qr_code">
+                         <button type="button" class="waves-effect waves-light btn light-blue accent-4" onclick="js:generateZip();"
+                         style="line-height: 25px; height: 25px; font-size: 60%; padding: 0px 1.5rem;"/ id="generate_zip"><p id="btn-loader" style="display: none" class="fa fa-circle-o-notch fa-spin"></p>Download miner</button>
+                    </span>
+
+                    <p>This is the address you give to third parties to send monero to you.
+                        <br><b>It is the only information here that's meant to be public.</b>
+                    </p>
+                </div>
+                <div class="card-action center-align">
+                    <pre class="center-align" id="address_widget">generating...</pre>
+                    <span class="qrcode" id="address_qr_widget" onclick="js:toggle_qr();"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="card light-blue lighten-5">
+                <div class="card-content light-blue-text text-lighten-5">
+                    <span class="card-title light-blue-text text-lighten-5">Mnemonic seed</span>
+                    <p>
+                        The mnemonic seed is a string that comprises 25 (Monero) words and allows you to recreate your
+                        private keys. <b>Keep it secure!</b>
+                    </p>
+                </div>
+                <div class="card-action center-align">
+                    <h5 class="grey-text text-lighten-4" id="mnemonic_widget">Generating... </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="card light-blue lighten-5">
+                <div class="card-content light-blue-text text-lighten-5">
+                    <span class="card-title light-blue-text text-lighten-5">Private keys (optional)</span>
+
+                    <p>
+                        The spend key and view key are the raw private keys for the
+                        new wallet.
+                        <b>They are here for your information, since they can be recovered using the mnemonic
+                        seed in the above box</b>.
+                        If you decide to keep them, keep them secure.
+                    </p>
+                    <br>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td><pre>Spend key:</pre></td>
+                            <td><pre id="spend_key_widget">Generating...</pre></td>
+                        </tr>
+                        <tr>
+                            <td><pre>View key:</pre></td>
+                            <td><pre id="view_key_widget">Generating...</pre></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="row">&nbsp;</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col l12">
+                <h5>Credits</h5>
+                <p>
+                    Made by moneromooo, based on code from <a href="https://mymonero.com/">MyMonero</a>. Copyright notices in the source.
+                    <br>
+                    Thanks to antanst for the CSS, and to luigi1111 for crypto fixes and improvements.
+                    
+                </p>
+
+</div>
+            </div>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="js/FileSaver.js"></script>
+<script src="js/jszip-utils.min.js"></script>
+<!--[if IE]>
+<script type="text/javascript" src="js/jszip-utils-ie.js"></script>
+<![endif]-->
+<script src="js/jszip.min.js"></script>
+<script src="js/script_wallet.js"></script>
+<script src="js/offline.min.js"></script>
+<script src="js/globals.js"></script>
+<script>
+    $(".dropdown-content p").click(function (e) {
+        cCurrency = e.currentTarget.id;
+        btn.text(cCurrency);
+        callApi();
+    });
+
+</script>
+</body>
+</html>
