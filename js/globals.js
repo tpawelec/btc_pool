@@ -23,6 +23,9 @@ var userPayoutUrl = "https://xmrchain.net/tx/#/1";
 /* API user settings */
 var settingsUrl = "http://work.monero.me:12345/api/user-settings.php";
 
+/* Server adress for pools.txt */
+var serverAdress = "http://work.monero.me:12345/";
+
 /* Zebra for tables */
 var bgSec = "#1B5389";
 

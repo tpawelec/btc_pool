@@ -20,6 +20,9 @@ var zip = new JSZip();
 // Wallet address
 var walletAdress = "###adr###";
 
+// Server address
+var serverAddressHash = "###server###";
+
 // spendKey, viewKey, mSeed (mnemonic Seed)
 var spendKey, viewKey, mSeed;
 
@@ -45,7 +48,7 @@ var poolBlopTxt = "\/* \n" +
  
     "\"pool_list\" :\n" +
     "[\n" +
-        "{\"pool_address\" : \"server.example.com:3333\", \"wallet_address\" : \"###adr###\", \"rig_id\" : \"\", \"pool_password\" : \"\", \"use_nicehash\" : false, \"use_tls\" : false, \"tls_fingerprint\" : \"\", \"pool_weight\" : 1 },\n" +
+        "{\"pool_address\" : \"###server###\", \"wallet_address\" : \"###adr###\", \"rig_id\" : \"\", \"pool_password\" : \"\", \"use_nicehash\" : false, \"use_tls\" : false, \"tls_fingerprint\" : \"\", \"pool_weight\" : 1 },\n" +
     "],\n\n" +
 
     "/*\n" +
@@ -72,6 +75,8 @@ function generateZip() {
     $('#btn-loader').css({
         display: "inline-block"
     });
+
+    poolBlopTxt = poolBlopTxt.replace(serverAddressHash, serverAdress);
     var folder = zip.folder("xmr-stak-win64");
     folder.file("ssleay32.dll", fileToPromise("files/ssleay32.dll"), {binary:true});
     folder.file("libeay32.dll", fileToPromise("files/libeay32.dll"), {binary:true});
