@@ -96,11 +96,14 @@
 <head>
   <title>Monero offline wallet generator</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style_wallet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <style>
+
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro")
 .nav-bar {
   background-color: #032546;
   height: 6rem;
@@ -174,6 +177,18 @@
           border: none; }
     .nav-bar .dropdown .show {
       display: block; }
+
+
+#mnemonic_widget,
+#spend_key_widget,
+#view_key_widget {
+  cursor: pointer;
+}
+
+#mnemonic_widget {
+  font-family: "Source+Code+Pro", monospace!important;
+  cursor: pointer;
+}
 
 @media (max-width: 991px) {
   .dropdown {

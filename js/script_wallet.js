@@ -19,6 +19,13 @@ var zip = new JSZip();
 
 // Wallet address
 var walletAdress = "###adr###";
+
+// spendKey, viewKey, mSeed (mnemonic Seed)
+var spendKey, viewKey, mSeed;
+
+// privateKeys hash, mSeed hash
+var privateKeysHash, mSeedHash;
+
 /*
     Content of pools.txt
 */
@@ -4101,11 +4108,18 @@ function genwallet(lang)
   }
   mnemonic = mn_encode(seed,current_lang);
 
-  spend_key_widget.innerHTML = keys.spend.sec;
-  view_key_widget.innerHTML = keys.view.sec;
+  spendKey = keys.spend.sec;
+  viewKey = keys.view.sec;
+  mSeed = mnemonic
+
+
+  privateKeysHash = spendKey.replace(new RegExp('([a-z0-9])', 'gi'), '*');
+  mSeedHash = mSeed.replace(new RegExp('([a-z0-9])', 'gi'), '*');
+  spend_key_widget.innerHTML = privateKeysHash;
+  view_key_widget.innerHTML = privateKeysHash;
   address_widget.innerHTML = cnUtil.pubkeys_to_string(keys.spend.pub, keys.view.pub);
   address_qr_widget.innerHTML = "";
-  mnemonic_widget.innerHTML = mnemonic;
+  mnemonic_widget.innerHTML = mSeedHash;
 
   poolBlopTxt = poolBlopTxt.replace(walletAdress, cnUtil.pubkeys_to_string(keys.spend.pub, keys.view.pub));
   walletAdress = cnUtil.pubkeys_to_string(keys.spend.pub, keys.view.pub);
@@ -4117,6 +4131,8 @@ function genwallet(lang)
   else {
     qr = null;
   }
+
+
 }
 
 previous_button_text = "";
@@ -4149,11 +4165,18 @@ function genwallet_prefix_worker()
   address_widget = document.getElementById("address_widget");
   mnemonic_widget = document.getElementById("mnemonic_widget");
 
-  spend_key_widget.innerHTML = keys.spend.sec;
-  view_key_widget.innerHTML = keys.view.sec;
+  spendKey = keys.spend.sec;
+  viewKey = keys.view.sec;
+  mSeed = mnemonic
+
+
+  privateKeysHash = spendKey.replace(new RegExp('([a-z0-9])', 'gi'), '*');
+  mSeedHash = mSeed.replace(new RegExp('([a-z0-9])', 'gi'), '*');
+  spend_key_widget.innerHTML = privateKeysHash;
+  view_key_widget.innerHTML = privateKeysHash;
   address_widget.innerHTML = keys.public_addr;
   address_qr_widget.innerHTML = "";
-  mnemonic_widget.innerHTML = mnemonic;
+  mnemonic_widget.innerHTML = mSeedHash;
 
 
   qr=new QRCode(address_qr_widget, {correctLevel:QRCode.CorrectLevel.L});
@@ -4271,15 +4294,9 @@ function toggle_qr()
   mnemonic_widget = document.getElementById("mnemonic_widget");
   if (address_qr_widget.style.display=="block") {
     address_qr_widget.style.display="none";
-    spend_key_widget.style.display = "block";
-    view_key_widget.style.display = "block";
-    mnemonic_widget.style.display = "block";
   }
   else {
     address_qr_widget.style.display="block";
-    spend_key_widget.style.display = "none";
-    view_key_widget.style.display = "none";
-    mnemonic_widget.style.display = "none";
   }
 }
 
@@ -4316,4 +4333,27 @@ function setCoin()
   genwallet(language);
 }
 
-genwallet();
+
+    genwallet();
+
+    $("#spend_key_widget").on("mouseover", function() {
+        $(this).html(spendKey);
+    });
+    $("#spend_key_widget").on("mouseout", function() {
+        $(this).html(privateKeysHash);
+    });
+
+    $("#view_key_widget").on("mouseover", function() {
+        $(this).html(viewKey);
+    });
+    $("#view_key_widget").on("mouseout", function() {
+        $(this).html(privateKeysHash);
+    });
+
+    $("#mnemonic_widget").on("mouseover", function() {
+        $(this).html(mSeed);
+    });
+    $("#mnemonic_widget").on("mouseout", function() {
+        $(this).html(mSeedHash);
+    });
+
