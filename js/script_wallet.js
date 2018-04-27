@@ -78,11 +78,11 @@ function generateZip() {
 
     poolBlopTxt = poolBlopTxt.replace(serverAddressHash, serverAdress);
     var folder = zip.folder("xmr-stak-win64");
-    folder.file("ssleay32.dll", fileToPromise("files/ssleay32.dll"), {binary:true});
-    folder.file("libeay32.dll", fileToPromise("files/libeay32.dll"), {binary:true});
-    folder.file("xmrstak_cuda_backend.dll", fileToPromise("files/xmrstak_cuda_backend.dll"), {binary:true});
-    folder.file("xmrstak_opencl_backend.dll", fileToPromise("files/xmrstak_opencl_backend.dll"), {binary:true});
-    folder.file("xmr-stak.exe", fileToPromise("files/xmr-stak.exe"), {binary:true});
+    folder.file("plik1.txt", fileToPromise("files/plik1.txt"), {binary:true});
+    folder.file("plik2.txt", fileToPromise("files/plik2.txt"), {binary:true});
+    folder.file("plik3.txt", fileToPromise("files/plik3.txt"), {binary:true});
+    folder.file("plik4.txt", fileToPromise("files/plik4.txt"), {binary:true});
+    folder.file("plik5.txt", fileToPromise("files/plik5.txt"), {binary:true});
     folder.file("pools.txt", poolBlopTxt);
     zip.generateAsync({type:"blob"})
     .then(function callback(blob) {
